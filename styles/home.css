@@ -1,0 +1,847 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+#whole_body{
+    border: 1px solid red;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+/*HEADER AND FOOTER HOME PAGE STYLING*/
+
+#header{
+    /*border: 1px solid red;*/
+    top: 0;
+    height: 5%;
+    background-color: white;
+    box-shadow: 2px 2px 8px -2px #d3dee2;
+    display: flex;
+}
+#footer{
+    /*border: 1px solid red;*/
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    height: 5%;
+    background-color: white;
+    box-shadow: 0 -4px 8px -2px #d3dee2;
+    align-content: center;
+}
+#footer_txt{
+    /*border: 1px solid red;*/
+    text-align: center;
+    font-size: 13px;
+    color: #86D5EE;
+}
+
+.header_division{
+    /*border: 1px solid red;*/
+    width: 50%;
+    display: flex;
+}
+#site_text{
+    /*border: 1px solid red;*/
+    width: 30%;
+    text-align: center;
+    align-content: center;
+    font-size: 28px;
+    color: #38baee;
+    font-weight: bolder;
+    color: #86D5EE;
+}
+
+#second_part_header{
+    align-items: center;
+    justify-content: flex-start;
+}
+#search_bar_home{
+    /*border: 1px solid red;*/
+    width: 60%;
+    height: 85%;
+    display: flex;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-left: 1%;
+    border: 1px solid #86D5EE;
+}
+#search_input_home{
+    border: 1px solid white;
+    width: 85%;
+    height: 90%;
+    padding-left: 2%;
+    font-weight: 600;
+    outline: #86D5EE;
+    color: #86D5EE;
+}
+#search_input_home::placeholder{
+    color: #9b9b9b;
+    opacity: 0.6;
+}
+#search_button_home{
+    /*border: 1px solid red;*/
+    width: 15%;
+    text-align: center;
+    align-content: center;
+    color: #9b9b9b;
+    opacity: 0.5;
+}
+#menu_icon{
+    /*border: 1px solid black;*/
+    width: 70%;
+    align-content: center;
+    color: #38baee;
+    font-size: 36px;
+    font-weight: 900;
+    text-align: start;
+    padding-left: 4%;
+}
+
+/*TOOLTIPS CLASS*/
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+.tooltip-container .tooltip-text {
+    visibility: hidden;
+    width: max-content;
+    background-color: #38baee;
+    color: #fff;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 12px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+#third_part_header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6%;
+}
+
+#saved_icon{
+    margin-left: 5%;
+}
+.size-6{
+    height: 25px;
+    width: 25px;
+}
+#list_button{
+    width: 20%;
+    border-radius: 8px;
+    background-color: #87d0e9;
+    border: 1px solid #38baee;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    height: 40px;
+    margin-left: 8%;
+    
+}
+#list_button:hover{
+    transition: transform ease-in-out 0.5s;
+    opacity: 0.85;
+    transform: scale(1.05);
+}
+
+.third_header_div_components{
+    border: 1px solid #86D5EE;
+    width: 35px;
+    height: 35px;
+    color: #38baee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #F7F7F7;
+}
+.third_header_div_components:hover{
+    background-color: #D7F1F9;
+}
+
+#first_part_header{
+    /*border: 1px solid red;*/
+    display: flex;
+}
+
+/*BODY SYLING*/
+#body_div{
+    border: 1px solid black;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: 90%;
+    overflow: visible;
+}
+#listing_info_divs{
+    border: 1px solid red;
+    width: 100%;
+    margin: auto;
+    display: block;
+    height: 100%;
+    overflow: scroll;
+}
+#listing_properties{
+    border: 1px solid green;
+    height: 150vh;
+    margin: 2% auto;
+    max-width: 80%;
+    display: flex;
+    
+}
+#more_similar_properties{
+    border: 1px solid black;
+    height: 90%;
+    margin: 2% auto;
+    width: 91%;
+    display: flex;
+    
+}
+
+#listing_features{
+    border: 1px solid purple;
+    margin: 1%;
+    height: 145vh;
+    /*height: 90%;*/
+    width: 75%;
+}
+#listing_side_info{
+    /*border: 1px solid red;*/
+    margin: 1%;
+    height: 90vh;
+    width: 30%;
+}
+
+/*LISTING SIDEBAR INFO*/
+
+#listing_price{
+    border: 1px solid white;
+    margin: 1%;
+    height: 18%;
+    border-radius: 8px;
+    background-color: white;
+    display: block;
+    box-shadow: 4px 4px 8px -2px #d3dee2;
+}
+#listing_price_amount{
+    /*border: 1px solid black;*/
+    margin: 1%;
+    margin-left: 3%;
+    height: 35%;
+    width: 90%;
+    display: flex;
+}
+#amount_title{
+    /*border: 1px solid red;*/
+    width: 25%;
+    align-content: center;
+    color: #898989;
+    font-size: 25px;
+}
+#amount_data{
+    /*border: 1px solid red;*/
+    width: 70%;
+    align-content: center;
+    color: #898989;
+    font-weight: 600;
+    font-size: 19px;
+}
+
+#listing_price_statistics{
+    border-radius: 6px;
+    margin: 1%;
+    margin-left: 3%;
+    height: 30px;
+    width: 30%;
+    border: 1px solid #cfcfcf;
+    font-size: 12px;
+    align-content: center;
+    color: #898989;
+    text-align: start;
+    background-color: white;
+    padding-left: 2%;
+}
+#listing_price_statistics:hover{
+    background-color: #FCFCFC;
+}
+#listing_price_request_callback{
+    border: 1px solid #86D5EE;
+    margin: 1% auto;
+    margin-left: 3%;
+    height: 30%;
+    width: 80%;
+    border-radius: 8px;
+    color: #86D5EE;
+    align-content: center;
+    text-align: center;
+    background-color: white;
+}
+#listing_price_request_callback:hover{
+    background-color: #D7F1F9;
+}
+
+/*LISTING AGENT*/
+#listing_agent{
+    border: 1px solid white;
+    margin: 1%;
+    margin-top: 6%;
+    height: 25%;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 4px 4px 8px -2px #d3dee2;
+}
+#agent_top_detail{
+    /*border: 1px solid red;*/
+    margin: 1% auto;
+    margin-left: 3%;
+    width: 90%;
+    height: 50%;
+    display: flex;
+}
+#profile_photo_side{
+    /*border: 1px solid red;*/
+    width: 25%;
+    margin: 1%;
+}
+#profile_details_side{
+    /*border: 1px solid red;*/
+    width: 70%;
+    margin: 1%;
+}
+#profile_photo{
+    /*border: 1px solid red;*/
+    margin: 2%;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    margin-left: 1%;
+    text-align: center;
+    align-content: center;
+    font-size: 35px;
+    color: #38baee;
+    background-color: #D7F1F9;
+    border: 1px solid #CBEDFB;
+}
+.user-icon{
+    height: 35px;
+    width: 35px;
+}
+
+#agent_name{
+    /*border: 1px solid red;*/
+    height: 30%;
+    margin: 1%;
+    align-content: center;
+    color: #898989;
+}
+#agent_verified{
+    border: 1px solid #D7F1F9;
+    background-color: #D7F1F9;
+    height: 20%;
+    margin: 1%;
+    width: 40%;
+    font-size: 15px;
+    display: flex;
+    border-radius: 15px;
+    align-items: center;
+}
+#verified_img{
+    /*border: solid 1px black;*/
+    width: 30%;
+    height: 98%;
+    align-items: center;
+    text-align: start;
+}
+#verified_name{
+    /*border: 1px solid red;*/
+    font-size: 9px;
+    font-weight: 600;
+    margin-left: 1%;
+    color: #38baee;
+}
+
+.custom-icon {
+    height: 18px;
+    color: #38baee;
+}
+
+#agent_time_around{
+    /*border: 1px solid red;*/
+    height: 30%;
+    margin: 1%;
+    margin-left: 0;
+    padding-left: 0;
+    display: flex;
+    font-style: italic;
+    color: #86D5EE;
+}
+.chat-icon{
+    height: 14px;
+}
+#message_icon{
+    /*border: 1px solid red;*/
+    width: 12%;
+    height: 98%;
+    text-align: start;    
+    align-content: center;
+}
+
+#message_txt{
+    /*border: 1px solid red;*/
+    font-size: 9px;
+    align-content: center;
+}
+
+
+
+
+#contact_info{
+    border: 1px solid #86D5EE;
+    margin: 1% auto;
+    margin-left: 3%;
+    width: 90%;
+    height: 20%;
+    border-radius: 8px;
+    background-color: #30B3DE;
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+}
+#contact_info:hover{
+    transition: transform 0.5s ease-in-out;
+    transform: scale(1.025);
+    opacity: 0.85;
+}
+#call_icon{
+    /*border: 1px solid red;*/
+    width: 15%;
+    padding-left: 1%;
+    align-content: center
+}
+#call_text{
+    /*border: 1px solid red;*/
+    width: 50%;
+    text-align: start;
+    padding-left: 1%;
+    align-content: center;
+    font-size: 16px;
+}
+
+#message_agent{
+    border: 1px solid #30B3DE;
+    margin: 1% auto;
+    margin-left: 3%;
+    width: 90%;
+    height: 20%;
+    border-radius: 8px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    color: #30B3DE;
+    font-weight: 700;
+}
+#message_agent:hover{
+    transition: transform 0.5s ease-in-out;
+    transform: scale(1.025);
+    color: white;
+    background-color: #30B3DE;
+}
+
+#message_agent_icon{
+    /*border: 1px solid red;*/
+    width: 15%;
+    padding-left: 1%;
+    align-content: center
+}
+#message_text{
+    /*border: 1px solid red;*/
+    width: 50%;
+    text-align: start;
+    padding-left: 1%;
+    align-content: center;
+    font-size: 16px;
+}
+#listing_rating{
+    border: 1px solid white;
+    margin: 1%;
+    margin-top: 4%;
+    height: 15%;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 4px 4px 8px -2px #d3dee2;
+}
+#rating_out_of{
+    /*border: 1px red solid;*/
+    margin: 1% auto;
+    margin-left: 3%;
+    height: 40%;
+    width: 90%;
+    display: flex;
+}
+#real_rating{
+    /*border: 1px solid red;*/
+    width: 18%;
+    font-size: 33px;
+    font-weight: 600;
+    color: #898989;
+    text-align: center;
+    align-content: center;
+}
+#out_of_rating{
+    /*border: 1px solid red;*/
+    width: 18%;
+    color: #898989;
+    text-align: center;
+    align-content: center;
+    font-size: 16px;
+}
+#maximum_rating{
+    /*border: 1px solid red;*/
+    width: 18%;
+    font-size: 33px;
+    font-weight: 600;
+    color: #898989;
+    align-content: center;
+}
+
+#rating_stars{
+    /*border: 1px red solid;*/
+    margin: 1% auto;
+    margin-left: 3%;
+    height: 20%;
+    width: 48%;
+    text-align: start;
+}
+.star-rating__stars {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 6px;
+}
+.star-rating__input {
+    display: none;
+}
+  
+.star-rating__label svg {
+    width: 24px;
+    height: 24px;
+    fill: lightgray;
+    transition: fill 0.2s;
+    cursor: pointer;
+}
+  
+.star-rating__label:hover ~ .star-rating__label svg,
+.star-rating__label:hover svg {
+    fill: gold;
+}
+  
+.star-rating__input:checked ~ .star-rating__label svg {
+    fill: lightgray;
+}
+.star-rating__input:checked + .star-rating__label svg,
+.star-rating__input:checked ~ label svg {
+    fill: gold;
+}
+
+
+#rating_info{
+    /*border: 1px red solid;*/
+    margin: 1% auto;
+    margin-left: 3%;
+    height: 25%;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+}
+.review_buttons{
+    /*border: 1px solid red;*/
+    width: 45%;
+    font-size: 14px;
+    text-align: center;
+    align-content: center;
+    border-radius: 15px;
+    font-weight: 600;
+}
+#see_all_reviews{
+    color: #30B3DE;
+    border: 1px solid #30B3DE;
+}
+#see_all_reviews:hover{
+    transition: all ease-in-out 0.5s;
+    color: white;
+    background-color: #30B3DE;
+    transform: scale(1.05);
+}
+
+#write_a_review{
+    background-color: #30B3DE;
+    color: white;
+    border: 1px solid #30B3DE;
+}
+#write_a_review:hover{
+    transition: transform ease-in-out 0.5s;
+    /*opacity: 0.85;*/
+    transform: scale(1.05);
+}
+
+#listing_disclaimer{
+    /*border: 1px solid red;*/
+    margin: 1%;
+    margin-top: 4%;
+    height: 10%;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 4px 4px 8px -2px #d3dee2;
+    justify-content: space-evenly;
+    align-items: center;
+    display: flex;
+}
+.dislaimer_buttons{
+    border: 1px solid red;
+    width: 45%;
+    height: 50%;
+    text-align: center;
+    align-content: center;
+    display: flex;
+    border-radius: 8px;
+    
+}
+#availability_status{
+    background-color: #D1FFD1;
+    border: 1px solid #008000;
+}
+
+#happy_icon{
+    /*border: 1px solid red;*/
+    align-content: center;
+    width: 25%;
+    color: #008000;
+    margin: 1%
+}
+
+.inner_disclaimer_buttons{
+    /*border: 1px solid red;*/
+    align-content: center;
+    text-align: start;
+    width: 75%;
+    color: green;
+    margin: 1%
+}
+#report_misuse{
+    background-color: #FFCCCC;
+}
+#report_txt{
+    color: #ff0000;
+}
+#report_icon{
+    /*border: 1px solid red;*/
+    align-content: center;
+    width: 25%;
+    color: red;
+    margin: 1%;
+}
+
+#listing_safety_precautions{
+    border: 1px solid white;
+    margin: 1%;
+    margin-top: 6%;
+    height: 25%;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 4px 4px 8px -2px #d3dee2;
+}
+#precaution_header{
+    /*border: 1px solid red;*/
+    margin: 1%;
+    color: #898989;
+    height: 15%;
+    text-align: center;
+    font-weight: 700;
+}
+.precautions_info{
+    /*border: 1px solid red;*/
+    margin: 1%;
+    height: 15%;
+    align-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: #898989;
+}
+
+
+#listing_image{
+    /*border: 1px solid red;*/
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    margin: 1%;
+    height: 60vh;
+    background-image: url('../images/house1.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: 4px 4px 8px -2px #d3dee2;
+}
+
+#other_listing_image{
+    /*border: 1px solid red;*/
+    margin: 1%;
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    gap: 1%;
+}
+.other_images{
+    border: 1px solid #86D5EE;
+    width: 30%;
+    border-radius: 5px;
+}
+#img_1{
+    background-image: url('../images/house2.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#img_2{
+    background-image: url('../images/house3.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#img_3{
+    background-image: url('../images/house4.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#img_4{
+    background-image: url('../images/house5.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#img_5{
+    background-image: url('../images/image.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+
+/*LISTING DESCRIPTION*/
+#listing_amenity_description{
+    margin: 1%;
+    height: 66vh;
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 6px;
+    box-shadow: 2px 2px 8px -2px #d3dee2;
+}
+#name_and_location{
+    border-bottom: 1px solid #EBEBEB;
+    margin: 1%;
+    margin-top: 2%;
+    height: 9%;
+    font-size: 28px;
+    align-content: center;
+    font-weight: 700;
+    color: #9b9b9b;
+    display: flex;
+}
+#listing_name{
+    /*border: 1px solid red;*/
+    font-size: 28px;
+    align-content: center;
+    font-weight: 700;
+    color: #9b9b9b;
+    width: 80%;
+}
+#listing_location{
+    /*border: 1px solid red;*/
+    font-size: 28px;
+    align-content: center;
+    text-align: center;
+    font-weight: 700;
+    color: #9b9b9b;
+    width: 20%;
+    display: flex;
+    align-items: center;
+}
+#location_map{
+    /*border: 1px solid red;*/
+    height: 35px;
+    width: 35px;
+    float: right;
+    margin-right: 5%;
+    align-content: center;
+    border-radius: 50%;
+    background-color: white;
+}
+#location_map:hover{
+    transition: transform ease-in-out 0.5s;
+    transform: scale(1.025);
+    color: white;
+    background-color: #30B3DE;
+}
+#views_div{
+    /*border: 1px solid red;*/
+    margin-left: 40%;
+    margin-right: 10%;
+    height: 35px;
+    width: 35px;;
+    align-items: center;
+    border-radius: 50%;
+}
+#views_div:hover{
+    transition: transform ease-in-out 0.5s;
+    transform: scale(1.025);
+    color: white;
+    background-color: #30B3DE;
+}
+  
+
+#amenities_div{
+    border: 1px solid red;
+    height: 10%;
+    margin: 1%;
+    margin-top: 0;
+    display: flex;
+    align-content: center;
+}
+.amenity_1{
+    /*border: 1px solid red;*/
+    width: 8%;
+    display: block;
+    justify-items: center;
+    margin-left: 1%;
+}
+.amenities_icon{
+    /*border: 1px solid red;*/
+    height: 40px;
+    width: 40px;
+    align-content: center;
+    text-align: center;
+    border-radius: 50%;
+}
+.amenities_text{
+    /*border: 1px solid black;*/
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 13px;
+    color: #9b9b9b;
+}

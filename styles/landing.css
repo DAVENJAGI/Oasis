@@ -1,0 +1,184 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+#whole_body{
+    border: 1px solid red;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+/*HEADER AND FOOTER HOME PAGE STYLING*/
+
+#header{
+    /*border: 1px solid red;*/
+    top: 0;
+    height: 5%;
+    background-color: white;
+    box-shadow: 2px 2px 8px -2px #d3dee2;
+    display: flex;
+}
+#footer{
+    /*border: 1px solid red;*/
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    height: 5%;
+    background-color: white;
+    box-shadow: 0 -4px 8px -2px #d3dee2;
+    align-content: center;
+}
+#footer_txt{
+    /*border: 1px solid red;*/
+    text-align: center;
+    font-size: 13px;
+    color: #86D5EE;
+}
+
+.header_division{
+    /*border: 1px solid red;*/
+    width: 50%;
+    display: flex;
+}
+#site_text{
+    /*border: 1px solid red;*/
+    width: 30%;
+    text-align: center;
+    align-content: center;
+    font-size: 28px;
+    color: #38baee;
+    font-weight: bolder;
+    color: #86D5EE;
+}
+
+#second_part_header{
+    align-items: center;
+    justify-content: flex-start;
+}
+#search_bar_home{
+    /*border: 1px solid red;*/
+    width: 60%;
+    height: 85%;
+    display: flex;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-left: 1%;
+    border: 1px solid #86D5EE;
+}
+#search_input_home{
+    border: 1px solid white;
+    width: 85%;
+    height: 90%;
+    padding-left: 2%;
+    font-weight: 600;
+    outline: #86D5EE;
+    color: #86D5EE;
+}
+#search_input_home::placeholder{
+    color: #9b9b9b;
+    opacity: 0.6;
+}
+#search_button_home{
+    /*border: 1px solid red;*/
+    width: 15%;
+    text-align: center;
+    align-content: center;
+    color: #9b9b9b;
+    opacity: 0.5;
+}
+#menu_icon{
+    /*border: 1px solid black;*/
+    width: 70%;
+    align-content: center;
+    color: #38baee;
+    font-size: 36px;
+    font-weight: 900;
+    text-align: center;
+}
+
+/*TOOLTIPS CLASS*/
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+.tooltip-container .tooltip-text {
+    visibility: hidden;
+    width: max-content;
+    background-color: #38baee;
+    color: #fff;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 12px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+#third_part_header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6%;
+}
+
+#saved_icon{
+    margin-left: 5%;
+}
+.size-6{
+    height: 25px;
+    width: 25px;
+}
+#list_button{
+    width: 20%;
+    border-radius: 8px;
+    background-color: #87d0e9;
+    border: 1px solid #38baee;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    height: 40px;
+    margin-left: 8%;
+    
+}
+#list_button:hover{
+    transition: transform ease-in-out 0.5s;
+    opacity: 0.85;
+    transform: scale(1.05);
+}
+
+.third_header_div_components{
+    border: 1px solid #86D5EE;
+    width: 35px;
+    height: 35px;
+    color: #38baee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #F7F7F7;
+}
+.third_header_div_components:hover{
+    background-color: #D7F1F9;
+}
+
+#first_part_header{
+    /*border: 1px solid red;*/
+    display: flex;
+}

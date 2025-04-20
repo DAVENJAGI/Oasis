@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="./styles/home.css">
+    <title>Listing</title>
+</head>
+<body>
+    <div id="whole_body">
+        <!--HEADER-->
+        <div id="header">
+            <div class="header_division" id="first_part_header">
+                <div id="site_text">Oasis</div>
+                <div id="menu_icon" class="tooltip-container">
+                    <i class='bx bx-menu'></i>                  
+                    <span class="tooltip-text">Menu</span>     
+                </div>
+            </div>
+            <div class="header_division" id="second_part_header">
+                <div id="search_bar_home">
+                    <input type="text" id="search_input_home" placeholder="Type your search here....">
+                    <div id="search_button_home"><i class="fa fa-search" aria-hidden="true" style="font-size: 20px;"></i></div>
+                </div>
+            </div>
+            <div class="header_division" id="third_part_header">
+                <div class="third_header_div_components tooltip-container" id="saved_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                    </svg>
+                    <span class="tooltip-text">Saved</span>
+                </div>
+                <div class="third_header_div_components tooltip-container" id="notifications_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5" />
+                    </svg>
+                    <span class="tooltip-text">Notifications</span>                                                
+                </div>
+                <div class="third_header_div_components tooltip-container" id="my_poperties_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1." stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
+                    </svg>
+                    <span class="tooltip-text">My Properties</span>                   
+                </div>
+                <div class="third_header_div_components tooltip-container" id="my_poperties_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.0" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                    </svg>                      
+                    <span class="tooltip-text">Messages</span>                   
+                </div>
+                <div class="third_header_div_components tooltip-container" id="user_profile_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                    <span class="tooltip-text">My Profile</span>                
+                </div>
+                <button class="third_header_div_components" id="list_button">List</button>
+            </div>
+        </div>
+
+        <!--BODY-->
+        <div id="body_div">
+            <div id="listing_info_divs">
+                <div id="listing_properties">
+                    <div id="listing_features">
+                        <div id="listing_image">
+                        </div>
+                        <div id="other_listing_image">
+                            <div class="other_images" id="img_1"></div>
+                            <div class="other_images" id="img_2"></div>
+                            <div class="other_images" id="img_3"></div>
+                            <div class="other_images" id="img_4"></div>
+                            <div class="other_images" id="img_5"></div>
+                        </div>
+
+                        <div id="listing_amenity_description">
+                            <div id="name_and_location">
+                                <div id="listing_name">Little Heaven Paradise</div>
+                                <div id="listing_location">
+                                    <div id="views_div">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                        </svg>                                          
+                                    </div>
+                                    <div id="location_map">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                                        </svg>                                          
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="amenities_div">
+                                <div class="amenity_1">
+                                    <div class="amenities_icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                        </svg>                                                                                  
+                                    </div>
+                                    <div class="amenities_text">Apartment</div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div id="listing_side_info">
+                        <div id="listing_price">
+                            <div id="listing_price_amount">
+                                <div id="amount_title">Ksh:</div>
+                                <div id="amount_data">4,500 per night</div>
+                            </div>
+                            <button id="listing_price_statistics">Price statistics</button>
+                            <button id="listing_price_request_callback">Request call back</button>
+                        </div>
+                        <div id="listing_agent">
+                            <div id="agent_top_detail">
+                                <div id="profile_photo_side">
+                                    <div id="profile_photo">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6 user-icon">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                        </svg>                                          
+                                    </div>
+                                </div>
+                                <div id="profile_details_side">
+                                    <div id="agent_name">John Doe</div>
+                                    <div id="agent_verified">
+                                        <div id="verified_img">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6 custom-icon">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                                            </svg>                                                                                        
+                                        </div>
+                                        <div id="verified_name">Verified ID</div>
+                                    </div>
+                                    <div id="agent_time_around">
+                                        <div id="message_icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6 chat-icon">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                                            </svg>                                              
+                                        </div>
+                                        <div id="message_txt">Typically replies within minutes</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="contact_info">
+                                <div id="call_icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 phone-icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                                    </svg>                                      
+                                </div>
+                                <div id="call_text">Show Contacts</div>
+                            </button>
+                            <button id="message_agent">
+                                <div id="message_agent_icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 phone-icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                                    </svg>
+                                </div>
+                                <div id="call_text">Message</div>
+                            </button>
+                        </div>
+                        <div id="listing_rating">
+                            <div id="rating_out_of">
+                                <div id="real_rating">0.0</div>
+                                <div id="out_of_rating">out of </div>
+                                <div id="maximum_rating">5</div>
+                            </div>
+                            <div id="rating_stars" class="star-rating__stars">
+                                <input class="star-rating__input" type="radio" name="rating" value="1" id="rating-1" />
+                                <label class="star-rating__label" for="rating-1" aria-label="One">
+                                  <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.75l-6 5.849 1.416 8.264L12 19.771l-7.416 4.092L6 15.599 0 9.75l8.332-1.732z"/></svg>
+                                </label>
+                            
+                                <input class="star-rating__input" type="radio" name="rating" value="2" id="rating-2" />
+                                <label class="star-rating__label" for="rating-2" aria-label="Two">
+                                  <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.75l-6 5.849 1.416 8.264L12 19.771l-7.416 4.092L6 15.599 0 9.75l8.332-1.732z"/></svg>
+                                </label>
+                            
+                                <input class="star-rating__input" type="radio" name="rating" value="3" id="rating-3" />
+                                <label class="star-rating__label" for="rating-3" aria-label="Three">
+                                  <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.75l-6 5.849 1.416 8.264L12 19.771l-7.416 4.092L6 15.599 0 9.75l8.332-1.732z"/></svg>
+                                </label>
+                            
+                                <input class="star-rating__input" type="radio" name="rating" value="4" id="rating-4" />
+                                <label class="star-rating__label" for="rating-4" aria-label="Four">
+                                  <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.75l-6 5.849 1.416 8.264L12 19.771l-7.416 4.092L6 15.599 0 9.75l8.332-1.732z"/></svg>
+                                </label>
+                            
+                                <input class="star-rating__input" type="radio" name="rating" value="5" id="rating-5" />
+                                <label class="star-rating__label" for="rating-5" aria-label="Five">
+                                  <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.75l-6 5.849 1.416 8.264L12 19.771l-7.416 4.092L6 15.599 0 9.75l8.332-1.732z"/></svg>
+                                </label>
+                              </div>
+                            
+                            <div id="rating_info">
+                                <div class="review_buttons" id="see_all_reviews">See all reviews</div>
+                                <div class="review_buttons" id="write_a_review">Write a review</div>
+                            </div>                            
+                        </div>
+
+                        <div  id="listing_disclaimer">
+                            <div class="dislaimer_buttons" id="availability_status">
+                                <div id="happy_icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
+                                    </svg>                                      
+                                </div>
+                                <div id="available_txt" class="inner_disclaimer_buttons">Available</div>
+                            </div>
+                            <div class="dislaimer_buttons" id="report_misuse">
+                                <div id="report_icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5M3 15V4.5" />
+                                    </svg>                                                                          
+                                </div>
+                                <div id="report_txt" class="inner_disclaimer_buttons">Report</div>
+                            </div>
+                        </div>
+
+                        <div id="listing_safety_precautions">
+                            <div id="precaution_header">Disclaimer Information</div>
+                            <div class="precautions_info">* We do not do due dilligence or investigate agents.</div>
+                            <div class="precautions_info">* Chat within the app to prevent users from being scammed off-platform.</div>
+                            <div class="precautions_info">* Avoid sharing bank account details directly.</div>
+                            <div class="precautions_info">* Beware of urgent “first come first serve” pressure tactics.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="more_similar_properties">
+
+                </div>
+            </div>
+        </div>
+
+
+        <!--FOOTER-->
+        <div id="footer">
+            <div id="footer_txt">Oasis listings</div>
+        </div>
+    </div>
+    
+</body>
+</html>
