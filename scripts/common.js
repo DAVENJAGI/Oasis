@@ -18,6 +18,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function showOverlay1() {
+        const overlayDiv1 = document.getElementById('overlay1');
+        const computedStyle = window.getComputedStyle(overlayDiv1);
+      
+        if (computedStyle.display === 'none') {
+          overlayDiv1.style.display = 'block';
+        }
+    }
+    function hideOverlay1() {
+        const overlayDiv1 = document.getElementById('overlay1');
+        const computedStyle = window.getComputedStyle(overlayDiv1);
+      
+        if (computedStyle.display === 'block') {
+          overlayDiv1.style.display = 'none';
+        }
+    }
+
     // SHOW AND HIDE CLOSE ICON AND MENU ICON
     function showCloseIcon() {
         const closeIconDiv = document.getElementById('top_close_menu_icon');
@@ -86,4 +103,100 @@ document.addEventListener('DOMContentLoaded', () => {
         hideMenuDropdown();
         hideCloseIcon();
     })
+
+
+    //SHOW AND HIDE PRICE FLUCTUATION GRAPH DIV
+    function showPriceChangeDiv() {
+        const priceChangeDiv = document.getElementById('price_statistics_div');
+        const computedStyle = window.getComputedStyle(priceChangeDiv);
+      
+        if (computedStyle.display === 'none') {
+            priceChangeDiv.style.display = 'block';
+        }
+    }
+    function hidePriceChangeDiv() {
+        const priceChangeDiv = document.getElementById('price_statistics_div');
+        const computedStyle = window.getComputedStyle(priceChangeDiv);
+      
+        if (computedStyle.display === 'block') {
+            priceChangeDiv.style.display = 'none';
+        }
+    }
+
+    const showPriceStatisticsButton = document.getElementById('listing_price_statistics');
+    showPriceStatisticsButton.addEventListener('click', () => {
+        showOverlay1();
+        showPriceChangeDiv();
+    })
+
+    const hidePriceStatisticsButton = document.getElementById('exit_price_button');
+    hidePriceStatisticsButton.addEventListener('click', () => {
+        hideOverlay1();
+        hidePriceChangeDiv();
+    })
+
+    //SHOW AND HIDE USER PROFILE DIV
+    function showUserProfileDiv() {
+        const userProfileDiv = document.getElementById('user_profile');
+        const computedStyle = window.getComputedStyle(userProfileDiv);
+      
+        if (computedStyle.display === 'none') {
+            userProfileDiv.style.display = 'block';
+        }
+    }
+    function hideUserProfileDiv() {
+        const userProfileDiv = document.getElementById('user_profile');
+        const computedStyle = window.getComputedStyle(userProfileDiv);
+      
+        if (computedStyle.display === 'block') {
+            userProfileDiv.style.display = 'none';
+        }
+    }
+
+    const showUserProfileButton = document.getElementById('user_profile_icon');
+    showUserProfileButton.addEventListener('click', () => {
+        showOverlay1();
+        showUserProfileDiv();
+    })
+
+    const hideUserProfileButton = document.getElementById('exit_user_profile_button');
+    hideUserProfileButton.addEventListener('click', () => {
+        hideOverlay1();
+        hideUserProfileDiv();
+    })
+
+
+
+    //SHOW AND HIDE LISTING LOCATION
+    function showListingLocationDiv() {
+        const listingLocationDiv = document.getElementById('listing_location_div');
+        const computedStyle = window.getComputedStyle(listingLocationDiv);
+      
+        if (computedStyle.display === 'none') {
+            listingLocationDiv.style.display = 'block';
+        }
+    }
+    function hideListingLocationDiv() {
+        const listingLocationDiv = document.getElementById('listing_location_div');
+        const computedStyle = window.getComputedStyle(listingLocationDiv);
+      
+        if (computedStyle.display === 'block') {
+            listingLocationDiv.style.display = 'none';
+        }
+    }
+
+    const showListingLocatinButton = document.getElementById('location_map');
+    showListingLocatinButton.addEventListener('click', () => {
+        showOverlay1();
+        showListingLocationDiv();
+    })
+
+    const hideListingLocatinButton = document.getElementById('exit_location_button');
+    hideListingLocatinButton.addEventListener('click', () => {
+        hideOverlay1();
+        hideListingLocationDiv();
+    })
+
+
+    
 })
