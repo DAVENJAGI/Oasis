@@ -88,115 +88,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const menuButton = document.getElementById('top_menu_icon');
-    menuButton.addEventListener('click', () => {
-        showOverlay();
-        showMenuDropdown();
-        hideMenuIcon();
-        showCloseIcon();
-    })
-
-    const closeMenuButton = document.getElementById('top_close_menu_icon');
-    closeMenuButton.addEventListener('click', () => {
-        showMenuIcon();
-        hideOverlay();
-        hideMenuDropdown();
-        hideCloseIcon();
-    })
-
-
-    //SHOW AND HIDE PRICE FLUCTUATION GRAPH DIV
-    function showPriceChangeDiv() {
-        const priceChangeDiv = document.getElementById('price_statistics_div');
-        const computedStyle = window.getComputedStyle(priceChangeDiv);
-      
-        if (computedStyle.display === 'none') {
-            priceChangeDiv.style.display = 'block';
-        }
-    }
-    function hidePriceChangeDiv() {
-        const priceChangeDiv = document.getElementById('price_statistics_div');
-        const computedStyle = window.getComputedStyle(priceChangeDiv);
-      
-        if (computedStyle.display === 'block') {
-            priceChangeDiv.style.display = 'none';
-        }
+    // CHANGE BACKGROUND OF VIDEOS
+    function changeBackgroundVideo(videoFileName) {
+        const video = document.getElementById('bg_video');
+        const source = document.getElementById('video_source');
+        source.src = `../images/videos/${videoFileName}`;
+        console.log(videoFileName);
+        video.load();
+        video.play();
     }
 
-    const showPriceStatisticsButton = document.getElementById('listing_price_statistics');
-    showPriceStatisticsButton.addEventListener('click', () => {
-        showOverlay1();
-        showPriceChangeDiv();
-    })
+    const videoList = [
+        "3773486-hd_1920_1080_30fps.mp4",
+        "3785192-hd_1920_1080_25fps.mp4",
+        "3769951-hd_1920_1080_25fps.mp4",
+        "4477613-hd_1920_1080_30fps.mp4",
+        "7578541-uhd_3840_2160_30fps.mp4",
+    ];
 
-    const hidePriceStatisticsButton = document.getElementById('exit_price_button');
-    hidePriceStatisticsButton.addEventListener('click', () => {
-        hideOverlay1();
-        hidePriceChangeDiv();
-    })
-
-    //SHOW AND HIDE USER PROFILE DIV
-    function showUserProfileDiv() {
-        const userProfileDiv = document.getElementById('user_profile');
-        const computedStyle = window.getComputedStyle(userProfileDiv);
-      
-        if (computedStyle.display === 'none') {
-            userProfileDiv.style.display = 'block';
-        }
+    function changeRandomVideo() {
+        const randomIndex = Math.floor(Math.random() * videoList.length);
+        changeBackgroundVideo(videoList[randomIndex]);
     }
-    function hideUserProfileDiv() {
-        const userProfileDiv = document.getElementById('user_profile');
-        const computedStyle = window.getComputedStyle(userProfileDiv);
-      
-        if (computedStyle.display === 'block') {
-            userProfileDiv.style.display = 'none';
+    const video = document.getElementById('bg_video');
+    video.addEventListener('ended', changeRandomVideo);
+    setInterval(changeRandomVideo, 30000);
+
+
+    
+    const customSelect = document.getElementById("apartment_select");
+    const selected = customSelect.querySelector(".selected");
+    const options = customSelect.querySelector(".options");
+    const optionItems = customSelect.querySelectorAll(".option");
+
+    customSelect.addEventListener("click", () => {
+        options.style.display = options.style.display === "block" ? "none" : "block";
+    });
+
+    optionItems.forEach(option => {
+        option.addEventListener("click", () => {
+        selected.textContent = option.textContent;
+        options.style.display = "none";
+        });
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!customSelect.contains(e.target)) {
+        options.style.display = "none";
         }
-    }
+    });
 
-    const showUserProfileButton = document.getElementById('user_profile_icon');
-    showUserProfileButton.addEventListener('click', () => {
-        showOverlay1();
-        showUserProfileDiv();
-    })
-
-    const hideUserProfileButton = document.getElementById('exit_user_profile_button');
-    hideUserProfileButton.addEventListener('click', () => {
-        hideOverlay1();
-        hideUserProfileDiv();
-    })
-
-
-
-    //SHOW AND HIDE LISTING LOCATION
-    function showListingLocationDiv() {
-        const listingLocationDiv = document.getElementById('listing_location_div');
-        const computedStyle = window.getComputedStyle(listingLocationDiv);
+    customSelect.addEventListener("click", () => {
+        customSelect.classList.toggle("open");
+    });
       
-        if (computedStyle.display === 'none') {
-            listingLocationDiv.style.display = 'block';
-        }
-    }
-    function hideListingLocationDiv() {
-        const listingLocationDiv = document.getElementById('listing_location_div');
-        const computedStyle = window.getComputedStyle(listingLocationDiv);
-      
-        if (computedStyle.display === 'block') {
-            listingLocationDiv.style.display = 'none';
-        }
-    }
-
-    const showListingLocatinButton = document.getElementById('location_map');
-    showListingLocatinButton.addEventListener('click', () => {
-        showOverlay1();
-        showListingLocationDiv();
-    })
-
-    const hideListingLocatinButton = document.getElementById('exit_location_button');
-    hideListingLocatinButton.addEventListener('click', () => {
-        hideOverlay1();
-        hideListingLocationDiv();
-    })
-
 
     
 })
