@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+
     //SHOW AND HIDE OVERLAY
     function showOverlay() {
         const overlayDiv = document.getElementById('overlay');
