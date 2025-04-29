@@ -1,5 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    window.addEventListener('scroll', function () {
+        console.log('Hello hello, I am being called');
+        const header = document.getElementById('header');
+        if (window.scrollY > 0) {
+          header.style.backgroundColor = '#87d0e999';
+        } else {
+          header.style.backgroundColor = 'transparent';
+        }
+    });
+
     //SHOW AND HIDE OVERLAY
     function showOverlay() {
         const overlayDiv = document.getElementById('overlay');
@@ -93,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const video = document.getElementById('bg_video');
         const source = document.getElementById('video_source');
         source.src = `../images/videos/${videoFileName}`;
-        console.log(videoFileName);
         video.load();
         video.play();
     }
@@ -141,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
     customSelect.addEventListener("click", () => {
         customSelect.classList.toggle("open");
     });
-      
 
     
 })

@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+
     const ctx = document.getElementById('price_fluctuations').getContext('2d');
 
     const priceFluctuationChart = new Chart(ctx, {
