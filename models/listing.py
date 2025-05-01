@@ -38,6 +38,7 @@ class Listings(BaseModel, Base):
         longitude = Column(Float, nullable=True)
         cover_image = Column(String(256), nullable=True)
         total_area = Column(String(256), nullable=True)
+        favorited_by = relationship("favoriteProperty", backref="listing")
         reviews = relationship("Review", backref="listing")
         amenities = relationship("Amenity", secondary="listing_amenity",
                                  backref="listing_amenities",
