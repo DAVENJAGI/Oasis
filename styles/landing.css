@@ -223,12 +223,13 @@ body {
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    height: 90%;
+    height: auto;
     width: auto;
     overflow: visible;
     margin: 3%;
     margin-top: 75vh;
     justify-content: space-evenly;
+
 }
 
 #listing_search_div{
