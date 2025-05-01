@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('location_div').textContent = 'Failed to load map.';
         });
     }
+    displayListingLocation();
 
 
     //SHOW AND HIDE OVERLAY
