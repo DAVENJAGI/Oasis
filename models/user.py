@@ -21,6 +21,8 @@ class User(BaseModel, Base):
         is_verified = Column(Boolean, default=False, nullable=False)
         places = relationship("Place", backref="user")
         reviews = relationship("Review", backref="user")
+        rating = relationship("userRating", backref="user")
+        favorite_listings = relationship("favoriteProperty", backref="user")
     else:
         email = ""
         password = ""
