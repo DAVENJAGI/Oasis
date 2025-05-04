@@ -18,11 +18,10 @@ class User(BaseModel, Base):
         last_name = Column(String(128), nullable=True)
         telephone_no = Column(String(64), nullable=False)
         sex = Column(String(64), nullable=False)
-        is_verified = Column(Boolean, default=False, nullable=False)
-        places = relationship("Place", backref="user")
+        is_verified = Column(Boolean, default=False, nullable=False) 
         reviews = relationship("Review", backref="user")
-        rating = relationship("userRating", backref="user")
-        favorite_listings = relationship("favoriteProperty", backref="user")
+        ratings = relationship("userRating", backref="user")
+        favorite_listing = relationship("favoriteListing", backref="user")
     else:
         email = ""
         password = ""
