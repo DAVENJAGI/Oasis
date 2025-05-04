@@ -11,7 +11,7 @@ from sqlalchemy.orm import relationship
 
 class favoriteListing(BaseModel, Base):
     """Representation user's favorite properties"""
-    if models.storage_t == "db":
+    if models.storage_type == "db":
         __tablename__ = 'favorite_listings'
         listing_id = Column(String(64), ForeignKey("listings.id"), nullable=False)
         user_id = Column(String(64), ForeignKey("users.id"), nullable=False)
