@@ -12,13 +12,14 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from models.favorite_listing import favoriteListing
+from models.user_rating import userRating
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
-           "Listing": Listing, "favoriteListing": favoriteListing, "Review": Review, "State": State, "User": User}
+           "Listing": Listing, "favoriteListing": favoriteListing, "userRating": userRating, "Review": Review, "State": State, "User": User}
 
 
 class DBStorage:
