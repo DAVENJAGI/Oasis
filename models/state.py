@@ -1,34 +1,39 @@
 #!/usr/bin/python3
-""" holds class State"""
+""" holds class county"""
 import models
 from models.base_model import BaseModel, Base
-from models.city import City
+from models.town import Town
 from os import getenv
 import sqlalchemy
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
-    """Representation of state """
-    if models.storage_t == "db":
+    """Representation of county"""
+    
+    if models.storage_type == "db":
         __tablename__ = 'states'
-        name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state")
+        name = Column(String(128), unique=True, nullable=False)
+        wards = relationship("Town", backref="states")
+        constituencies = relationship("City", backref="county")
+        county_code = Column(String(64), unique=True, nullable=False)
+ 
     else:
         name = ""
+        county_code = ""
 
     def __init__(self, *args, **kwargs):
         """initializes state"""
         super().__init__(*args, **kwargs)
 
-    if models.storage_t != "db":
+    if models.storage_type != "db":
         @property
-        def cities(self):
+        def towns(self):
             """getter for list of city instances related to the state"""
-            city_list = []
-            all_cities = models.storage.all(City)
-            for city in all_cities.values():
-                if city.state_id == self.id:
-                    city_list.append(city)
-            return city_list
+            town_list = []
+            all_towns = models.storage.all(Town)
+            for town in all_towns.values():
+                if town.county_id == self.id:
+                    town_list.append(town)
+            return town_list
