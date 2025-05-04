@@ -7,6 +7,7 @@ from flask import jsonify, abort, request, make_response
 from models import storage
 from models.user import User
 from flasgger.utils import swag_from
+from werkzeug.security import generate_password_hash
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
@@ -49,11 +50,23 @@ def create_obj_user():
     """ create new instance """
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
+    
+    data = request.get_json()
+
     if 'email' not in request.get_json():
         return make_response(jsonify({"error": "Missing email"}), 400)
     if 'password'not in request.get_json():
         return make_response(jsonify({"error": "Missing password"}), 400)
+    if 'telephone_no' not in request.get_json():
+        return make_response(jsonify({"error": "Missing telephone_No"}), 400)
+    if 'sex' not in request.get_json():
+        return make_response(jsonify({"error": "Missing user sex"}), 400)
+    
     js = request.get_json()
+
+    hashed_password = generate_password_hash(js['password'])
+    js['password'] = hashed_password
+
     obj = User(**js)
     obj.save()
     return (jsonify(obj.to_dict()), 201)
