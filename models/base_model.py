@@ -41,7 +41,14 @@ class BaseModel:
             else:
                 self.updated_at = datetime.utcnow()
             if kwargs.get("id", None) is None:
-                self.id = str(uuid.uuid4())
+#                self.id = str(uuid.uuid4())
+                uid = str(uuid.uuid4())
+                if self.__class__.__name__ == "User":
+                    self.id = f"usr_{uid}"
+                elif self.__class__.__name__ == "State":
+                    self.id = f"cty_{uid}"
+                else:
+                    self.id = uid
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
@@ -68,6 +75,8 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+        if "password" in new_dict:
+            del new_dict["password"]
         return new_dict
 
     def delete(self):
