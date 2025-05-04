@@ -24,7 +24,8 @@ def get_user(user_id):
     """ get user by id"""
     user = storage.get(User, user_id)
     if user is None:
-        abort(404)
+        message = f"user with id {user_id} not found"
+        return make_response(jsonify({"Message": message}), 404)
     return jsonify(user.to_dict())
 
 
