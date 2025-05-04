@@ -10,7 +10,7 @@ from sqlalchemy.orm import relationship
 
 class Agent(BaseModel, Base):
     """Representation of an agent"""
-    if models.storage_t == 'db':
+    if models.storage_type == 'db':
         __tablename__ = 'agents'
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
