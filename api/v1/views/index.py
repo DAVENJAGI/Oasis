@@ -6,9 +6,10 @@ from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
 from models.city import City
-from models.place import Place
+from models.listing import Listing
 from models.review import Review
 from models.state import State
+from models.town import Town
 from models.user import User
 import json
 
@@ -25,7 +26,7 @@ def no_of_objects():
     data = {
             "amenities": storage.count(Amenity),
             "cities": storage.count(City),
-            "Places": storage.count(Place),
+            "Places": storage.count(Listing),
             "reviews": storage.count(Review),
             "states": storage.count(State),
             "users": storage.count(User)
