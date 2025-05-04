@@ -4,10 +4,11 @@ import models
 from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
-from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table, enum
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
+from sqlalchemy.types import Enum
 
-if models.storage_t == 'db':
+if models.storage_type == 'db':
     place_amenity = Table('listing_amenity', Base.metadata,
                           Column('listing_id', String(60),
                                  ForeignKey('listings.id', onupdate='CASCADE',
@@ -19,9 +20,9 @@ if models.storage_t == 'db':
                                  primary_key=True))
 
 
-class Listings(BaseModel, Base):
+class Listing(BaseModel, Base):
     """Representation of apartments """
-    if models.storage_t == 'db':
+    if models.storage_type == 'db':
         __tablename__ = 'listings'
         city_id = Column(String(64), ForeignKey('cities.id'), nullable=False)
         owner_id = Column(String(64), ForeignKey('users.id'), nullable=False)
@@ -32,8 +33,8 @@ class Listings(BaseModel, Base):
         max_guest = Column(Integer, nullable=False, default=0)
         price_by_night = Column(Integer, nullable=False, default=0)
         address = Column(String(64), nullable=False)
-        rental_status = Column(String(64), enum("Available", "Occupied","Pending", name="rental_status_enum"))
-        property_type = Column(String(64), enum("Condo", "Studio Apartment", "Apartments", "Bungalow", "Maisonette", "Townhouse", "Cottage", "Cabin", "Single Room", name="property_type_enum"), nullable=False)
+        rental_status = Column(String(64), Enum("Available", "Occupied","Pending", name="rental_status_enum"))
+        property_type = Column(String(64), Enum("Condo", "Studio Apartment", "Apartments", "Bungalow", "Maisonette", "Townhouse", "Cottage", "Cabin", "Single Room", name="property_type_enum"), nullable=False)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
         cover_image = Column(String(256), nullable=True)
@@ -64,7 +65,7 @@ class Listings(BaseModel, Base):
         """initializes Place"""
         super().__init__(*args, **kwargs)
 
-    if models.storage_t != 'db':
+    if models.storage_type != 'db':
         @property
         def reviews(self):
             """getter attribute returns the list of Review instances"""
