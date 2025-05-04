@@ -13,9 +13,9 @@ class Town(BaseModel, Base):
     if models.storage_type == "db":
         __tablename__ = 'towns'
         state_id = Column(String(60), ForeignKey('states.id', ondelete="CASCADE"), nullable=False)
-        city_id = Column(String(60), ForeignKey('constituencies.id'), nullable=False) 
+        city_id = Column(String(60), ForeignKey('cities.id'), nullable=False) 
         town_name = Column(String(128), nullable=False)
-        listing = relationship("Listing", backref="town")
+        listings = relationship("Listing", backref="town")
     else:
         state_id = ""
         city_id = ""
