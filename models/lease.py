@@ -11,7 +11,7 @@ from sqlalchemy.orm import relationship
 
 class Lease(BaseModel, Base):
     """Representation property lease"""
-    if models.storage_t == "db":
+    if models.storage_type == "db":
         __tablename__ = 'lease_agreements'
         listing_id = Column(String(64), ForeignKey("listings.id"), nullable=False)
         lessee_id = Column(String(64), ForeignKey("users.id"), nullable=False)
