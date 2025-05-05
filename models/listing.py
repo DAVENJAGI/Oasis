@@ -25,7 +25,7 @@ class Listing(BaseModel, Base):
     if models.storage_type == 'db':
         __tablename__ = 'listings'
         town_id = Column(String(64), ForeignKey('towns.id'), nullable=False)
-        owner_id = Column(String(64), ForeignKey('users.id'), nullable=False)
+        agent_id = Column(String(64), ForeignKey('agents.id'), nullable=False)
         property_name = Column(String(128), nullable=False)
         description = Column(String(1024), nullable=True)
         number_rooms = Column(Integer, nullable=False, default=0)
@@ -46,7 +46,7 @@ class Listing(BaseModel, Base):
                                  viewonly=False)
     else:
         city_id = ""
-        owner_id = ""
+        agent_id = ""
         name = ""
         description = ""
         number_rooms = 0
