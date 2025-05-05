@@ -46,7 +46,25 @@ class BaseModel:
                 if self.__class__.__name__ == "User":
                     self.id = f"usr_{uid}"
                 elif self.__class__.__name__ == "State":
+                    self.id = f"stat_{uid}"
+                elif self.__class__.__name__ == "City":
                     self.id = f"cty_{uid}"
+                elif self.__class__.__name__ == "Agent":
+                    self.id = f"agt_{uid}"
+                elif self.__class__.__name__ == "Listing":
+                    self.id = f"lst_{uid}"
+                elif self.__class__.__name__ == "Amenity":
+                    self.id = f"amn_{uid}"
+                elif self.__class__.__name__ == "Lease":
+                    self.id = f"lea_{uid}"
+                elif self.__class__.__name__ == "Comment":
+                    self.id = f"com_{uid}"
+                elif self.__class__.__name__ == "Ticket":
+                    self.id = f"tic_{uid}"
+                elif self.__class__.__name__ == "userRating":
+                    self.id = f"usr_rat_{uid}"
+                elif self.__class__.__name__ == "agentRating":
+                    self.id = f"agt_rat_{uid}"
                 else:
                     self.id = uid
         else:
