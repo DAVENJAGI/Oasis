@@ -11,15 +11,19 @@ from models.listing import Listing
 from models.review import Review
 from models.state import State
 from models.user import User
+from models.agent import Agent
 from models.favorite_listing import favoriteListing
 from models.user_rating import userRating
+from models.agent_rating import agentRating
+from models.ticket import Ticket
+from models.admin import Admin
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
-           "Listing": Listing, "favoriteListing": favoriteListing, "userRating": userRating, "Review": Review, "State": State, "User": User}
+           "agentRating": agentRating, "Listing": Listing, "favoriteListing": favoriteListing, "Agent": Agent, "userRating": userRating, "Ticket": Ticket, "Review": Review, "State": State, "Admin": Admin, "User": User}
 
 
 class DBStorage:
