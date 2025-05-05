@@ -21,6 +21,7 @@ class User(BaseModel, Base):
         is_verified = Column(Boolean, default=False, nullable=False) 
         reviews = relationship("Review", backref="user")
         ratings = relationship("userRating", backref="user")
+        tickets = relationship("Ticket", backref="user")
         favorite_listing = relationship("favoriteListing", backref="user")
     else:
         email = ""
