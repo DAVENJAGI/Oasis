@@ -20,8 +20,8 @@ class Agent(BaseModel, Base):
         sex = Column(String(64), nullable=False)
         bio = Column(String(1024), nullable=False)
         is_verified = Column(Boolean, default=False, nullable=False)
-        places = relationship("Listing", backref="agent")
-        ratings = relationship("agentReview", backref="agent")
+        listings = relationship("Listing", backref="agent")
+        ratings = relationship("agentRating", backref="agent")
     else:
         email = ""
         password = ""
