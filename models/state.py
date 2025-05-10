@@ -17,11 +17,12 @@ class State(BaseModel, Base):
         name = Column(String(128), unique=True, nullable=False)
         wards = relationship("Town", backref="states")
         constituencies = relationship("City", backref="county")
-        county_code = Column(String(64), unique=True, nullable=False)
+        country_id = Column(String(64), ForeignKey('countries.id'), nullable=False)
  
     else:
         name = ""
         county_code = ""
+        country_id = ""
 
     def __init__(self, *args, **kwargs):
         """initializes state"""
