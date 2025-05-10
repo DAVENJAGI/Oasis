@@ -5,7 +5,7 @@ from models.base_model import BaseModel, Base
 from models.city import City
 from os import getenv
 import sqlalchemy
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 
 
@@ -14,6 +14,7 @@ class Country(BaseModel, Base):
     if models.storage_type == "db":
         __tablename__ = 'countries'
         name = Column(String(128), nullable=False)
+        country_code = Column(Integer, nullable=False)
         states = relationship("State", backref="country")
     else:
         name = ""
