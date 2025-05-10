@@ -23,6 +23,7 @@ class User(BaseModel, Base):
         ratings = relationship("userRating", backref="user")
         tickets = relationship("Ticket", backref="user")
         favorite_listing = relationship("favoriteListing", backref="user")
+        leases = relationship("Lease", backref="user")
     else:
         email = ""
         password = ""
