@@ -65,6 +65,12 @@ class BaseModel:
                     self.id = f"usr_rat_{uid}"
                 elif self.__class__.__name__ == "agentRating":
                     self.id = f"agt_rat_{uid}"
+                elif self.__class__.__name__ == "Country":
+                    self.id = f"ctry_{uid}"
+                elif self.__class__.__name__ == "listingImage":
+                    self.id = f"img_{uid}"
+                elif self.__class__.__name__ == "Admin":
+                    self.id = f"adm_{uid}"
                 else:
                     self.id = uid
         else:
