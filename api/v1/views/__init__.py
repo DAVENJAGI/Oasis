@@ -10,18 +10,28 @@ ward_views = Blueprint('ward_views', __name__, url_prefix='/api/v1')
 listing_views = Blueprint('listing_views', __name__, url_prefix='/api/v1')
 user_views = Blueprint('user_views', __name__, url_prefix='/api/v1')
 agent_views = Blueprint('agent_views', __name__, url_prefix='/api/v1')
-agent_views = Blueprint('agent_views', __name__, url_prefix='/api/v1')
 favorite_views = Blueprint('favorite_views', __name__, url_prefix='/api/v1')
 amenity_views = Blueprint('amenity_views', __name__, url_prefix='/api/v1')
-
+location_views = Blueprint('location_views', __name__, url_prefix='/api/v1')
+ticket_views = Blueprint('ticket_views', __name__, url_prefix='/api/v1')
+admin_views = Blueprint('admin_views', __name__, url_prefix='/api/v1')
+lease_views = Blueprint('lease_views', __name__, url_prefix='/api/v1')
+review_views = Blueprint('review_views', __name__, url_prefix='/api/v1')
+report_views = Blueprint('report_views', __name__, url_prefix='/api/v1')
 
 
 from api.v1.views.index import *
 from api.v1.views.states import *
+from api.v1.views.countries import *
+from api.v1.views.reviews import *
+from api.v1.views.reports import *
+from api.v1.views.admins import *
+from api.v1.views.leases import *
 from api.v1.views.cities import *
 from api.v1.views.amenities import *
 from api.v1.views.users import *
 from api.v1.views.agents import *
-from api.v1.views.places import *
+from api.v1.views.listings import *
+from api.v1.views.tickets import *
 from api.v1.views.places_reviews import *
 from api.v1.views.places_amenities import *
