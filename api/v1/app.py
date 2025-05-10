@@ -4,7 +4,10 @@
 from flask import Flask
 from flask_cors import CORS
 from api.v1.views import app_views, state_views, city_views
-from api.v1.views import amenity_views, user_views
+from api.v1.views import listing_views, agent_views
+from api.v1.views import amenity_views, user_views, location_views
+from api.v1.views import ticket_views, admin_views, lease_views
+from api.v1.views import review_views, report_views
 from models import storage
 import os
 from flask import jsonify
@@ -15,6 +18,15 @@ app.register_blueprint(state_views)
 app.register_blueprint(city_views)
 app.register_blueprint(amenity_views)
 app.register_blueprint(user_views)
+app.register_blueprint(listing_views)
+app.register_blueprint(agent_views)
+app.register_blueprint(location_views)
+app.register_blueprint(ticket_views)
+app.register_blueprint(admin_views)
+app.register_blueprint(lease_views)
+app.register_blueprint(review_views)
+app.register_blueprint(report_views)
+
 cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
