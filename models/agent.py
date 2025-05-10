@@ -22,6 +22,8 @@ class Agent(BaseModel, Base):
         is_verified = Column(Boolean, default=False, nullable=False)
         listings = relationship("Listing", backref="agent")
         ratings = relationship("agentRating", backref="agent")
+        leases =  relationship("Lease", backref="agent")
+        tickets = relationship("Ticket", backref="agent")
     else:
         email = ""
         password = ""
