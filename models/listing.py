@@ -9,7 +9,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.types import Enum
 
 if models.storage_type == 'db':
-    place_amenity = Table('listing_amenity', Base.metadata,
+    listing_amenity = Table('listing_amenity', Base.metadata,
                           Column('listing_id', String(60),
                                  ForeignKey('listings.id', onupdate='CASCADE',
                                             ondelete='CASCADE'),
@@ -19,6 +19,10 @@ if models.storage_type == 'db':
                                             ondelete='CASCADE'),
                                  primary_key=True))
 
+rental_status_enum = Enum("Available", "Occupied", "Pending", name="rental_status_enum")
+property_type_enum = Enum("Apartment", "Bungalow", "Maisonette", "Bedsitter", "Single Room",
+                       "Studio", "Villa", "Townhouse", "Mansion", "Duplex", "Penthouse", 
+                       "Office", "Shop", "Warehouse", name="property_type_enum")
 
 class Listing(BaseModel, Base):
     """Representation of apartments """
@@ -33,8 +37,8 @@ class Listing(BaseModel, Base):
         max_guest = Column(Integer, nullable=False, default=0)
         price_by_night = Column(Integer, nullable=False, default=0)
         address = Column(String(64), nullable=False)
-        rental_status = Column(String(64), Enum("Available", "Occupied","Pending", name="rental_status_enum"))
-        property_type = Column(String(64), Enum("Condo", "Studio Apartment", "Apartments", "Bungalow", "Maisonette", "Townhouse", "Cottage", "Cabin", "Single Room", name="property_type_enum"), nullable=False)
+        rental_status = Column(rental_status_enum, default="Available")
+        property_type = Column(property_type_enum, default="Apartment")
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
         cover_image = Column(String(256), nullable=True)
@@ -44,6 +48,8 @@ class Listing(BaseModel, Base):
         amenities = relationship("Amenity", secondary="listing_amenity",
                                  backref="listing_amenities",
                                  viewonly=False)
+        images = relationship("listingImage", back_populates="listing", cascade="all, delete-orphan")
+        reports = relationship("Report", back_populates="listing")
     else:
         city_id = ""
         agent_id = ""
