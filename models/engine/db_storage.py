@@ -21,7 +21,6 @@ from models.lease import Lease
 from models.image import listingImage
 from models.ticket import Ticket
 from models.admin import Admin
-from models.listing_amenities import listingAmenity
 from models.report import Report
 from os import getenv
 import sqlalchemy
@@ -29,7 +28,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
-           "agentRating": agentRating, "listingImage": listingImage, "listingAmenity": listingAmenity, "Lease": Lease, "Report": Report, "Town": Town, "Country": Country, "Listing": Listing, "favoriteListing": favoriteListing, "Agent": Agent, "userRating": userRating, "Ticket": Ticket, "Review": Review, "State": State, "Admin": Admin, "User": User}
+           "agentRating": agentRating, "listingImage": listingImage, "Lease": Lease, "Report": Report, "Town": Town, "Country": Country, "Listing": Listing, "favoriteListing": favoriteListing, "Agent": Agent, "userRating": userRating, "Ticket": Ticket, "Review": Review, "State": State, "Admin": Admin, "User": User}
 
 
 class DBStorage:
