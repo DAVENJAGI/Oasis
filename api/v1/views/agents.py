@@ -159,4 +159,3 @@ def get_all_agent_tickets(agent_id):
     tickets = [obj.to_dict() for obj in agent.tickets]
     return jsonify(tickets)
 
-
