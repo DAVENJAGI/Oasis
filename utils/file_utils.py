@@ -12,4 +12,3 @@ def save_image(file, listing_id):
     filepath = os.path.join(UPLOAD_FOLDER, filename)
     file.save(filepath)
     return filepath
-
