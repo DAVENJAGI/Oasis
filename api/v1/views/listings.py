@@ -6,7 +6,6 @@ from api.v1.views import listing_views
 from flask import jsonify, abort, request, make_response
 from models import storage
 from models.listing import Listing
-from models.listing_amenities import listingAmenity
 from models.town import Town
 from models.agent import Agent
 from models.user import User
