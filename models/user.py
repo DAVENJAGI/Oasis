@@ -4,7 +4,7 @@ import models
 from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
-from sqlalchemy import Column, String, Boolean
+from sqlalchemy import Column, String, Boolean, Float
 from sqlalchemy.orm import relationship
 
 
@@ -18,7 +18,9 @@ class User(BaseModel, Base):
         last_name = Column(String(128), nullable=True)
         telephone_no = Column(String(64), nullable=False)
         sex = Column(String(64), nullable=False)
-        is_verified = Column(Boolean, default=False, nullable=False) 
+        is_verified = Column(Boolean, default=False, nullable=False)
+        user_latitude = Column(Float, nullable=False)
+        user_longitude = Column(Float, nullable=False)
         reviews = relationship("Review", backref="user")
         ratings = relationship("userRating", backref="user")
         tickets = relationship("Ticket", backref="user")
