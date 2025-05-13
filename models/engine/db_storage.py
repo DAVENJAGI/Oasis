@@ -18,8 +18,9 @@ from models.favorite_listing import favoriteListing
 from models.user_rating import userRating
 from models.agent_rating import agentRating
 from models.lease import Lease
-from models.image import listingImage
+from models.listing_image import listingImage
 from models.ticket import Ticket
+from models.booking import Booking
 from models.admin import Admin
 from models.report import Report
 from os import getenv
