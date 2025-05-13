@@ -14,9 +14,10 @@ from models.state import State
 from models.review import Review
 from models.booking import Booking
 from models.report import Report
+from models.tag import Tag
 from models.listing_image import listingImage
 from flasgger.utils import swag_from
-from utils.file_utils import save_image
+from utils.file_utils import save_image, save_cover_image
 
 @listing_views.route('/town/<string:town_id>/listings',
                  methods=['GET'], strict_slashes=False)
@@ -60,21 +61,32 @@ def del_listing(listing_id):
 def create_obj_listing(town_id):
     """ create new instance """
     town = storage.get(Town, town_id)
-    if Town is None:
+    if town is None:
         return make_response(jsonify({"error": "Town not found"}), 404)
-    if not request.get_json():
+    if not request.form.to_dict():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if 'agent_id' not in request.get_json():
+    if 'agent_id' not in request.form.to_dict():
         return make_response(jsonify({"error": "Missing agent_id"}), 400)
-    if 'property_name' not in request.get_json():
+    if 'property_name' not in request.form.to_dict():
         return make_response(jsonify({"error": "Missing property name"}), 400)
-    kwargs = request.get_json()
+
+    kwargs = request.form.to_dict()
     kwargs['town_id'] = town_id
     agent = storage.get(Agent, kwargs['agent_id'])
     if agent is None:
-        abort(404)
+        return make_respomse(jsonify({"error": "Agent not found."}), 404)
+
     obj = Listing(**kwargs)
     obj.save()
+
+    if "cover_image" in request.files:
+        file = request.files['cover_image']
+        if file.filename == '':
+            return jsonify({"error": "No selected file"}), 400
+        filepath = save_cover_image(file, str(obj.id))
+        obj.cover_image = filepath
+        obj.save()
+
     return (jsonify(obj.to_dict()), 201)
 
 
@@ -83,14 +95,23 @@ def create_obj_listing(town_id):
 @swag_from('documentation/listings/put.yml', methods=['PUT'])
 def post_listing(listing_id):
     """ update by id """
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    if not request.form and 'cover_image' not in request.files:
+        return make_response(jsonify({"error": "Missing form data or file"}), 400)
     obj = storage.get(Listing, listing_id)
     if obj is None:
-        abort(404)
-    for key, value in request.get_json().items():
+        return make_response(jsonify({"error": "Listing not found"}), 404)
+    for key, value in request.form.to_dict().items():
         if key not in ['id', 'user_id', 'town_id', 'created_at', 'updated']:
             setattr(obj, key, value)
+        
+    if "cover_image" in request.files:
+        file = request.files['cover_image']
+        if file.filename == '':
+            return jsonify({"error": "No selected file"}), 400
+        filepath = save_cover_image(file, obj.id)
+        obj.cover_image = filepath
+    
+    obj.save()
     storage.save()
     return jsonify(obj.to_dict())
 
@@ -168,7 +189,7 @@ def upload_listing_image(listing_id):
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
 
-    filepath = save_image(file, listing_id)  # You must have a defined function to handle saving
+    filepath = save_image(file, listing_id)
 
     listing_image = listingImage(listing_id=listing_id, file_path=filepath)
     storage.new(listing_image)
@@ -352,4 +373,61 @@ def get_a_listing_booking(listing_id, booking_id):
     storage.save()
     message = f"Booking with bookingId: {booking.id} deleted successfully."
     return make_response(jsonify({"Message": message}), 200)
+
+
+@listing_views.route('/listing/<string:listing_id>/tags/', methods=['POST'],
+                 strict_slashes=False)
+@swag_from('documentation/tags/post.yml', methods=['POST'])
+def create_obj_tags(listing_id):
+    """ create new listing tag instance """
+    if not request.get_json():
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+
+    data = request.get_json()
+    listing = storage.get(Listing, listing_id)
+    if not listing:
+        return make_response(jsonify({"error": "Listing not found"}), 404)
+
+    if 'tag_id' not in request.get_json():
+        return make_response(jsonify({"error": "Missing tag id."}), 400)
+
+    tag = storage.get(Tag, data['tag_id'])
+    if not tag:
+        return make_response(jsonify({"error": "Tag not found"}), 404)
+
+    listing.tags.append(tag)
+    storage.save()
+    return (jsonify(tag.to_dict()), 201)
+
+@listing_views.route('/listing/<string:listing_id>/tags',
+                 methods=['GET'], strict_slashes=False)
+@swag_from('documentation/listings/get.yml', methods=['GET'])
+def get_all_listing_tags(listing_id):
+    """ listing tags """
+    listing = storage.get(Listing, listing_id)
+    if listing is None:
+        return make_response(jsonify({"error": "Listing not found"}), 404)
+    tags = [obj.to_dict() for obj in listing.tags]
+    return jsonify(tags)
+
+
+@listing_views.route('/listing/<string:listing_id>/tag/<string:tag_id>', methods=['DELETE'], strict_slashes=False)
+def delete_listing_tag(listing_id, tag_id):
+    """Remove a tag from a listing"""
+    listing = storage.get(Listing, listing_id)
+    if not listing:
+        return make_response(jsonify({"error": "Listing not found"}), 404)
+
+    tag = storage.get(Tag, tag_id)
+    if not tag:
+        return make_response(jsonify({"error": "Tag not found"}), 404)
+
+    if tag not in listing.tags:
+        return make_response(jsonify({"error": "Tag not associated with this listing"}), 404)
+
+    listing.tags.remove(tag)
+    storage.save()
+
+    message = f"Tag {tag.name} removed from {listing.property_name} successfully."
+    return make_response(jsonify({"Message": message}), 202)
 
