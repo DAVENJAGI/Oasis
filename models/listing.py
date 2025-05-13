@@ -51,6 +51,7 @@ class Listing(BaseModel, Base):
                                  viewonly=False)
         images = relationship("listingImage", back_populates="listing", cascade="all, delete-orphan")
         reports = relationship("Report", back_populates="listing")
+        bookings = relationship('Booking', back_populates='listing', cascade="all, delete-orphan")
     else:
         city_id = ""
         agent_id = ""
