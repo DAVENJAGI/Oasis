@@ -19,7 +19,7 @@ lease_views = Blueprint('lease_views', __name__, url_prefix='/api/v1')
 review_views = Blueprint('review_views', __name__, url_prefix='/api/v1')
 report_views = Blueprint('report_views', __name__, url_prefix='/api/v1')
 recommendation_views = Blueprint('recommendation_views', __name__, url_prefix='/api/v1')
-
+tag_views = Blueprint('tag_views', __name__, url_prefix='/api/v1')
 
 
 from api.v1.views.index import *
@@ -38,3 +38,4 @@ from api.v1.views.tickets import *
 from api.v1.views.places_reviews import *
 from api.v1.views.places_amenities import *
 from api.v1.views.recommendation import *
+from api.v1.views.tags import *
