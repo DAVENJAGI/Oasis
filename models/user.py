@@ -17,6 +17,7 @@ class User(BaseModel, Base):
         first_name = Column(String(128), nullable=True)
         last_name = Column(String(128), nullable=True)
         telephone_no = Column(String(64), nullable=False)
+        secondary_telephone_no = Column(String(64), nullable=True)
         sex = Column(String(64), nullable=False)
         is_verified = Column(Boolean, default=False, nullable=False)
         user_latitude = Column(Float, nullable=False)
@@ -26,12 +27,14 @@ class User(BaseModel, Base):
         tickets = relationship("Ticket", backref="user")
         favorite_listing = relationship("favoriteListing", backref="user")
         leases = relationship("Lease", backref="user")
+        bookings = relationship('Booking', back_populates='user', cascade="all, delete-orphan")
     else:
         email = ""
         password = ""
         first_name = ""
         last_name = ""
         telephone_no = ""
+        secondary_telephone_no = ""
         sex = ""
         is_verified = False
 
