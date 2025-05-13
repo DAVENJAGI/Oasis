@@ -19,6 +19,12 @@ if models.storage_type == 'db':
                                             ondelete='CASCADE'),
                                  primary_key=True))
 
+    listing_tag = Table('listing_tags', Base.metadata, 
+                        Column('listing_id', String(60), ForeignKey('listings.id'), primary_key=True),
+                        Column('tag_id', String(60), ForeignKey('tags.id'), primary_key=True)
+                        )
+
+
 rental_status_enum = Enum("Available", "Occupied", "Pending", name="rental_status_enum")
 property_type_enum = Enum("Apartment", "Bungalow", "Maisonette", "Bedsitter", "Single Room",
                        "Studio", "Villa", "Townhouse", "Mansion", "Duplex", "Penthouse", 
@@ -52,6 +58,8 @@ class Listing(BaseModel, Base):
         images = relationship("listingImage", back_populates="listing", cascade="all, delete-orphan")
         reports = relationship("Report", back_populates="listing")
         bookings = relationship('Booking', back_populates='listing', cascade="all, delete-orphan")
+        tags = relationship('Tag', secondary='listing_tags', back_populates='listings')
+
     else:
         city_id = ""
         agent_id = ""
