@@ -71,6 +71,10 @@ class BaseModel:
                     self.id = f"img_{uid}"
                 elif self.__class__.__name__ == "Admin":
                     self.id = f"adm_{uid}"
+                elif self.__class__.__name__ == "Tag":
+                    self.id = f"tag_{uid}"
+                elif self.__class__.__name__ == "Booking":
+                    self.id = f"book_{uid}"
                 else:
                     self.id = uid
         else:
