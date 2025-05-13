@@ -12,7 +12,9 @@ from models.user import User
 from models.amenity import Amenity
 from models.state import State
 from models.review import Review
+from models.booking import Booking
 from models.report import Report
+from models.listing_image import listingImage
 from flasgger.utils import swag_from
 from utils.file_utils import save_image
 
@@ -152,17 +154,43 @@ def search_listings_by_id():
 
     return jsonify(listings)
 
-@listing_views.route('/listings/<listing_id>/images', methods=['POST'])
+@listing_views.route('/listings/<string:listing_id>/images', methods=['POST'])
 def upload_listing_image(listing_id):
+    """Upload an image for a listing"""
+    listing = storage.get(Listing, listing_id)
+    if not listing:
+        return jsonify({"error": "Listing not found"}), 404
+
+    if 'image' not in request.files:
+        return jsonify({"error": "No image part in the request"}), 400
+
     file = request.files['image']
-    filepath = save_image(file, listing_id)
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    filepath = save_image(file, listing_id)  # You must have a defined function to handle saving
 
     listing_image = listingImage(listing_id=listing_id, file_path=filepath)
     storage.new(listing_image)
     storage.save()
 
-    return jsonify({"message": "Image uploaded successfully", "file_path": filepath}), 201
+    return jsonify({
+        "message": "Image uploaded successfully",
+        "file_path": filepath,
+        "listing_id": listing_id
+    }), 201
 
+@listing_views.route('/listing/<string:listing_id>/images',
+                 methods=['GET'], strict_slashes=False)
+@swag_from('documentation/listings/get.yml', methods=['GET'])
+def get_all_listing_images(listing_id):
+    """ listing images """
+    listing = storage.get(Listing, listing_id)
+    if listing is None:
+        return make_response(jsonify({"error": "Listing not found"}), 404)
+    images = [obj.to_dict() for obj in listing.images]
+    return jsonify(images)
+                             
 
 @listing_views.route('/listings/<string:listing_id>/review/', methods=['POST'],
                  strict_slashes=False)
@@ -271,4 +299,57 @@ def get_all_listing_amenities(listing_id):
         return make_response(jsonify({"error": "Listing not found"}), 404)
     amenities = [obj.to_dict() for obj in listing.amenities]
     return jsonify(amenities)
+
+
+@listing_views.route('/listing/<string:listing_id>/book/', methods=['POST'],
+                 strict_slashes=False)
+@swag_from('documentation/bookings/post.yml', methods=['POST'])
+def create_obj_bookings(listing_id):
+    """ create new listing booking instance """
+    if not request.get_json():
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+
+    js = request.get_json()
+    listing = storage.get(Listing, listing_id)
+    if not listing:
+        return make_response(jsonify({"error": "Listing not found"}), 404)
+
+    if 'user_id' not in request.get_json():
+        return make_response(jsonify({"error": "Missing user id."}), 400)
+    if 'user_id' not in request.get_json():
+        return make_response(jsonify({"error": "Missing user id."}), 400)
+    if 'start_date' not in request.get_json():
+        return make_response(jsonify({"error": "Missing start date."}), 400)
+    if 'end_date' not in request.get_json():
+        return make_response(jsonify({"error": "Missing end date."}), 400)
+
+
+    obj = Booking(**js, listing_id=listing.id)
+    obj.save()
+    return (jsonify(obj.to_dict()), 201)
+
+@listing_views.route('/listing/<string:listing_id>/bookings',
+                 methods=['GET'], strict_slashes=False)
+@swag_from('documentation/bookings/get.yml', methods=['GET'])
+def get_all_listing_bookings(listing_id):
+    """ listing bookings """
+    listing = storage.get(Listing, listing_id)
+    if listing is None:
+        return make_response(jsonify({"error": "Listing not found"}), 404)
+    bookings = [obj.to_dict() for obj in listing.bookings]
+    return jsonify(bookings)
+
+@listing_views.route('/listing/<string:listing_id>/booking/<string:booking_id>/',
+                 methods=['DELETE'], strict_slashes=False)
+@swag_from('documentation/bookings/get.yml', methods=['DELETE'])
+def get_a_listing_booking(listing_id, booking_id):
+    """ delete listing bookings """
+    listing = storage.get(Listing, listing_id)
+    if listing is None:
+        return make_response(jsonify({"error": "Listing not found"}), 404)
+    booking = storage.get(Booking, booking_id)
+    booking.delete()
+    storage.save()
+    message = f"Booking with bookingId: {booking.id} deleted successfully."
+    return make_response(jsonify({"Message": message}), 200)
 
