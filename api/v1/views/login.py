@@ -151,3 +151,45 @@ def agent_login():
 
     return response
 
+"""SUPPORT AGENT"""
+
+@app_views.route("/support_agent/login", strict_slashes=False, methods=["POST"])
+def support_agent_login():
+    """A post request sent with email and password from the login page
+        Handles login for the app
+    """
+    data = request.get_json() # the request sent from the login page
+
+    if not data or 'email' not in data or 'password' not in data:
+        return make_response(jsonify({"error": "Missing data in request"}), 400)
+
+    email = data['email']
+    password = data.get('password')
+
+
+    agt = storage.getLogin(supportAgent, email)
+    if not agt:
+        return make_response(jsonify({"Message": "Login failed: Agent not found"}), 401)
+
+    if not check_password_hash(agt.password, password):
+        return make_response(jsonify({"Message": "Login failed: Incorrect password"}), 401)
+
+    session_id = secrets.token_hex(32)
+    hashed_session_id = hashlib.sha256(session_id.encode()).hexdigest()
+    session[hashed_session_id] = agt.id
+
+    response = make_response(jsonify({"Message": "Login sucessful", "agt": agt.to_dict()}), 200)
+    response.set_cookie('session_id', session_id, httponly=True, max_age=3600)
+
+    custom_token = secrets.token_hex(24)
+    hashed_custom_token = hashlib.sha256(custom_token.encode()).hexdigest()
+    response.headers['X-Custom-Token'] = custom_token
+
+    new_session = Session(support_agent_id=agt.id)
+    new_session.session_token = hashed_session_id #secrets.token_hex(32)
+    new_session.authorization_token = hashed_custom_token
+    storage.new(new_session)
+    storage.save()
+
+    return response
+
