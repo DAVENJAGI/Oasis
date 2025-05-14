@@ -1,14 +1,15 @@
 #!/usr/bin/python3
 """This is a route to handle the login request"""
 
-from api.v1.views import app_views
+from api.v1.views import login_views
 from flask import jsonify, Blueprint, abort, request, make_response, session, Flask
 from models import storage
 from models.admin import Admin
 from models.user import User
-from models.doctor import Doctor
+from models.agent import Agent
+from models.support_agent import supportAgent
 from models.user_session import userSession
-from models.agent_session import doctorSession
+from models.agent_session import agentSession
 from models.admin_session import adminSession
 from models.support_agent_session import supportAgentSession
 import json
@@ -17,7 +18,7 @@ import hashlib
 from werkzeug.security import check_password_hash
 
 # app = Flask(__name__)
-#app_views.secret_key = secrets.token_hex(32)
+#login_views.secret_key = secrets.token_hex(32)
 
 @login_views.route("/admin/login", strict_slashes=False, methods=["POST"])
 def admin_login():
@@ -38,7 +39,7 @@ def admin_login():
 
     if not check_password_hash(admin.password, password):
         return make_response(jsonify({"Message": "Login failed: Incorrect password"}), 401)
-"""Cookie"""
+    """Cookie"""
     session_id = secrets.token_hex(32)
     hashed_session_id = hashlib.sha256(session_id.encode()).hexdigest()
     session[hashed_session_id] = admin.id
@@ -61,7 +62,7 @@ def admin_login():
 
 """USER"""
 
-@app_views.route("/user/login", strict_slashes=False, methods=["POST"])
+@login_views.route("/user/login", strict_slashes=False, methods=["POST"])
 def user_login():
     """A post request sent with email and password from the login page
         Handles login for the app
@@ -107,7 +108,7 @@ def user_login():
 
 """AGENT"""
 
-@app_views.route("/agent/login", strict_slashes=False, methods=["POST"])
+@login_views.route("/agent/login", strict_slashes=False, methods=["POST"])
 def agent_login():
     """A post request sent with email and password from the login page
         Handles login for the app
@@ -153,7 +154,7 @@ def agent_login():
 
 """SUPPORT AGENT"""
 
-@app_views.route("/support_agent/login", strict_slashes=False, methods=["POST"])
+@login_views.route("/support_agent/login", strict_slashes=False, methods=["POST"])
 def support_agent_login():
     """A post request sent with email and password from the login page
         Handles login for the app
