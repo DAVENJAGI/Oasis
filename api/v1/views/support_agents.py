@@ -86,10 +86,15 @@ def post_support_agent(support_agent_id):
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     obj = storage.get(supportAgent, support_agent_id)
     if obj is None:
-        abort(404)
+        return make_response(jsonify({"error": "Support agent not found"}), 404)
+    
     for key, value in request.get_json().items():
-        if key not in ['id', 'email', 'created_at', 'updated']:
+        if key == 'password':
+            hashed_password = generate_password_hash(value)
+            setattr(obj, key, hashed_password)
+        elif key not in ['id', 'email', 'created_at', 'updated']:
             setattr(obj, key, value)
+
     storage.save()
     return jsonify(obj.to_dict())
 
