@@ -13,7 +13,7 @@ class userSession(BaseModel, Base):
 
     if models.storage_type == 'db':
         __tablename__ = 'user_sessions'
-        user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+        user_id = Column(String(64), ForeignKey('users.id'), nullable=False)
         session_token = Column(String(128), nullable=False)
         authorization_token = Column(String(128), nullable=False)
         expires_at = Column(DateTime, nullable=False)
