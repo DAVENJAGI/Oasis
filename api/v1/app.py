@@ -12,8 +12,11 @@ from api.v1.views import tag_views, support_agent_views, login_views
 from models import storage
 import os
 from flask import jsonify
+import secrets
 
 app = Flask(__name__)
+app.secret_key = secrets.token_hex(32)
+
 app.register_blueprint(app_views)
 app.register_blueprint(state_views)
 app.register_blueprint(city_views)
