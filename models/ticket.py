@@ -26,6 +26,7 @@ class Ticket(BaseModel, Base):
         admin_id = Column(String(64), ForeignKey('admins.id', ondelete="SET NULL"), nullable=True)
         user_id = Column(String(64), ForeignKey('users.id', ondelete="CASCADE"), nullable=True)
         agent_id = Column(String(64), ForeignKey('agents.id', ondelete="CASCADE"), nullable=True)
+        support_agent = Column(String(64), ForeignKey('support_agents.id', ondelete="SET NULL"), nullable=True)
         ticket_status = Column(ticket_processing_status, default="Open") 
         priority = Column(ticket_priority, default="Low")
 
