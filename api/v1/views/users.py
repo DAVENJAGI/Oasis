@@ -78,16 +78,20 @@ def create_obj_user():
 @user_views.route('/users/<string:user_id>', methods=['PUT'],
                  strict_slashes=False)
 @swag_from('documentation/user/put.yml', methods=['PUT'])
-def post_user(user_id):
-    """  """
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+def put_user(user_id):
+    """ put user data endpoint  """
+    if not request.form:
+        return make_response(jsonify({"error": "Missing form data"}), 400)
     obj = storage.get(User, user_id)
     if obj is None:
         abort(404)
-    for key, value in request.get_json().items():
+    for key, value in request.form.to_dict().items():
         if key not in ['id', 'email', 'created_at', 'updated']:
             setattr(obj, key, value)
+    if 'password' in request.form:
+        hashed_password = generate_password_hash(request.form['password'])
+        setattr(obj, 'password', hashed_password)
+
     storage.save()
     return jsonify(obj.to_dict())
 
