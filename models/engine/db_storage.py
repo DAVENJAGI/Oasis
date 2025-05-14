@@ -19,6 +19,8 @@ from models.user_rating import userRating
 from models.agent_rating import agentRating
 from models.lease import Lease
 from models.listing_image import listingImage
+from models.support_agent import supportAgent
+from models.support_agent_rating import supportAgentRating
 from models.ticket import Ticket
 from models.booking import Booking
 from models.admin import Admin
@@ -29,7 +31,7 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {"Amenity": Amenity, "City": City,
+classes = {"Amenity": Amenity, "City": City, "supportAgent": supportAgent, "supportAgentRating": supportAgentRating,
            "agentRating": agentRating, "listingImage": listingImage, "Tag": Tag, "Lease": Lease, "Report": Report, "Town": Town, "Country": Country, "Listing": Listing, "favoriteListing": favoriteListing, "Agent": Agent, "userRating": userRating, "Ticket": Ticket, "Review": Review, "Booking": Booking,  "State": State, "Admin": Admin, "User": User}
 
 
