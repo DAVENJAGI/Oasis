@@ -8,12 +8,12 @@ from sqlalchemy.orm import relationship
 import models
 from datetime import datetime, timedelta
 
-class supportAgent(BaseModel, Base):
+class supportAgentSession(BaseModel, Base):
     """Represents support_agent session details"""
 
     if models.storage_type == 'db':
         __tablename__ = 'support_agent_sessions'
-        support_agent_id = Column(Integer, ForeignKey('support_agents.id'), nullable=False)
+        support_agent_id = Column(String(64), ForeignKey('support_agents.id'), nullable=False)
         session_token = Column(String(128), nullable=False)
         authorization_token = Column(String(128), nullable=False)
         expires_at = Column(DateTime, nullable=False)
