@@ -186,8 +186,8 @@ def support_agent_login():
     hashed_custom_token = hashlib.sha256(custom_token.encode()).hexdigest()
     response.headers['X-Custom-Token'] = custom_token
 
-    new_session = Session(support_agent_id=agt.id)
-    new_session.session_token = hashed_session_id #secrets.token_hex(32)
+    new_session = supportAgentSession(support_agent_id=agt.id)
+    new_session.session_token = hashed_session_id 
     new_session.authorization_token = hashed_custom_token
     storage.new(new_session)
     storage.save()
