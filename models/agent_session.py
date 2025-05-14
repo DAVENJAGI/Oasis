@@ -13,7 +13,7 @@ class agentSession(BaseModel, Base):
 
     if models.storage_type == 'db':
         __tablename__ = 'agent_sessions'
-        agent_id = Column(Integer, ForeignKey('agents.id'), nullable=False)
+        agent_id = Column(String(64), ForeignKey('agents.id'), nullable=False)
         session_token = Column(String(128), nullable=False)
         authorization_token = Column(String(128), nullable=False)
         expires_at = Column(DateTime, nullable=False)
