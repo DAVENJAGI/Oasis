@@ -13,7 +13,7 @@ class adminSession(BaseModel, Base):
 
     if models.storage_type == 'db':
         __tablename__ = 'admin_sessions'
-        admin_id = Column(Integer, ForeignKey('admins.id'), nullable=False)
+        admin_id = Column(String(64), ForeignKey('admins.id'), nullable=False)
         session_token = Column(String(128), nullable=False)
         authorization_token = Column(String(128), nullable=False)
         expires_at = Column(DateTime, nullable=False)
