@@ -75,7 +75,7 @@ def user_login():
     email = data['email']
     password = data.get('password')
 
-# The data is sorted in the database, using the email and checks the password.
+
     user = storage.getLogin(User, email)
     if not user:
         return make_response(jsonify({"Message": "Login failed: User not found"}), 401)
