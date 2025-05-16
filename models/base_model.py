@@ -18,6 +18,8 @@ if models.storage_type == "db":
 else:
     Base = object
 
+classes = {"Amenity": "amn", "City": "cty", "supportAgent": "spa", "supportAgentRating": "sar", "supportAgentSession": "sas", "userSession": "uss", "agentSession": "ags", "adminSession": "ads", "agentRating": "agr", "listingImage": "limg", "Tag": "tag", "Lease": "lse", "Report": "rpt", "Town": "twn", "Country": "ctr", "Listing": "lst", "favoriteListing": "fav", "Agent": "agt", "userRating": "usr", "Ticket": "tkt", "Review": "rev", "Booking": "bkg", "State": "stt", "Admin": "adm", "User": "usr"}
+
 
 class BaseModel:
     """The BaseModel class from which future classes will be derived"""
@@ -43,38 +45,9 @@ class BaseModel:
             if kwargs.get("id", None) is None:
 #                self.id = str(uuid.uuid4())
                 uid = str(uuid.uuid4())
-                if self.__class__.__name__ == "User":
-                    self.id = f"usr_{uid}"
-                elif self.__class__.__name__ == "State":
-                    self.id = f"stat_{uid}"
-                elif self.__class__.__name__ == "City":
-                    self.id = f"cty_{uid}"
-                elif self.__class__.__name__ == "Agent":
-                    self.id = f"agt_{uid}"
-                elif self.__class__.__name__ == "Listing":
-                    self.id = f"lst_{uid}"
-                elif self.__class__.__name__ == "Amenity":
-                    self.id = f"amn_{uid}"
-                elif self.__class__.__name__ == "Lease":
-                    self.id = f"lea_{uid}"
-                elif self.__class__.__name__ == "Comment":
-                    self.id = f"com_{uid}"
-                elif self.__class__.__name__ == "Ticket":
-                    self.id = f"tic_{uid}"
-                elif self.__class__.__name__ == "userRating":
-                    self.id = f"usr_rat_{uid}"
-                elif self.__class__.__name__ == "agentRating":
-                    self.id = f"agt_rat_{uid}"
-                elif self.__class__.__name__ == "Country":
-                    self.id = f"ctry_{uid}"
-                elif self.__class__.__name__ == "listingImage":
-                    self.id = f"img_{uid}"
-                elif self.__class__.__name__ == "Admin":
-                    self.id = f"adm_{uid}"
-                elif self.__class__.__name__ == "Tag":
-                    self.id = f"tag_{uid}"
-                elif self.__class__.__name__ == "Booking":
-                    self.id = f"book_{uid}"
+                class_name = self.__class__.__name__
+                if class_name in classes:
+                    self.id = f"{classes[class_name]}_{uid}"
                 else:
                     self.id = uid
         else:
