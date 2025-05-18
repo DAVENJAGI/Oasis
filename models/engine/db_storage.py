@@ -108,3 +108,12 @@ class DBStorage:
         """counts the number of object in storage"""
         obj = self.all(cls)
         return len(obj)
+
+    def get_session(self, cls, authorization_token):
+        """A method to retrieve session data based on session_id"""
+        query = self.__session.query(cls).filter(cls.authorization_token == authorization_token)
+        return query.first()
+    def get_email(self, cls, email):
+        """A method to retrieve objects by email. Used to check whether the email is used while creating new user"""
+        query = self.__session.query(cls).filter(cls.email == email)
+        return query.first()
