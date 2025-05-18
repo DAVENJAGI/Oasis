@@ -11,19 +11,21 @@ from models.agent import Agent
 from models.support_agent_rating import supportAgentRating
 from flasgger.utils import swag_from
 from werkzeug.security import generate_password_hash
-
+from auth.authorization import require_admin_auth, require_support_agent_or_admin_auth 
 
 @support_agent_views.route('/support_agents', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/support_agent/get.yml', methods=['GET'])
+@require_admin_auth
 def get_all_support_agents():
     """ get support_agents by id"""
     all_list = [obj.to_dict() for obj in storage.all(supportAgent).values()]
     return jsonify(all_list)
 
 
-@support_agent_views.route('/support_agents/<string:support_agent_id>', methods=['GET'],
+@support_agent_views.route('/support_agent/<string:support_agent_id>', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/support_agent/get_id.yml', methods=['GET'])
+@require_support_agent_or_admin_auth
 def get_support_agent(support_agent_id):
     """ get support_agent by id"""
     support_agent = storage.get(supportAgent, support_agent_id)
@@ -33,9 +35,10 @@ def get_support_agent(support_agent_id):
     return jsonify(support_agent.to_dict())
 
 
-@support_agent_views.route('/support_agents/<string:support_agent_id>', methods=['DELETE'],
+@support_agent_views.route('/support_agent/<string:support_agent_id>', methods=['DELETE'],
                  strict_slashes=False)
 @swag_from('documentation/support_agent/delete.yml', methods=['DELETE'])
+@require_support_agent_or_admin_auth
 def del_support_agent(support_agent_id):
     """ delete support_agent by id"""
     support_agent = storage.get(supportAgent, support_agent_id)
@@ -49,6 +52,7 @@ def del_support_agent(support_agent_id):
 @support_agent_views.route('/support_agents/', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/support_agent/post.yml', methods=['POST'])
+@require_support_agent_or_admin_auth
 def create_obj_support_agent():
     """ create new instance """
     if not request.get_json():
@@ -77,9 +81,10 @@ def create_obj_support_agent():
     return (jsonify(obj.to_dict()), 201)
 
 
-@support_agent_views.route('/support_agents/<string:support_agent_id>', methods=['PUT'],
+@support_agent_views.route('/support_agent/<string:support_agent_id>', methods=['PUT'],
                  strict_slashes=False)
 @swag_from('documentation/support_agent/put.yml', methods=['PUT'])
+@require_support_agent_or_admin_auth
 def post_support_agent(support_agent_id):
     """  """
     if not request.get_json():
@@ -99,9 +104,10 @@ def post_support_agent(support_agent_id):
     return jsonify(obj.to_dict())
 
 
-@support_agent_views.route('/support_agents/<string:support_agent_id>/rating/', methods=['POST'],
+@support_agent_views.route('/support_agent/<string:support_agent_id>/rating/', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/ratings/post.yml', methods=['POST'])
+@require_support_agent_or_admin_auth
 def create_obj_support_agent_ratings(support_agent_id):
     """ create new instance of support_agent ratings"""
     if not request.get_json():
@@ -133,6 +139,7 @@ def create_obj_support_agent_ratings(support_agent_id):
 @support_agent_views.route('/support_agent/<string:support_agent_id>/ratings',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/ratings/get.yml', methods=['GET'])
+@require_support_agent_or_admin_auth
 def get_all_support_agent_ratings(support_agent_id):
     """ support_agent rating """
     support_agent = storage.get(supportAgent, support_agent_id)
@@ -145,6 +152,7 @@ def get_all_support_agent_ratings(support_agent_id):
 @support_agent_views.route('/support_agent/<string:support_agent_id>/tickets',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/tickets/get.yml', methods=['GET'])
+@require_support_agent_or_admin_auth
 def get_all_support_agent_tickets(support_agent_id):
     """ support_agent tickets """
     support_agent = storage.get(supportAgent, support_agent_id)
