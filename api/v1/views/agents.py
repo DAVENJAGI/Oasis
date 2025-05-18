@@ -9,19 +9,21 @@ from models.agent import Agent
 from models.agent_rating import agentRating
 from flasgger.utils import swag_from
 from werkzeug.security import generate_password_hash
-
+from auth.authorization import require_admin_auth, require_user_or_admin_auth, require_agent_or_admin_auth, require_agent_or_admin_or_user_auth, require_support_agent_or_admin_or_agent_auth
 
 @agent_views.route('/agents', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/agent/get.yml', methods=['GET'])
+@require_admin_auth
 def get_all_agents():
     """ get agents by id"""
     all_list = [obj.to_dict() for obj in storage.all(Agent).values()]
     return jsonify(all_list)
 
 
-@agent_views.route('/agents/<string:agent_id>', methods=['GET'],
+@agent_views.route('/agent/<string:agent_id>', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/agent/get_id.yml', methods=['GET'])
+@require_agent_or_admin_or_user_auth
 def get_agent(agent_id):
     """ get agent by id"""
     agent = storage.get(Agent, agent_id)
@@ -34,6 +36,7 @@ def get_agent(agent_id):
 @agent_views.route('/agents/<string:agent_id>', methods=['DELETE'],
                  strict_slashes=False)
 @swag_from('documentation/agent/delete.yml', methods=['DELETE'])
+@require_agent_or_admin_auth
 def del_agent(agent_id):
     """ delete agent by id"""
     agent = storage.get(Agent, agent_id)
@@ -47,6 +50,7 @@ def del_agent(agent_id):
 @agent_views.route('/agents/', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/agent/post.yml', methods=['POST'])
+@require_agent_or_admin_auth
 def create_obj_agent():
     """ create new instance """
     if not request.get_json():
@@ -76,6 +80,7 @@ def create_obj_agent():
 @agent_views.route('/agents/<string:agent_id>', methods=['PUT'],
                  strict_slashes=False)
 @swag_from('documentation/agent/put.yml', methods=['PUT'])
+@require_agent_or_admin_auth
 def post_agent(agent_id):
     """  """
     if not request.get_json():
@@ -93,6 +98,7 @@ def post_agent(agent_id):
 @agent_views.route('/agents/<string:agent_id>/rating/', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/ratings/post.yml', methods=['POST'])
+@require_user_or_admin_auth
 def create_obj_agent_ratings(agent_id):
     """ create new instance of agent ratings"""
     if not request.get_json():
@@ -117,6 +123,7 @@ def create_obj_agent_ratings(agent_id):
 @agent_views.route('/agent/<string:agent_id>/ratings',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/ratings/get.yml', methods=['GET'])
+@require_agent_or_admin_or_user_auth
 def get_all_agent_ratings(agent_id):
     """ agent rating """
     agent = storage.get(Agent, agent_id)
@@ -129,6 +136,7 @@ def get_all_agent_ratings(agent_id):
 @agent_views.route('/agent/<string:agent_id>/listings',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/listings/get.yml', methods=['GET'])
+@require_agent_or_admin_or_user_auth
 def get_all_agent_listings(agent_id):
     """ agent listing """
     agent = storage.get(Agent, agent_id)
@@ -140,6 +148,7 @@ def get_all_agent_listings(agent_id):
 @agent_views.route('/agent/<string:agent_id>/leases',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/leases/get.yml', methods=['GET'])
+@require_agent_or_admin_auth
 def get_all_agent_leases(agent_id):
     """ agent leases """
     agent = storage.get(Agent, agent_id)
@@ -151,6 +160,7 @@ def get_all_agent_leases(agent_id):
 @agent_views.route('/agent/<string:agent_id>/tickets',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/tickets/get.yml', methods=['GET'])
+@require_support_agent_or_admin_or_agent_auth
 def get_all_agent_tickets(agent_id):
     """ agent tickets """
     agent = storage.get(Agent, agent_id)
