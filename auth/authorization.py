@@ -1,4 +1,3 @@
-cat authorization.py
 #!/usr/bin/python3
 """Creates the authentication functions.
 They act as authenticatiors for the function. They incude cookie session token and authorization token. Cookie session token expires after one hour. The hashlib hashes the session token to store it in the server"""
@@ -7,7 +6,6 @@ from api.v1.views import app_views
 from flask import jsonify, Blueprint, abort, request, make_response, session
 from models import storage
 from models.user import User
-from models.disease import Disease
 from models.user_session import userSession
 from models.admin_session import adminSession
 from models.agent_session import agentSession
@@ -136,6 +134,14 @@ def verify_agent_session(auth_token):
         return False
     return True
 
+def verify_support_agent_session(auth_token):
+    hashed_auth_token = hashlib.sha256(auth_token.encode()).hexdigest()
+    support_agent_session = storage.get_session(supportAgentSession, hashed_auth_token)
+    if not support_agent_session or support_agent_session.expires_at <= datetime.utcnow() or support_agent_session.authorization_token != hashed_auth_token:
+        return False
+    return True
+
+
 
 def require_user_or_admin_auth(f):
     @wraps(f)
@@ -186,4 +192,52 @@ def require_agent_or_admin_or_user_auth(f):
         return make_response(jsonify({"Message": "Sorry, you do not have valid authorization to access this data"}), 401)
     return wrapper
 
+
+def require_support_agent_or_admin_or_user_auth(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        auth_token = request.headers.get('X-Custom-Token')
+#        session_id = request.cookies.get('session_id')
+
+        if not auth_token:
+            return make_response(jsonify({"Message": "Sorry, you do not have valid authorization to access this data"}), 403)
+
+        if verify_support_agent_session(auth_token) or verify_user_session(auth_token) or verify_admin_session(auth_token):
+            return f(*args, **kwargs)
+
+
+        return make_response(jsonify({"Message": "Sorry, you do not have valid authorization to access this data"}), 401)
+    return wrapper
+
+def require_support_agent_or_admin_or_agent_auth(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        auth_token = request.headers.get('X-Custom-Token')
+#        session_id = request.cookies.get('session_id')
+
+        if not auth_token:
+            return make_response(jsonify({"Message": "Sorry, you do not have valid authorization to access this data"}), 403)
+
+        if verify_support_agent_session(auth_token) or verify_agent_session(auth_token) or verify_admin_session(auth_token):
+            return f(*args, **kwargs)
+
+
+        return make_response(jsonify({"Message": "Sorry, you do not have valid authorization to access this data"}), 401)
+    return wrapper
+
+def require_support_agent_or_admin_auth(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        auth_token = request.headers.get('X-Custom-Token')
+#        session_id = request.cookies.get('session_id')
+
+        if not auth_token:
+            return make_response(jsonify({"Message": "Sorry, you do not have valid authorization to access this data"}), 403)
+
+        if verify_support_agent_session(auth_token) or verify_admin_session(auth_token):
+            return f(*args, **kwargs)
+
+
+        return make_response(jsonify({"Message": "Sorry, you do not have valid authorization to access this data"}), 401)
+    return wrapper
 
