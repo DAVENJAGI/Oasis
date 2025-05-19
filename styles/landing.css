@@ -422,10 +422,11 @@ body {
     border-radius: 20px;
     box-shadow: 4px 4px 8px -2px #d3dee2;
 }
-.listing_overview_container:hover{
+.listing_overview_container:hover {
     transition: transform ease-in-out 1s;
     transform: scale(1.05);
     border: solid 1px #86D5EE;
+    z-index: 1;
 }
 
 .listing_image_div{
@@ -438,6 +439,26 @@ body {
     background-repeat: no-repeat;
     background-position-y: 50%;
 }
+.distance_div{
+    border: 0.5px solid #30B3DE;
+    margin: 2%;
+    min-width: 16%;
+    height: 20px;
+    border-radius: 8px;
+    float: right;
+    font-size: 12px;
+    text-align: center;
+    align-content: center;
+    background-color: white;
+    font-weight: bold;
+    box-shadow: 2px 2px 8px -2px #d3dee2;
+    color: rgba(135, 208, 233, 0.8);
+    color: rgb(0, 0, 0, 0.5);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 #nairobi_image{
     background-image: url('../images/point3d-commercial-imaging-ltd-5BV56SdvLmo-unsplash.jpg');
     background-size: cover;
@@ -657,7 +678,7 @@ body {
     font-weight: 700;
     font-size: 18px;
     height: 40px;
-    margin-left: 40%;
+    margin-left: 60%;
     
 }
 #login_button:hover{
