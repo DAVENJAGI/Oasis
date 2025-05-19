@@ -9,11 +9,13 @@ from models.listing import Listing
 from models.review import Review
 from models.user import User
 from flasgger.utils import swag_from
+from auth.authorization import require_admin_auth, require_user_or_admin_auth, require_agent_or_admin_or_user_auth, require_support_agent_or_admin_or_user_auth
 
 
 @app_views.route('/listings/<string:listing_id>/reviews',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/reviews/get.yml', methods=['GET'])
+@require_agent_or_admin_or_user_auth
 def get_all_reviews(listing_id):
     """ get reviews from a spcific listing """
     listing = storage.get(Listing, listing_id)
@@ -26,6 +28,7 @@ def get_all_reviews(listing_id):
 @app_views.route('/reviews/<string:review_id>', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/reviews/get_id.yml', methods=['GET'])
+@require_agent_or_admin_or_user_auth
 def get_review(review_id):
     """ get review by id"""
     review = storage.get(Review, review_id)
@@ -37,6 +40,7 @@ def get_review(review_id):
 @app_views.route('/reviews/<string:review_id>', methods=['DELETE'],
                  strict_slashes=False)
 @swag_from('documentation/reviews/delete.yml', methods=['DELETE'])
+@require_admin_auth
 def del_review(review_id):
     """ delete review by id"""
     review = storage.get(Review, review_id)
@@ -50,6 +54,7 @@ def del_review(review_id):
 @app_views.route('/listings/<string:listing_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/reviews/post.yml', methods=['POST'])
+@require_admin_or_user_auth
 def create_obj_review(listing_id):
     """ create new instance """
     listing = storage.get(Listing, listing_id)
@@ -74,6 +79,7 @@ def create_obj_review(listing_id):
 @app_views.route('/reviews/<string:review_id>', methods=['PUT'],
                  strict_slashes=False)
 @swag_from('documentation/reviews/put.yml', methods=['PUT'])
+@require_user_or_admin_auth
 def post_review(review_id):
     """ updates by id """
     if not request.get_json():

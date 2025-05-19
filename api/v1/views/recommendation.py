@@ -40,7 +40,7 @@ def get_listings_similar_to_viewed(listing_id):
     common = current_amenity_ids & other_amenity_ids
     if len(common) >= 4:
         listing_data = other.to_dict()
-        listing_data["amenities"] = [a.to_dict() for a in other.amenities]  # safely serialize
+        listing_data["amenities"] = [a.to_dict() for a in other.amenities]
         similar_listings.append(listing_data)
 
     return(similar_listings)
@@ -61,7 +61,7 @@ def get_latest_listing():
 def get_listings_near_user(user_id):
     """Return listings near the user's provided location"""
     user = storage.get(User, user_id)
-    default_distance = 20  # Default distance in km
+    default_distance = 20
     
     if not user:
         return make_response(jsonify({"error": "User not found"}), 404)
@@ -69,7 +69,7 @@ def get_listings_near_user(user_id):
     user_lat = user.user_latitude
     user_lon = user.user_longitude
     
-    # Check if 'distance_from_me' is passed as a query parameter
+
     distance_from_me = request.args.get('distance_from_me', default_distance, type=float)
     
     if not user_lat or not user_lon:

@@ -10,10 +10,12 @@ from models.favorite_listing import favoriteListing
 from models.listing import Listing
 from flasgger.utils import swag_from
 from werkzeug.security import generate_password_hash
+from auth.authorization import require_support_agent_or_admin_auth, require_admin_auth, require_user_or_admin_auth, require_agent_or_admin_or_user_auth, require_support_agent_or_admin_or_user_auth
 
 
 @report_views.route('/reports', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/report/get.yml', methods=['GET'])
+@require_admin_auth
 def get_all_reports():
     """ get reports by id"""
     all_list = [obj.to_dict() for obj in storage.all(Report).values()]
@@ -23,6 +25,7 @@ def get_all_reports():
 @report_views.route('/reports/<string:report_id>', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/report/get_id.yml', methods=['GET'])
+@require_support_agent_or_admin_auth
 def get_report(report_id):
     """ get report by id"""
     report = storage.get(Report, report_id)
@@ -35,6 +38,7 @@ def get_report(report_id):
 @report_views.route('/reports/<string:report_id>', methods=['DELETE'],
                  strict_slashes=False)
 @swag_from('documentation/report/delete.yml', methods=['DELETE'])
+@require_admin_auth
 def del_report(report_id):
     """ delete report by id"""
     report = storage.get(Report, report_id)
@@ -48,6 +52,7 @@ def del_report(report_id):
 @report_views.route('/reports/<string:report_id>', methods=['PUT'],
                  strict_slashes=False)
 @swag_from('documentation/report/put.yml', methods=['PUT'])
+@require_agent_or_admin_or_user_auth
 def post_report(report_id):
     """  """
     if not request.get_json():

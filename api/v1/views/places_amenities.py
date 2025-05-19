@@ -7,11 +7,13 @@ from models import storage
 from models.amenity import Amenity
 from models.listing import Listing
 from flasgger.utils import swag_from
+from auth.authorization import require_admin_auth, require_agent_or_admin_auth, require_agent_or_admin_or_user_auth, require_support_agent_or_admin_or_user_auth
 
 
 @app_views.route('/listings/<string:listing_id>/amenities', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/listing_amenity/get_id.yml', methods=['GET'])
+@require_agent_or_admin_or_user_auth
 def get_amenities(listing_id):
     """ retrieves all amenities from a listing """
     listing = storage.get(Listing, listing_id)
@@ -24,6 +26,7 @@ def get_amenities(listing_id):
 @app_views.route('/listings/<string:listing_id>/amenities/<string:amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
 @swag_from('documentation/listing_amenity/delete.yml', methods=['DELETE'])
+@require_agent_or_admin_or_user_auth
 def delete_amenity(listing_id, amenity_id):
     """ delete amenity from listing """
     listing = storage.get(Listing, listing_id)
@@ -42,6 +45,7 @@ def delete_amenity(listing_id, amenity_id):
 @app_views.route('/listings/<string:listing_id>/amenities/<string:amenity_id>',
                  methods=['POST'], strict_slashes=False)
 @swag_from('documentation/listing_amenity/post.yml', methods=['POST'])
+@require_agent_or_admin_auth
 def post_amenity2(listing_id, amenity_id):
     """ post amenity by id """
     listing = storage.get(Listing, listing_id)

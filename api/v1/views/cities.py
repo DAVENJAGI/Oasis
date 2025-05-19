@@ -12,6 +12,7 @@ from models.review import Review
 # from models.state import State
 from models.user import User
 import json
+from auth.authorization import require_admin_auth
 
 
 @city_views.route("/cities", strict_slashes=False, methods=["GET"])
@@ -24,7 +25,7 @@ def return_cities():
     return jsonify(cities_list)
 
 
-@city_views.route("/states/<state_id>/cities", strict_slashes=False)
+@city_views.route("/states/<state_id>/cities", methods=['GET'], strict_slashes=False)
 def return_by_city_id(state_id):
     """returns city based on state_id"""
     if request.method == "GET":
@@ -58,6 +59,7 @@ def return_city(city_id):
 
 @city_views.route("/states/<state_id>/cities/", strict_slashes=False,
                   methods=["POST"])
+@require_admin_auth
 def post_city(state_id):
     """posts a new state"""
     if request.method == "POST":
@@ -77,6 +79,7 @@ def post_city(state_id):
 
 
 @city_views.route("/cities/<city_id>", methods=["PUT"])
+@require_admin_auth
 def update_city(city_id):
     """updates data on a city"""
     if request.method == "PUT":

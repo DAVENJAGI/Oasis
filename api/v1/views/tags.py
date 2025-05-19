@@ -12,9 +12,11 @@ from models.review import Review
 from models.state import State
 from models.user import User
 import json
+from auth.authorization import require_admin_auth, require_user_or_admin_auth, require_agent_or_admin_or_user_auth, require_support_agent_or_admin_or_user_auth
 
 
 @tag_views.route("/tags", strict_slashes=False, methods=["GET"])
+@require_agent_or_admin_or_user_auth
 def return_tags():
     """returns all tag objects"""
     all_tags = storage.all(Tag).values()
@@ -26,6 +28,7 @@ def return_tags():
 
 @tag_views.route("/tags/<tag_id>", strict_slashes=False,
                      methods=["GET", "DELETE"])
+@require_agent_or_admin_or_user_auth
 def return_tag_by_id(tag_id):
     """deletes a tag"""
     if request.method == "GET":
@@ -46,6 +49,7 @@ def return_tag_by_id(tag_id):
 
 @tag_views.route("/tags", strict_slashes=False,
                      methods=["POST"])
+@require_admin_auth
 def post_tag():
     """posts a new tag"""
     if request.method == "POST":
@@ -61,6 +65,7 @@ def post_tag():
 
 
 @tag_views.route("/tags/<tag_id>", methods=["PUT"])
+@require_admin_auth
 def update_tag(tag_id):
     """updates data on a tag"""
     if request.method == "PUT":

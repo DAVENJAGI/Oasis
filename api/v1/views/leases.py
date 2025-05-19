@@ -8,10 +8,12 @@ from models import storage
 from models.lease import Lease
 from flasgger.utils import swag_from
 from werkzeug.security import generate_password_hash
+from auth.authorization import require_admin_auth, require_agent_or_admin_auth, require_agent_or_admin_or_user_auth, require_support_agent_or_admin_or_user_auth
 
 
 @lease_views.route('/leases', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/lease/get.yml', methods=['GET'])
+@require_admin_auth
 def get_all_leases():
     """ get leases by id"""
     all_list = [obj.to_dict() for obj in storage.all(Lease).values()]
@@ -21,6 +23,7 @@ def get_all_leases():
 @lease_views.route('/leases/<string:lease_id>', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/lease/get_id.yml', methods=['GET'])
+@require_agent_or_admin_or_user_auth
 def get_lease(lease_id):
     """ get lease by id"""
     lease = storage.get(Lease, lease_id)
@@ -33,6 +36,7 @@ def get_lease(lease_id):
 @lease_views.route('/leases/<string:lease_id>', methods=['DELETE'],
                  strict_slashes=False)
 @swag_from('documentation/lease/delete.yml', methods=['DELETE'])
+@require_admin_auth
 def del_lease(lease_id):
     """ delete lease by id"""
     lease = storage.get(Lease, lease_id)
@@ -47,6 +51,7 @@ def del_lease(lease_id):
 @lease_views.route('/leases/', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/lease/post.yml', methods=['POST'])
+@require_agent_or_admin_auth
 def create_obj_lease():
     """ create new instance """
     if not request.get_json():
@@ -78,6 +83,7 @@ def create_obj_lease():
 @lease_views.route('/leases/<string:lease_id>', methods=['PUT'],
                  strict_slashes=False)
 @swag_from('documentation/lease/put.yml', methods=['PUT'])
+@require_agent_or_admin_or_user_auth
 def post_lease(lease_id):
     """  """
     if not request.get_json():
