@@ -307,7 +307,9 @@ body {
     border-top: none;
     background-color: #f9f9f9;
     border-radius: 0 0 8px 8px;
-    z-index: 2;
+    z-index: 200;
+    height: 180px;
+    overflow-y: auto;
 }
   
 .custom-select .option {
@@ -440,9 +442,9 @@ body {
     background-position-y: 50%;
 }
 .distance_div{
-    border: 0.5px solid #30B3DE;
+    /*border: 0.5px solid #30B3DE;*/
     margin: 2%;
-    min-width: 16%;
+    min-width: 18%;
     height: 20px;
     border-radius: 8px;
     float: right;
