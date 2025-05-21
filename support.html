@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=chair" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=elevator" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=apartment" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=cabin" />
+    <link href='https://unpkg.com/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./styles/ticket.css">
+    <script type="text/javascript" src="./scripts/common.js"></script>
+    <title>Tickets</title>
+</head>
+<body>
+    <div id="whole_body">
+        <!--HEADER-->
+        <div id="header">
+            <div class="header_division" id="first_part_header">
+                <div id="site_text">Oasis Help Center</div>
+            </div>
+            <div class="header_division" id="third_part_header">
+                <div class="div_names">Submit Ticket</div>
+                <div class="div_names">My Tickets</div>
+
+                <div class="third_header_div_components tooltip-container" id="user_profile_icon">
+                    <div>JD</div>                        
+                </div>
+                
+            </div>
+        </div>
+        
+        <!--WELCOME INFO-->
+        <div id="welcome_div">Welcome to our Support Center...</div>
+        <!--INFO DIV-->
+        <div id="details_div">
+                <div id="info_top">Create a New Ticket</div>
+                <div id="ticket_detail_head">Ticket Details</div>
+                <div class="ticket-items" id="ticket_categories">
+                    <div id="category_label">Category *</div><br>
+                    <select name="ticket_category" id="ticket_category">
+                        <option>- - - - - - - - -</option>
+                        <option value="1">  App & Account Support</option>
+                        <option value="2">  Lease & Rent</option>
+                        <option value="3">  Move-In & Move-Out</option>
+                        <option value="4">  Complains</option>
+                        <option value="5">  Emergencies</option>
+                        <option value="6">  Property Issues</option>
+                        <option value="7">  Maintenance & Repairs</option>
+                    </select>
+                </div>
+
+                <div class="ticket-items" id="ticket_title">
+                    <div id="title_label">Subject *</div><br>
+                    <input placeholder="Enter subject" name="ticket_category" id="ticket_subject"></input>
+                </div>
+
+                <div class="ticket-items" id="ticket_description_title">
+                    <div id="desc_label">Description *</div><br>
+                    <textarea placeholder="Enter description" id="ticket_description"></textarea>
+                </div>
+
+                <div id="ticket_image">
+                    <div id="image_label">An image of problem?</div><br>
+                    <div id="enter_image">
+                        <div class="inner_tick_image">Drag & drop a file to attach it, or</div>
+                        <div id="browse_file" class="inner_tick_image">Browse for a file</div>
+                    </div>
+                </div>
+
+                <div id="submit_buttons">
+                    <button id="create_ticket_button">Create Ticket</button>
+                </div>
+
+        </div>
+    </div>
+</body>
