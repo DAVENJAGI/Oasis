@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=chair" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=elevator" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=apartment" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=cabin" />
+    <link href='https://unpkg.com/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./styles/my_ticket.css">
+    <script type="text/javascript" src="./scripts/common.js"></script>
+    <script type="text/javascript" src="./scripts/routing.js"></script>
+    <script type="text/javascript" src="./scripts/tickets.js"></script>
+    <title>Tickets</title>
+</head>
+<body>
+    <div id="whole_body">
+        <!--HEADER-->
+        <div id="header">
+            <div class="header_division" id="first_part_header">
+                <div id="site_text">Oasis Help Center</div>
+            </div>
+            <div class="header_division" id="third_part_header">
+                <div id="create_ticket_page" class="div_names">Submit Ticket</div>
+                <div id="my_ticket_page" class="div_names">My Tickets</div>
+
+                <div class="third_header_div_components tooltip-container" id="user_profile_icon">
+                    <div>JD</div>                        
+                </div>
+                
+            </div>
+        </div>
+
+        <div id="overlay1"></div>
+        <div id="overlay"></div>
+
+        <div id="ticket_feedback_div">
+            <div id="feedback_top">
+                <div id="ticket_id">Id: tkt_25ddf-sa54-65sf-58994</div>
+                <div id="exit_ticket_feedback_button">
+                    <i class='bx bx-x'></i>
+                </div>
+            </div>
+            <div id="feedback_div">
+                <div id="subject_div_top">
+                    <div id="subject_head">Subject</div>
+                    <div id="comma_div">:</div>
+                    <div id="subject_body">Ticket Received – Login and Data Viewing Issues</div>
+                </div>
+                <div id="other_info">
+                    <div id="top_greeting">Hi John Doe,</div>
+                    <div id="middle_info">
+                        Thank you for reaching out and reporting the issue.
+
+                        We’re sorry to hear that you're experiencing problems logging into the app and accessing your data. Our team is currently reviewing the situation to identify the root cause and will work to resolve it as quickly as possible.
+
+                        In the meantime, could you please confirm the following to help us troubleshoot more effectively:
+
+                        The device and operating system you're using (e.g., Android, iOS, Windows, etc.)
+
+                        The version of the app you have installed
+
+                        Any error messages or screenshots you may have encountered during login or data access
+
+                        We truly appreciate your patience and will update you as soon as we have more information or a solution.
+
+                    </div>
+                    <div id="regards_part">
+                        Best regards,<br>
+                        Khalid Khalif,<br>
+                        Support agent
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="body_div">
+            <div id="left_side_div">
+                <div id="left_top">
+                    <div id="status_title_top" class="side_bar_items">
+                        <div  class="ticket_title">Tickets</div>
+                    </div>
+                    <div id="all_tickets" class="side_bar_items">
+                        <div class="ticket_status">All Tickets</div>
+                        <div class="type_number">1</div>
+                    </div>
+                    <div class="side_bar_items">
+                        <div class="ticket_status">Pending Tickets</div>
+                        <div class="type_number">0</div>
+                    </div>
+                    <div class="side_bar_items">
+                        <div class="ticket_status">Closed Tickets</div>
+                        <div class="type_number">0</div>
+                    </div>
+                </div>
+
+                <div id="left_bottom">
+                    <div id="status_title_top" class="side_bar_items">
+                        <div  class="ticket_title">Statuses</div>
+                    </div>
+                    <div class="side_bar_items">
+                        <div  class="ticket_status">New</div>
+                    </div>
+                    <div class="side_bar_items">
+                        <div  class="ticket_status">In Progress</div>
+                    </div>
+                    <div class="side_bar_items">
+                        <div  class="ticket_status">On Hold</div>
+                    </div>
+                    <div class="side_bar_items">
+                        <div  class="ticket_status">Awaiting Response</div>
+                    </div>
+                    <div class="side_bar_items">
+                        <div  class="ticket_status">Resolved/Closed</div>
+                    </div>
+                </div>
+            </div>
+            <div id="right_side_div">
+                <div id="right_top">All Tickets</div>
+                <div id="ticket_div">
+                    <div id="ticket_div_title">
+                        <div id="checkbox_div" class="ticket_div_title_items">
+                            <input type="checkbox" id="ticket_checkbox" name="ticket_checkbox">
+                        </div>
+                        <div class="ticket_div_title_items">STATUS</div>
+                        <div id="subject_div" class="ticket_div_title_items">SUBJECT</div>
+                        <div class="ticket_div_title_items">RAISED BY</div>
+                        <div class="ticket_div_title_items">CATEGORY</div>
+                        <div class="ticket_div_title_items">TICKET ID</div>
+                        <div class="ticket_div_title_items">LAST UPDATED</div>
+                    </div>
+                    <div id="ticket_div_body">
+                        <div id="checkbox_box" class="ticket_div_body_items">
+                            <input type="checkbox" id="ticket_checkbox" name="ticket_checkbox">
+                        </div>
+                        <div class="ticket_div_body_items">
+                            <div id="resolved_div">Resolved/Closed</div>
+                        </div>
+                        <div id="subject_txt" class="ticket_div_body_items">Unable to log into my account</div>
+                        <div class="ticket_div_body_items">Jane Doe</div>
+                        <div class="ticket_div_body_items">App & Account management</div>
+                        <div class="ticket_div_body_items">tkt_e3492-546a-asdf3</div>
+                        <div class="ticket_div_body_items">12-4-2025</div>
+                        
+                    </div>
+
+                    <div id="ticket_div_body">
+                        <div id="checkbox_box" class="ticket_div_body_items">
+                            <input type="checkbox" id="ticket_checkbox" name="ticket_checkbox">
+                        </div>
+                        <div class="ticket_div_body_items">
+                            <div id="resolved_div">Resolved/Closed</div>
+                        </div>
+                        <div id="subject_txt" class="ticket_div_body_items">Unable to log into my account</div>
+                        <div class="ticket_div_body_items">Jane Doe</div>
+                        <div class="ticket_div_body_items">App & Account management</div>
+                        <div class="ticket_div_body_items">tkt_e3492-546a-asdf3</div>
+                        <div class="ticket_div_body_items">12-4-2025</div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
