@@ -223,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hidePriceChangeDiv();
     })
 
+    /*
     //SHOW AND HIDE USER PROFILE DIV
     function showUserProfileDiv() {
         const userProfileDiv = document.getElementById('user_profile');
@@ -253,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hideUserProfileDiv();
     })
 
-
+*/
 
     //SHOW AND HIDE LISTING LOCATION
     function showListingLocationDiv() {
