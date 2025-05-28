@@ -135,7 +135,7 @@ body {
 .tooltip-container .tooltip-text {
     visibility: hidden;
     width: max-content;
-    background-color: #38baee;
+    background-color: #000;
     color: #fff;
     text-align: center;
     padding: 4px 8px;
@@ -199,7 +199,7 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    background-color: #F7F7F7;
+    background-color: #f1f1f1;
 }
 .third_header_div_components:hover{
     background-color: #D7F1F9;
@@ -229,9 +229,9 @@ body {
 }
 #listing_properties{
     /*border: 1px solid green;*/
-    height: auto;
+    height: 200vh;
     margin: 2% auto;
-    max-width: 80vw;
+    width: 80vw;
     display: flex;
     
 }
@@ -267,7 +267,7 @@ body {
     /*border: 1px solid red;*/
     margin: 1%;
     height: auto;
-    max-width: 25vw;
+    width: 30vw;
 }
 
 /*LISTING SIDEBAR INFO*/
@@ -345,7 +345,7 @@ body {
     border: 1px solid white;
     margin: 1%;
     margin-top: 6%;
-    height: 30vh;
+    height: 34vh;
     border-radius: 8px;
     background-color: white;
     box-shadow: 4px 4px 8px -2px #d3dee2;
@@ -356,10 +356,10 @@ body {
 }
 #agent_top_detail{
     /*border: 1px solid red;*/
-    margin: 1% auto;
+    margin: 2%;
     margin-left: 3%;
     width: 90%;
-    height: 50%;
+    height: 44%;
     display: flex;
 }
 #profile_photo_side{
@@ -461,12 +461,13 @@ body {
 
 #contact_info{
     border: 1px solid #86D5EE;
-    margin: 1% auto;
+    margin: 1%;
+    margin-bottom: 2%;
     margin-left: 3%;
     width: 90%;
     height: 22%;
     border-radius: 8px;
-    background-color: #30B3DE;
+    background-color: #38baee;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -494,7 +495,7 @@ body {
 }
 
 #message_agent{
-    border: 1px solid #30B3DE;
+    border: 1px solid #38baee;
     margin: 1% auto;
     margin-left: 3%;
     width: 90%;
@@ -503,7 +504,7 @@ body {
     background-color: white;
     display: flex;
     justify-content: center;
-    color: #30B3DE;
+    color: #38baee;
     font-weight: 700;
     align-items: center;
 }
@@ -511,7 +512,7 @@ body {
     transition: transform 0.5s ease-in-out;
     transform: scale(1.025);
     color: white;
-    background-color: #30B3DE;
+    background-color: #38baee;
 }
 
 #message_agent_icon{
@@ -576,42 +577,46 @@ body {
 
 #rating_stars{
     /*border: 1px red solid;*/
-    margin: 1% auto;
-    margin-left: 3%;
+    margin: 1%;
     height: 20%;
     min-width: 38%;
     max-width: 54%;
     text-align: start;
+    align-items: center;
+    justify-content: space-around;
 }
 .star-rating__stars {
     display: flex;
     flex-direction: row-reverse;
     gap: 6px;
+    padding-left: 1%;
 }
+
 .star-rating__input {
     display: none;
 }
-  
+
 .star-rating__label svg {
     width: 24px;
     height: 24px;
-    fill: lightgray;
+    fill: #9b9b9b;
+    color: #9b9b9b;
     transition: fill 0.2s;
     cursor: pointer;
 }
-  
-.star-rating__label:hover ~ .star-rating__label svg,
-.star-rating__label:hover svg {
+
+.star-rating__label:hover svg,
+.star-rating__label:hover ~ .star-rating__label svg {
     fill: gold;
+    color: gold;
 }
-  
+
 .star-rating__input:checked ~ .star-rating__label svg {
-    fill: lightgray;
-}
-.star-rating__input:checked + .star-rating__label svg,
-.star-rating__input:checked ~ label svg {
     fill: gold;
+    color: gold;
 }
+
+
 
 
 #rating_info{
@@ -633,21 +638,21 @@ body {
     font-weight: 600;
 }
 #see_all_reviews{
-    color: #30B3DE;
-    border: 1px solid #30B3DE;
+    color: #38baee;
+    border: 1px solid #38baee;
     height: 35px;
 }
 #see_all_reviews:hover{
     transition: all ease-in-out 0.5s;
     color: white;
-    background-color: #30B3DE;
+    background-color: #38baee;
     transform: scale(1.05);
 }
 
 #write_a_review{
-    background-color: #30B3DE;
+    background-color: #38baee;
     color: white;
-    border: 1px solid #30B3DE;
+    border: 1px solid #38baee;
     height: 35px;
 }
 #write_a_review:hover{
@@ -834,7 +839,7 @@ body {
 #listing_location{
     /*border: 1px solid red;*/
     font-size: 28px;
-    align-content: center;
+    justify-content: space-between;
     text-align: center;
     font-weight: 700;
     color: #9b9b9b;
@@ -842,51 +847,24 @@ body {
     display: flex;
     align-items: center;
 }
-#location_map{
-    /*border: 1px solid red;*/
+
+
+.more_listing_property{
+    border: 1px solid white;
     height: 35px;
     width: 35px;
-    float: right;
-    margin-right: 5%;
-    align-content: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
     border-radius: 50%;
-    background-color: white;
-}
-#location_map:hover{
+}  
+.more_listing_property:hover{
     transition: all ease-in-out 0.5s;
     color: white;
     background-color: #D7F1F9;
     border: 1px solid #30B3D3;
 }
-#views_div{
-    /*border: 1px solid red;*/
-    margin-left: 10%;
-    margin-right: 10%;
-    height: 35px;
-    width: 35px;;
-    align-items: center;
-    border-radius: 50%;
-}
-#views_div:hover{
-    transition: transform ease-in-out 0.5s;
-    color: white;
-    background-color: #D7F1F9;
-    border: 1px solid #30B3D3;
-}
-#saved_div{
-    height: 35px;
-    width: 35px;;
-    align-items: center;
-    border-radius: 50%;
-}
-#saved_div:hover{
-    transition: transform ease-in-out 0.5s;
-    color: white;
-    background-color: #D7F1F9;
-    border: 1px solid #30B3D3;
-}
 
-  
 
 #amenities_div{
     /*border: 1px solid red;*/
@@ -1015,14 +993,14 @@ body {
     border-bottom: 1px solid #EBEBEB;
 }
 #book_button{
-    border: 1px solid #30B3DE;
+    border: 1px solid #38baee;
     margin: 1% auto;
     margin-left: 1%;
     width: 30%;
     height: 80%;
     font-size: 18px;
     border-radius: 8px;
-    background-color: #30B3DE;
+    background-color: #38baee;
     justify-content: center;
     color: white;
     font-weight: 700;
@@ -1061,10 +1039,9 @@ body {
     color: white;
 }
 #left_icon:hover{
-    background-color: #E9F7FC;
+    background-color: rgba(135, 208, 233, 0.6);
     transition: transform ease-in-out 0.5s;
-    transform: scale(1.1);
-    border: 1px solid #E9F7FC;
+    transform: scale(1.01);
 }
 #scroll_right_vector{
     border: 1px solid red;
@@ -1085,10 +1062,9 @@ body {
     color: white;
 }
 #right_icon:hover{
-    background-color: #E9F7FC;
+    background-color: rgba(135, 208, 233, 0.6);
     transition: transform ease-in-out 0.5s;
-    transform: scale(1.1);
-    border: 1px solid #E9F7FC;
+    transform: scale(1.01);
 }
 
 #menu_dropdown{
