@@ -47,4 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ROUTE TO MESSAGES PAGE
+    const myLoginPage = document.getElementById('logout_div');
+    if (myLoginPage) {
+        myLoginPage.addEventListener('click', function () {
+            window.location.href = 'new_visitor.html';
+        });
+    }
+
 });
