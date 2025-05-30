@@ -1,0 +1,48 @@
+summary: User login
+description: Authenticates a user using email and password.
+consumes:
+  - application/json
+parameters:
+  - in: body
+    name: login
+    required: true
+    schema:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: user@example.com
+        password:
+          type: string
+          example: userpassword
+responses:
+  200:
+    description: Login successful
+    schema:
+      type: object
+      properties:
+        Message:
+          type: string
+          example: Login sucessful
+        user:
+          type: object
+  400:
+    description: Missing data in request
+    schema:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Missing data in request
+  401:
+    description: Unauthorized - User not found or incorrect password
+    schema:
+      type: object
+      properties:
+        Message:
+          type: string
+          example: Login failed: User not found
+

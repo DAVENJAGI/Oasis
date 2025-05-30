@@ -1,0 +1,48 @@
+summary: Admin login
+description: Authenticates an admin using email and password.
+consumes:
+  - application/json
+parameters:
+  - in: body
+    name: login
+    required: true
+    schema:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: admin@example.com
+        password:
+          type: string
+          example: adminpassword
+responses:
+  200:
+    description: Login successful
+    schema:
+      type: object
+      properties:
+        Message:
+          type: string
+          example: Login sucessful
+        admin:
+          type: object
+  400:
+    description: Missing data in request
+    schema:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Missing data in request
+  401:
+    description: Unauthorized - Admin not found or incorrect password
+    schema:
+      type: object
+      properties:
+        Message:
+          type: string
+          example: Login failed: Admin not found
+
