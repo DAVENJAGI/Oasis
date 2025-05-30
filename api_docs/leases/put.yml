@@ -1,0 +1,27 @@
+tags:
+  - Lease
+summary: Update lease
+description: Update an existing lease by its ID. Requires user, agent, or admin authorization.
+parameters:
+  - name: lease_id
+    in: path
+    required: true
+    type: string
+    description: ID of the lease
+  - in: body
+    name: body
+    required: true
+    schema:
+      $ref: '#/definitions/LeaseInput'
+responses:
+  200:
+    description: Lease updated successfully
+    schema:
+      $ref: '#/definitions/Lease'
+  400:
+    description: Invalid JSON
+  404:
+    description: Lease not found
+  401:
+    description: Unauthorized access
+

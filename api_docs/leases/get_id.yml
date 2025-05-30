@@ -1,0 +1,20 @@
+tags:
+  - Lease
+summary: Get lease by ID
+description: Retrieve a lease using its unique ID. Requires user, agent, or admin authentication.
+parameters:
+  - name: lease_id
+    in: path
+    required: true
+    type: string
+    description: ID of the lease
+responses:
+  200:
+    description: Lease found
+    schema:
+      $ref: '#/definitions/Lease'
+  404:
+    description: Lease not found
+  401:
+    description: Unauthorized access
+

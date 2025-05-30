@@ -1,0 +1,18 @@
+tags:
+  - Lease
+summary: Delete a lease
+description: Delete a lease by its ID. Only accessible by an admin.
+parameters:
+  - name: lease_id
+    in: path
+    required: true
+    type: string
+    description: ID of the lease to delete
+responses:
+  200:
+    description: Lease deleted successfully
+  404:
+    description: Lease not found
+  401:
+    description: Unauthorized access
+

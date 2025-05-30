@@ -1,0 +1,20 @@
+tags:
+  - Lease
+summary: Create a new lease
+description: Create a new lease. Requires agent or admin privileges.
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      $ref: '#/definitions/LeaseInput'
+responses:
+  201:
+    description: Lease created successfully
+    schema:
+      $ref: '#/definitions/Lease'
+  400:
+    description: Bad request (e.g., missing fields or invalid JSON)
+  401:
+    description: Unauthorized access
+
