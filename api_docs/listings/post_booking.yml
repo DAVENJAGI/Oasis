@@ -1,0 +1,38 @@
+summary: Book a listing
+description: Creates a new booking for a listing.
+consumes:
+  - application/json
+parameters:
+  - name: listing_id
+    in: path
+    type: string
+    required: true
+    description: ID of the listing
+  - in: body
+    name: booking
+    required: true
+    schema:
+      type: object
+      required:
+        - user_id
+        - start_date
+        - end_date
+      properties:
+        user_id:
+          type: string
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+responses:
+  201:
+    description: Booking created successfully
+    schema:
+      $ref: '#/definitions/Booking'
+  400:
+    description: Invalid input
+  404:
+    description: Listing or user not found
+

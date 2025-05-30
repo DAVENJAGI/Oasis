@@ -1,0 +1,16 @@
+summary: Retrieve a specific listing
+description: Returns the details of a listing by its ID.
+parameters:
+  - name: listing_id
+    in: path
+    type: string
+    required: true
+    description: ID of the listing
+responses:
+  200:
+    description: Listing details
+    schema:
+      $ref: '#/definitions/Listing'
+  404:
+    description: Listing not found
+

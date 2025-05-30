@@ -1,0 +1,18 @@
+summary: Retrieve listing images
+description: Returns all images associated with a listing.
+parameters:
+  - name: listing_id
+    in: path
+    type: string
+    required: true
+    description: ID of the listing
+responses:
+  200:
+    description: A list of images
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/ListingImage'
+  404:
+    description: Listing not found
+

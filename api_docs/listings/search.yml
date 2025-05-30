@@ -1,0 +1,33 @@
+summary: Search listings
+description: Searches for listings based on states, towns, and amenities.
+consumes:
+  - application/json
+parameters:
+  - in: body
+    name: search_criteria
+    required: true
+    schema:
+      type: object
+      properties:
+        states:
+          type: array
+          items:
+            type: string
+        towns:
+          type: array
+          items:
+            type: string
+        amenities:
+          type: array
+          items:
+            type: string
+responses:
+  200:
+    description: Search results
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Listing'
+  400:
+    description: Invalid input
+

@@ -1,0 +1,30 @@
+summary: Report a listing
+description: Submits a report for a listing.
+consumes:
+  - application/json
+parameters:
+  - name: listing_id
+    in: path
+    type: string
+    required: true
+    description: ID of the listing
+  - in: body
+    name: report
+    required: true
+    schema:
+      type: object
+      required:
+        - reason
+      properties:
+        reason:
+          type: string
+responses:
+  201:
+    description: Report submitted successfully
+    schema:
+      $ref: '#/definitions/Report'
+  400:
+    description: Invalid input
+  404:
+    description: Listing not found
+

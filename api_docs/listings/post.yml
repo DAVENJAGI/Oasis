@@ -1,0 +1,35 @@
+summary: Create a new listing
+description: Creates a new listing in the specified town.
+consumes:
+  - multipart/form-data
+parameters:
+  - name: town_id
+    in: path
+    type: string
+    required: true
+    description: ID of the town
+  - name: agent_id
+    in: formData
+    type: string
+    required: true
+    description: ID of the agent
+  - name: property_name
+    in: formData
+    type: string
+    required: true
+    description: Name of the property
+  - name: cover_image
+    in: formData
+    type: file
+    required: false
+    description: Cover image of the listing
+responses:
+  201:
+    description: Listing created successfully
+    schema:
+      $ref: '#/definitions/Listing'
+  400:
+    description: Invalid input
+  404:
+    description: Town or agent not found
+

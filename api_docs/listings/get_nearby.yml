@@ -1,0 +1,57 @@
+get:
+  summary: Get nearby listings for a user
+  description: Returns listings within a specific distance from the user's saved location.
+  tags:
+    - Listings - Recommendations
+  parameters:
+    - name: user_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ID of the user
+    - name: distance_from_me
+      in: query
+      required: false
+      schema:
+        type: number
+        format: float
+        default: 20
+      description: Distance radius (in kilometers) from user's location
+  responses:
+    200:
+      description: Listings within the specified distance
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              allOf:
+                - $ref: '#/components/schemas/Listing'
+                - type: object
+                  properties:
+                    distance_km:
+                      type: number
+                      format: float
+                      example: 5.3
+    400:
+      description: Missing user's latitude/longitude
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: User latitude and longitude cannot be null.
+    404:
+      description: User not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: User not found
+

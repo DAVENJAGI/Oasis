@@ -1,0 +1,15 @@
+get:
+  summary: Get the latest listings
+  description: Returns the 20 most recently created listings.
+  tags:
+    - Listings - Recommendations
+  responses:
+    200:
+      description: A list of the most recent listings
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Listing'
+

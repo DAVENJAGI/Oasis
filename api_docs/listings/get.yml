@@ -1,0 +1,18 @@
+summary: Retrieve all listings in a town
+description: Returns a list of all listings associated with the specified town ID.
+parameters:
+  - name: town_id
+    in: path
+    type: string
+    required: true
+    description: ID of the town
+responses:
+  200:
+    description: A list of listings
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Listing'
+  404:
+    description: Town not found
+

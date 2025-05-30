@@ -1,0 +1,30 @@
+summary: Update an existing listing
+description: Updates the details of an existing listing.
+consumes:
+  - multipart/form-data
+parameters:
+  - name: listing_id
+    in: path
+    type: string
+    required: true
+    description: ID of the listing
+  - name: property_name
+    in: formData
+    type: string
+    required: false
+    description: Updated name of the property
+  - name: cover_image
+    in: formData
+    type: file
+    required: false
+    description: Updated cover image of the listing
+responses:
+  200:
+    description: Listing updated successfully
+    schema:
+      $ref: '#/definitions/Listing'
+  400:
+    description: Invalid input
+  404:
+    description: Listing not found
+

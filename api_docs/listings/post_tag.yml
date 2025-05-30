@@ -1,0 +1,30 @@
+summary: Add a tag to a listing
+description: Associates a tag with a listing.
+consumes:
+  - application/json
+parameters:
+  - name: listing_id
+    in: path
+    type: string
+    required: true
+    description: ID of the listing
+  - in: body
+    name: tag
+    required: true
+    schema:
+      type: object
+      required:
+        - tag_id
+      properties:
+        tag_id:
+          type: string
+responses:
+  201:
+    description: Tag added successfully
+    schema:
+      $ref: '#/definitions/Tag'
+  400:
+    description: Invalid input
+  404:
+    description: Listing or tag not found
+

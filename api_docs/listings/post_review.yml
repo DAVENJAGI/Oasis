@@ -1,0 +1,33 @@
+summary: Create a review for a listing
+description: Adds a new review to a listing.
+consumes:
+  - application/json
+parameters:
+  - name: listing_id
+    in: path
+    type: string
+    required: true
+    description: ID of the listing
+  - in: body
+    name: review
+    required: true
+    schema:
+      type: object
+      required:
+        - user_id
+        - text
+      properties:
+        user_id:
+          type: string
+        text:
+          type: string
+responses:
+  201:
+    description: Review created successfully
+    schema:
+      $ref: '#/definitions/Review'
+  400:
+    description: Invalid input
+  404:
+    description: Listing or user not found
+
