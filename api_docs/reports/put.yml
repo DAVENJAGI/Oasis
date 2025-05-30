@@ -1,0 +1,27 @@
+tags:
+  - Report
+summary: Update a report
+description: Update a report's data by ID.
+parameters:
+  - name: report_id
+    in: path
+    required: true
+    type: string
+    description: ID of the report to update
+  - in: body
+    name: body
+    required: true
+    schema:
+      $ref: '#/definitions/ReportInput'
+responses:
+  200:
+    description: Report updated successfully
+    schema:
+      $ref: '#/definitions/Report'
+  400:
+    description: Not a JSON
+  404:
+    description: Report not found
+  403:
+    description: Unauthorized access
+

@@ -1,0 +1,18 @@
+tags:
+  - Report
+summary: Delete a report
+description: Delete a specific report by ID (admin only).
+parameters:
+  - name: report_id
+    in: path
+    required: true
+    type: string
+    description: ID of the report to delete
+responses:
+  200:
+    description: Report deleted successfully
+  404:
+    description: Report not found
+  403:
+    description: Unauthorized access
+

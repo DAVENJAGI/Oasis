@@ -1,0 +1,20 @@
+tags:
+  - Report
+summary: Get report by ID
+description: Retrieve a single report by its unique ID.
+parameters:
+  - name: report_id
+    in: path
+    required: true
+    type: string
+    description: ID of the report to retrieve
+responses:
+  200:
+    description: Report object returned
+    schema:
+      $ref: '#/definitions/Report'
+  404:
+    description: Report not found
+  403:
+    description: Unauthorized access
+
