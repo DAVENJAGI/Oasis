@@ -1,0 +1,16 @@
+tags:
+  - Ticket
+summary: Delete ticket by ID
+description: Delete a ticket using its unique ID.
+parameters:
+  - name: ticket_id
+    in: path
+    required: true
+    type: string
+    description: ID of the ticket
+responses:
+  200:
+    description: Ticket deleted successfully
+  404:
+    description: Ticket not found
+

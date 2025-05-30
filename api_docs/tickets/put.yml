@@ -1,0 +1,25 @@
+tags:
+  - Ticket
+summary: Update a ticket
+description: Update the data of an existing ticket.
+parameters:
+  - name: ticket_id
+    in: path
+    required: true
+    type: string
+    description: ID of the ticket
+  - in: body
+    name: body
+    required: true
+    schema:
+      $ref: '#/definitions/TicketInput'
+responses:
+  200:
+    description: Ticket updated successfully
+    schema:
+      $ref: '#/definitions/Ticket'
+  400:
+    description: Not a JSON
+  404:
+    description: Ticket not found
+

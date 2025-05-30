@@ -1,0 +1,18 @@
+tags:
+  - Ticket
+summary: Get ticket by ID
+description: Retrieve a specific ticket using its ID.
+parameters:
+  - name: ticket_id
+    in: path
+    required: true
+    type: string
+    description: ID of the ticket
+responses:
+  200:
+    description: Ticket found
+    schema:
+      $ref: '#/definitions/Ticket'
+  404:
+    description: Ticket not found
+

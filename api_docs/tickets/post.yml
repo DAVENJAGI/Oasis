@@ -1,0 +1,18 @@
+tags:
+  - Ticket
+summary: Create a new ticket
+description: Post a new ticket.
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      $ref: '#/definitions/TicketInput'
+responses:
+  201:
+    description: Ticket created successfully
+    schema:
+      $ref: '#/definitions/Ticket'
+  400:
+    description: Missing title or description
+

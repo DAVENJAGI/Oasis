@@ -1,0 +1,12 @@
+tags:
+  - Ticket
+summary: Get all tickets
+description: Retrieve all ticket objects.
+responses:
+  200:
+    description: List of tickets
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Ticket'
+
