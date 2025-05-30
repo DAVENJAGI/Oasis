@@ -1,0 +1,66 @@
+get:
+  tags:
+    - System
+  summary: Object counts
+  description: Returns the number of each object stored in the database.
+  responses:
+    200:
+      description: Object counts returned
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              amenities:
+                type: integer
+              tags:
+                type: integer
+              cities:
+                type: integer
+              countries:
+                type: integer
+              towns:
+                type: integer
+              agents:
+                type: integer
+              support_agents:
+                type: integer
+              tickets:
+                type: integer
+              listings:
+                type: integer
+              reviews:
+                type: integer
+              states:
+                type: integer
+              users:
+                type: integer
+              bookings:
+                type: integer
+              support_agent_sessions:
+                type: integer
+              user_sessions:
+                type: integer
+              agent_sessions:
+                type: integer
+              admin_sessions:
+                type: integer
+            example:
+              amenities: 15
+              tags: 10
+              cities: 7
+              countries: 3
+              towns: 5
+              agents: 8
+              support_agents: 4
+              tickets: 22
+              listings: 40
+              reviews: 18
+              states: 6
+              users: 100
+              bookings: 25
+              support_agent_sessions: 12
+              user_sessions: 50
+              agent_sessions: 15
+              admin_sessions: 3
+
