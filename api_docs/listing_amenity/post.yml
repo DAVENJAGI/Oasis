@@ -1,0 +1,36 @@
+post:
+  summary: Link an amenity to a listing
+  tags:
+    - Listings - Amenities
+  parameters:
+    - name: listing_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ID of the listing
+    - name: amenity_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ID of the amenity to add
+  responses:
+    200:
+      description: Amenity already linked to listing
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Amenity'
+    201:
+      description: Amenity linked successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Amenity'
+    404:
+      description: Listing or Amenity not found
+  security:
+    - AdminAuth: []
+    - AgentAuth: []
+

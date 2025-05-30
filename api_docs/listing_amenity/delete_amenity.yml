@@ -1,0 +1,32 @@
+delete:
+  summary: Remove an amenity from a listing
+  tags:
+    - Listings - Amenities
+  parameters:
+    - name: listing_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ID of the listing
+    - name: amenity_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ID of the amenity to remove
+  responses:
+    200:
+      description: Amenity removed successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            example: {}
+    404:
+      description: Listing or Amenity not found, or not linked
+  security:
+    - AdminAuth: []
+    - AgentAuth: []
+    - UserAuth: []
+
