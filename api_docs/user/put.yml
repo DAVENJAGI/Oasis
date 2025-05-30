@@ -1,0 +1,30 @@
+put:
+  summary: Update user information
+  description: Updates the details of an existing user.
+  tags:
+    - Users
+  parameters:
+    - name: user_id
+      in: path
+      required: true
+      description: ID of the user to update
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/UserUpdate'
+  responses:
+    '200':
+      description: User updated successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+    '400':
+      description: Invalid input
+    '404':
+      description: User not found
+

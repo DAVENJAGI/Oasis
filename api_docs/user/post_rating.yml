@@ -1,0 +1,40 @@
+post:
+  summary: Add a user rating
+  description: Allows a user to rate an agent.
+  tags:
+    - Ratings
+  parameters:
+    - name: user_id
+      in: path
+      required: true
+      description: ID of the user providing the rating
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - agent_id
+            - score
+          properties:
+            agent_id:
+              type: string
+            score:
+              type: integer
+              minimum: 1
+              maximum: 5
+  responses:
+    '201':
+      description: Rating added successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserRating'
+    '400':
+      description: Invalid input
+    '404':
+      description: User or agent not found
+

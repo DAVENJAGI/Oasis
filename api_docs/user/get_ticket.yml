@@ -1,0 +1,24 @@
+get:
+  summary: Retrieve user tickets
+  description: Returns a list of support tickets submitted by the user.
+  tags:
+    - Tickets
+  parameters:
+    - name: user_id
+      in: path
+      required: true
+      description: ID of the user
+      schema:
+        type: string
+  responses:
+    '200':
+      description: List of user tickets
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Ticket'
+    '404':
+      description: User not found
+

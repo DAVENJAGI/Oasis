@@ -1,0 +1,24 @@
+get:
+  summary: Retrieve user ratings
+  description: Returns a list of ratings provided by the user.
+  tags:
+    - Ratings
+  parameters:
+    - name: user_id
+      in: path
+      required: true
+      description: ID of the user
+      schema:
+        type: string
+  responses:
+    '200':
+      description: List of user ratings
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/UserRating'
+    '404':
+      description: User not found
+

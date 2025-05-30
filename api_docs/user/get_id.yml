@@ -1,0 +1,22 @@
+get:
+  summary: Retrieve a user by ID
+  description: Returns the details of a user identified by user_id.
+  tags:
+    - Users
+  parameters:
+    - name: user_id
+      in: path
+      required: true
+      description: ID of the user to retrieve
+      schema:
+        type: string
+  responses:
+    '200':
+      description: User details
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+    '404':
+      description: User not found
+

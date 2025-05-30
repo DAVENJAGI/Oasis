@@ -1,0 +1,24 @@
+get:
+  summary: Retrieve user's favorite listings
+  description: Returns a list of listings favorited by the user.
+  tags:
+    - Favorites
+  parameters:
+    - name: user_id
+      in: path
+      required: true
+      description: ID of the user
+      schema:
+        type: string
+  responses:
+    '200':
+      description: List of favorite listings
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/FavoriteListing'
+    '404':
+      description: User not found
+

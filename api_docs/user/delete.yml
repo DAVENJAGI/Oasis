@@ -1,0 +1,18 @@
+delete:
+  summary: Delete a user
+  description: Removes a user from the system.
+  tags:
+    - Users
+  parameters:
+    - name: user_id
+      in: path
+      required: true
+      description: ID of the user to delete
+      schema:
+        type: string
+  responses:
+    '200':
+      description: User deleted successfully
+    '404':
+      description: User not found
+

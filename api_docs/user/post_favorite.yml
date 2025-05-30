@@ -1,0 +1,35 @@
+post:
+  summary: Add a favorite listing
+  description: Adds a listing to the user's list of favorites.
+  tags:
+    - Favorites
+  parameters:
+    - name: user_id
+      in: path
+      required: true
+      description: ID of the user
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - listing_id
+          properties:
+            listing_id:
+              type: string
+  responses:
+    '201':
+      description: Favorite added successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FavoriteListing'
+    '400':
+      description: Invalid input
+    '404':
+      description: User or listing not found
+

@@ -1,0 +1,21 @@
+post:
+  summary: Create a new user
+  description: Registers a new user in the system.
+  tags:
+    - Users
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/UserInput'
+  responses:
+    '201':
+      description: User created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+    '400':
+      description: Invalid input
+
