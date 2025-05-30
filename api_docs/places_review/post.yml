@@ -1,0 +1,27 @@
+tags:
+  - Review
+summary: Create a new review for a listing
+description: Create and attach a new review to a listing.
+parameters:
+  - name: listing_id
+    in: path
+    required: true
+    type: string
+    description: ID of the listing
+  - in: body
+    name: body
+    required: true
+    schema:
+      $ref: '#/definitions/ReviewInput'
+responses:
+  201:
+    description: Review created successfully
+    schema:
+      $ref: '#/definitions/Review'
+  400:
+    description: Missing fields or not a JSON
+  404:
+    description: Listing or User not found
+  403:
+    description: Unauthorized access
+

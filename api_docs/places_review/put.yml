@@ -1,0 +1,27 @@
+tags:
+  - Review
+summary: Update a review
+description: Update the text or content of a specific review.
+parameters:
+  - name: review_id
+    in: path
+    required: true
+    type: string
+    description: ID of the review to update
+  - in: body
+    name: body
+    required: true
+    schema:
+      $ref: '#/definitions/ReviewInput'
+responses:
+  200:
+    description: Review updated successfully
+    schema:
+      $ref: '#/definitions/Review'
+  400:
+    description: Not a JSON
+  404:
+    description: Review not found
+  403:
+    description: Unauthorized access
+

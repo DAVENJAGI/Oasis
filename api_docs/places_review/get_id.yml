@@ -1,0 +1,20 @@
+tags:
+  - Review
+summary: Get review by ID
+description: Retrieve a single review by its unique ID.
+parameters:
+  - name: review_id
+    in: path
+    required: true
+    type: string
+    description: ID of the review to retrieve
+responses:
+  200:
+    description: Review object
+    schema:
+      $ref: '#/definitions/Review'
+  404:
+    description: Review not found
+  403:
+    description: Unauthorized access
+

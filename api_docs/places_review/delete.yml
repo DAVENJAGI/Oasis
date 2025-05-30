@@ -1,0 +1,18 @@
+tags:
+  - Review
+summary: Delete a review
+description: Delete a specific review by ID (admin only).
+parameters:
+  - name: review_id
+    in: path
+    required: true
+    type: string
+    description: ID of the review to delete
+responses:
+  200:
+    description: Review deleted successfully
+  404:
+    description: Review not found
+  403:
+    description: Unauthorized access
+

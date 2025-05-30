@@ -1,0 +1,22 @@
+tags:
+  - Review
+summary: Get all reviews for a listing
+description: Retrieve all reviews associated with a specific listing.
+parameters:
+  - name: listing_id
+    in: path
+    required: true
+    type: string
+    description: ID of the listing
+responses:
+  200:
+    description: A list of reviews
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Review'
+  404:
+    description: Listing not found
+  403:
+    description: Unauthorized access
+
