@@ -1,0 +1,17 @@
+delete:
+  tags:
+    - States
+  summary: Delete a state
+  description: Delete a state object by its ID.
+  parameters:
+    - in: path
+      name: state_id
+      required: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: State deleted successfully
+    404:
+      description: State not found
+

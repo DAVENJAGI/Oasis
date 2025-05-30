@@ -1,0 +1,15 @@
+get:
+  tags:
+    - States
+  summary: Get all states
+  description: Retrieve a list of all state objects.
+  responses:
+    200:
+      description: List of all states
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/State'
+
