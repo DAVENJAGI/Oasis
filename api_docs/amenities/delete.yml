@@ -1,0 +1,21 @@
+delete:
+  tags:
+    - Amenities
+  summary: Delete amenity
+  description: Deletes a specific amenity by its ID.
+  parameters:
+    - name: amenity_id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: Amenity deleted successfully
+      content:
+        application/json:
+          schema:
+            type: object
+    404:
+      description: Amenity not found
+

@@ -1,0 +1,21 @@
+get:
+  tags:
+    - Amenities
+  summary: Get amenity by ID
+  description: Retrieve a specific amenity object by its ID.
+  parameters:
+    - name: amenity_id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: Amenity object returned
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Amenity'
+    404:
+      description: Amenity not found
+

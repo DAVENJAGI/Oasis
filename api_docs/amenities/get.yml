@@ -1,0 +1,15 @@
+get:
+  tags:
+    - Amenities
+  summary: Get all amenities
+  description: Retrieve a list of all amenity objects.
+  responses:
+    200:
+      description: A list of amenities
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Amenity'
+

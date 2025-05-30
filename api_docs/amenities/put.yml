@@ -1,0 +1,33 @@
+put:
+  tags:
+    - Amenities
+  summary: Update an amenity
+  description: Updates a specific amenity by its ID.
+  parameters:
+    - name: amenity_id
+      in: path
+      required: true
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Gym
+  responses:
+    200:
+      description: Amenity updated successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Amenity'
+    400:
+      description: Not a JSON
+    404:
+      description: Amenity not found
+
