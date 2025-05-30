@@ -1,0 +1,17 @@
+delete:
+  summary: Delete an admin
+  description: Deletes a specific admin by ID.
+  tags:
+    - Admins
+  parameters:
+    - name: admin_id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: Admin deleted successfully
+    404:
+      description: Admin not found
+

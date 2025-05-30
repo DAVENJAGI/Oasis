@@ -1,0 +1,15 @@
+get:
+  summary: Get all admins
+  description: Retrieve a list of all admin users from the database.
+  tags:
+    - Admins
+  responses:
+    200:
+      description: A list of all admins
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Admin'
+

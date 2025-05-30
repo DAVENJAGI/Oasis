@@ -1,0 +1,25 @@
+put:
+  summary: Update an admin
+  description: Update an existing admin's details using their ID.
+  tags:
+    - Admins
+  parameters:
+    - name: admin_id
+      in: path
+      required: true
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/AdminUpdate'
+  responses:
+    200:
+      description: Admin updated successfully
+    400:
+      description: Not a JSON
+    404:
+      description: Admin not found
+

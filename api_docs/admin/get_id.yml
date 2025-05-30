@@ -1,0 +1,21 @@
+get:
+  summary: Get a specific admin by ID
+  description: Retrieve the details of a specific admin using their unique ID.
+  tags:
+    - Admins
+  parameters:
+    - name: admin_id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: Admin found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Admin'
+    404:
+      description: Admin not found
+
