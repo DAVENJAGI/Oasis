@@ -1,0 +1,30 @@
+summary: Update a favorite listing
+description: Updates the details of a favorite listing by admin ID.
+consumes:
+  - application/json
+parameters:
+  - name: admin_id
+    in: path
+    type: string
+    required: true
+    description: Admin ID of the favorite listing to update
+  - in: body
+    name: update_data
+    required: true
+    schema:
+      type: object
+      properties:
+        listing_id:
+          type: string
+        user_id:
+          type: string
+responses:
+  200:
+    description: Favorite listing updated successfully
+    schema:
+      $ref: '#/definitions/FavoriteListing'
+  400:
+    description: Not a JSON
+  404:
+    description: favoriteListing not found
+

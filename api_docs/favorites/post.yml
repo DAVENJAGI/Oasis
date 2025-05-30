@@ -1,0 +1,34 @@
+summary: Create a favorite listing
+description: Adds a listing to the user's favorites.
+consumes:
+  - application/json
+parameters:
+  - in: body
+    name: favorite
+    required: true
+    schema:
+      type: object
+      required:
+        - listing_id
+        - user_id
+      properties:
+        listing_id:
+          type: string
+          example: "abc123"
+        user_id:
+          type: string
+          example: "user456"
+responses:
+  201:
+    description: Favorite listing created successfully
+    schema:
+      $ref: '#/definitions/FavoriteListing'
+  400:
+    description: Missing or invalid input
+    schema:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Not a JSON
+

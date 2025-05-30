@@ -1,0 +1,26 @@
+summary: Delete a favorite listing
+description: Deletes a favorite listing by its admin ID.
+parameters:
+  - name: admin_id
+    in: path
+    type: string
+    required: true
+    description: ID of the admin associated with the favorite listing
+responses:
+  200:
+    description: Favorite listing deleted successfully
+    schema:
+      type: object
+      properties:
+        Message:
+          type: string
+          example: favoriteListing with favoritesId: 123 deleted successfully
+  404:
+    description: favoriteListing not found
+    schema:
+      type: object
+      properties:
+        error:
+          type: string
+          example: favoriteListing not found
+
