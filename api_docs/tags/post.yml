@@ -1,0 +1,23 @@
+post:
+  tags:
+    - Tags
+  summary: Create a new tag
+  description: Create a new tag object. Requires admin access.
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/TagInput'
+  responses:
+    201:
+      description: Tag created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Tag'
+    400:
+      description: Missing name or not a JSON
+

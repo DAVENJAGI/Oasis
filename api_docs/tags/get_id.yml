@@ -1,0 +1,23 @@
+get:
+  tags:
+    - Tags
+  summary: Get tag by ID
+  description: Retrieve a specific tag by ID. Requires agent, user, or admin access.
+  security:
+    - bearerAuth: []
+  parameters:
+    - in: path
+      name: tag_id
+      required: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: Tag data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Tag'
+    404:
+      description: Tag not found
+

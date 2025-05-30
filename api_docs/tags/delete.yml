@@ -1,0 +1,19 @@
+delete:
+  tags:
+    - Tags
+  summary: Delete tag
+  description: Delete a tag by its ID. Requires agent, user, or admin access.
+  security:
+    - bearerAuth: []
+  parameters:
+    - in: path
+      name: tag_id
+      required: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: Tag deleted successfully
+    404:
+      description: Tag not found
+
