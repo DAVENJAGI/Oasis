@@ -12,11 +12,12 @@ The console is the first segment of the Oasis project at Holberton School that w
 * [Environment](#environment)
 * [Installation](#installation)
 * [File Descriptions](#file-descriptions)
+* [API Documentation](#api-documentation)
 * [Usage](#usage)
 * [Examples of use](#examples-of-use)
 * [Bugs](#bugs)
 * [Authors](#authors)
-* [License](#license)
+
 
 ## Environment
 This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
@@ -161,6 +162,12 @@ TestBaseModel class:
 * `def test_user_module_docstring(self)` - Test for the user.py module docstring
 * `def test_user_class_docstring(self)` - Test for the User class docstring
 
+#### `/api/v1/views` Directory contains all the API endpoints.
+[admin.py](/api/v1/views/admins.py) - Handles all admin related API endpoints.
+* `api/v1/admins`
+
+## API Documentation
+[API DOCS](/api_docs)
 
 ## Examples of use
 ```
