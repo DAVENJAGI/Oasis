@@ -1,0 +1,29 @@
+put:
+  tags:
+    - Countries
+  summary: Update a country
+  description: Update fields of a country object by ID.
+  parameters:
+    - in: path
+      name: country_id
+      required: true
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/CountryInput'
+  responses:
+    200:
+      description: Country updated successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Country'
+    400:
+      description: Not a JSON
+    404:
+      description: Country not found
+

@@ -1,0 +1,17 @@
+delete:
+  tags:
+    - Countries
+  summary: Delete a country
+  description: Delete a country object by its ID.
+  parameters:
+    - in: path
+      name: country_id
+      required: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: Country deleted successfully
+    404:
+      description: Country not found
+

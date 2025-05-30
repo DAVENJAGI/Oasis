@@ -1,0 +1,21 @@
+get:
+  tags:
+    - Countries
+  summary: Get country by ID
+  description: Retrieve a specific country by its ID.
+  parameters:
+    - in: path
+      name: country_id
+      required: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: Country data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Country'
+    404:
+      description: Country not found
+

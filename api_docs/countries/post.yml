@@ -1,0 +1,21 @@
+post:
+  tags:
+    - Countries
+  summary: Create a new country
+  description: Add a new country object.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/CountryInput'
+  responses:
+    201:
+      description: Country created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Country'
+    400:
+      description: Missing name, country_code, or not a JSON
+
