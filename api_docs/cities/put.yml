@@ -1,0 +1,31 @@
+put:
+  tags:
+    - Cities
+  summary: Update a city
+  description: Update a city object by ID (admin only).
+  security:
+    - bearerAuth: []
+  parameters:
+    - in: path
+      name: city_id
+      required: true
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/CityInput'
+  responses:
+    200:
+      description: City updated successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/City'
+    400:
+      description: Not a JSON
+    404:
+      description: City not found
+

@@ -1,0 +1,23 @@
+get:
+  tags:
+    - Cities
+  summary: Get cities in a state
+  description: Retrieve a list of all cities in a specific state.
+  parameters:
+    - in: path
+      name: state_id
+      required: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: List of cities for the state
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/City'
+    404:
+      description: State not found
+

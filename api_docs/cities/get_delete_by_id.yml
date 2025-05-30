@@ -1,0 +1,38 @@
+get:
+  tags:
+    - Cities
+  summary: Get a specific city
+  description: Retrieve city details by its ID.
+  parameters:
+    - in: path
+      name: city_id
+      required: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: City data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/City'
+    404:
+      description: City not found
+
+delete:
+  tags:
+    - Cities
+  summary: Delete a city
+  description: Delete a city object by ID.
+  parameters:
+    - in: path
+      name: city_id
+      required: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: City deleted successfully
+    404:
+      description: City not found
+
