@@ -40,7 +40,7 @@ body {
 }
 
 #header{
-    height: 9vh;
+    min-height: 56px;
     display: flex;
     position: sticky;
     top: 0;
@@ -70,14 +70,14 @@ body {
     margin-left: 5%;
 }
 .size-6{
-    height: 25px;
-    width: 25px;
+    height: 30px;
+    width: 30px;
 }
 
 .third_header_div_components{
     border: 1px solid #86D5EE;
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     color: #38baee;
     display: flex;
     justify-content: center;
