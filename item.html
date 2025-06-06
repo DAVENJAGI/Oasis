@@ -11,6 +11,7 @@
     <link href='https://unpkg.com/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link href='https://unpkg.com/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="./styles/item.css">
@@ -169,6 +170,98 @@
                 </div>
                 <div id="location_div">
             
+                </div>
+            </div>
+
+            <div id="listing_reviews">
+                <div id="reviews_listing_top">
+                    <div id="listing_id"></div>
+                    <div id="exit_reviews_button">
+                        <i class='bx bx-x'></i>
+                    </div>
+                </div>
+                <div id="reviews_div">
+                    <div class="whole_parent_div">
+                        <div class="comment_div">
+                            <div class="top_review_details">
+                                <div class="profile_image">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 profile-image">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                    </svg>                                  
+                                </div>
+                                <div class="profile_name">John Doe</div>
+                            </div>
+                            <div class="bottom_review_txt">Cozy, clean, and convenient — perfect stay with great host support.</div>
+                        </div>
+                        <div class="other_info_div">
+                            <div class="date_div">12/10/2021</div>
+                            <span class="date_div bold-date-div">Like</span>
+                            <div class="date_div bold-date-div">Reply</div>
+                        </div>
+                    </div>
+
+                    <div class="whole_parent_div">
+                        <div class="comment_div">
+                            <div class="top_review_details">
+                                <div class="profile_image">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 profile-image">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                    </svg>                                  
+                                </div>
+                                <div class="profile_name">John Doe</div>
+                            </div>
+                            <div class="bottom_review_txt">I had a fantastic stay at this property. The place was exactly as described—clean, cozy, and well-maintained. The host was incredibly responsive and made check-in and check-out seamless. The neighborhood felt safe and had everything I needed within walking distance, including shops and restaurants. I especially appreciated the comfortable bed and the fast Wi-Fi, which made working remotely very easy. I would definitely recommend this listing to anyone looking for a peaceful and convenient place to stay. I’m already planning my next visit! </div>
+                        </div>
+                        <div class="other_info_div">
+                            <div class="date_div">12/10/2022</div>
+                            <span class="date_div bold-date-div">Like</span>
+                            <div class="date_div bold-date-div">Reply</div>
+                        </div>
+                    </div>
+
+                    <div class="whole_parent_div">
+                        <div class="comment_div">
+                            <div class="top_review_details">
+                                <div class="profile_image">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 profile-image">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                    </svg>                                  
+                                </div>
+                                <div class="profile_name">John Doe</div>
+                            </div>
+                            <div class="bottom_review_txt">Cozy, clean, and convenient — perfect stay with great host support.</div>
+                        </div>
+                        <div class="other_info_div">
+                            <div class="date_div">12/10/2023</div>
+                            <span class="date_div bold-date-div">Like</span>
+                            <div class="date_div bold-date-div">Reply</div>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+
+            <div id="listing_report_div">
+                <div id="listing_top">
+                    <div id="listing_id">Report for property with Id:</div>
+                    <div id="exit_report_button">
+                        <i class='bx bx-x'></i>
+                    </div>
+                </div>
+                <div id="report_div">
+                    <select id="reporting_category">
+                        <option class="options">Choose Category</option>
+                        <option class="options">Illegal or Fraudulent</option>
+                        <option class="options">Listing is a Spam</option>
+                        <option class="options">Wrong Pricing</option>
+                        <option class="options">Already Booked</option>
+                        <option class="options">User is Unreachable</option>
+                    </select>
+                    <textarea id="report_description"></textarea>
+                </div>
+                <div id="send_report_div">
+                    <button id="report_button">Send Report</button>
                 </div>
             </div>
 
@@ -481,20 +574,20 @@
                         <div  id="listing_disclaimer">
                             <div class="dislaimer_buttons" id="availability_status">
                                 <div id="happy_icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6 happy-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flag-icon">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
-                                    </svg>                                      
+                                    </svg>                                                                         
                                 </div>
                                 <div id="available_txt" class="inner_disclaimer_buttons">Available</div>
                             </div>
-                            <div class="dislaimer_buttons" id="report_misuse">
+                            <button class="dislaimer_buttons" id="report_misuse">
                                 <div id="report_icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flag-icon">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5M3 15V4.5" />
-                                    </svg>                                                                          
+                                    </svg>                                                                                                            
                                 </div>
                                 <div id="report_txt" class="inner_disclaimer_buttons">Report</div>
-                            </div>
+                            </button>
                         </div>
 
                         <div id="listing_safety_precautions">
