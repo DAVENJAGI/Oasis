@@ -47,11 +47,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ROUTE TO MESSAGES PAGE
+    // ROUTE TO LOGOUT
     const myLoginPage = document.getElementById('logout_div');
     if (myLoginPage) {
         myLoginPage.addEventListener('click', function () {
             window.location.href = 'new_visitor.html';
+        });
+    }
+
+    // ROUTE TO MESSAGES PAGE FROM USER LISTING
+    const chatMessage = document.getElementById('message_agent');
+    if (chatMessage) {
+        chatMessage.addEventListener('click', function () {
+            window.location.href = 'messages.html';
         });
     }
 
