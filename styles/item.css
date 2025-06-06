@@ -38,7 +38,7 @@ body {
     bottom: 0;
     position: sticky;
     width: 100%;
-    height: 7vh;
+    height: 56px;
     background-color: white;
     box-shadow: 0 -4px 8px -2px #d3dee2;
     align-content: center;
@@ -700,6 +700,11 @@ body {
     color: #008000;
     margin: 1%;
     height: 52%;
+    align-items: center;
+    width: 25%;
+    padding-top: 2%;
+    height: 52%;
+    font-size: 16px;
 }
 
 .inner_disclaimer_buttons{
@@ -717,15 +722,22 @@ body {
     border: 1px solid rgb(255, 0, 0, 0.4);
 }
 #report_txt{
+    /*border: 1px solid black;*/
     color: #ff0000;
+    font-size: 16px;
 }
 #report_icon{
     /*border: 1px solid red;*/
     align-content: center;
+    align-items: center;
     width: 25%;
     color: red;
     margin: 1%;
     height: 52%;
+    font-size: 16px;
+}
+.flag-icon{
+    height: 20px;
 }
 
 #listing_safety_precautions{
@@ -1205,6 +1217,233 @@ body {
     width: 100%;
     height: 100%;
 }
+
+/*LISTING REVIEWS DIV*/
+#listing_reviews{
+    border: solid 1px white;
+    display: none;
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 750px;    
+    width: 700px;
+    background: white;
+    z-index: 50;
+    box-shadow: 2px 2px 8px -2px #d3dee2;
+    z-index: 105;
+    overflow: scroll;
+}
+#reviews_listing_top{
+    /*border: 1px solid red;*/
+    top: 0;
+    position: sticky;
+    margin: 1%;
+    height: 45px;
+    display: flex;
+    border-bottom: 1px solid #EBEBEB;
+    z-index: 10;
+}
+#listing_id{
+    /*border: 1px solid red;*/
+    align-content: center;
+    padding-left: 1%;
+    color: #9b9b9b;
+    width: 95%;
+}
+#exit_reviews_button{
+    width: 30px;
+    border-radius: 50%;
+    align-self: center;
+    height: 30px;
+    align-content: center;
+    text-align: center;
+    font-size: 24px;
+    color: #898989;
+    
+}
+#exit_reviews_button:hover{
+    color: #000;
+    transform: scale(0.95);
+}
+#reviews_div{
+    /*border: 1px solid red;*/
+    margin: 1%;
+    max-height: 98%;
+    /*background-color: #f1f1f1;*/
+}
+.whole_parent_div{
+    /*border: 1px solid red;*/
+    min-height: 20%;
+    margin: 1%;
+}
+.other_info_div{
+    /*border: 1px solid red;*/
+    height: 20px;
+    max-width: 60%;
+    width: 45%;
+    margin: 1% 2%;
+    display: flex;
+}
+.date_div{
+    /*border: 1px solid red;*/
+    width: 30%;
+    font-size: 14px;
+    text-align:end;
+    color: #38baee;
+}
+.bold-date-div{
+    font-weight: 800;
+}
+.bold-date-div:hover{
+    opacity: 0.55;
+}
+
+
+.comment_div{
+    border: 1px solid #c7ebfa;
+    margin: 2% 2% 1% 2%;
+    max-width: 70%;
+    min-width: 45%;
+    min-height: 100px;
+    border-radius: 0px 25px 9px 25px;
+    background-color: #ebf2f7;
+    background-color: #c7ebfa;
+}
+.comment_div:hover{
+    opacity: 0.85;
+}
+
+
+.top_review_details{
+    /*border: 1px solid red;*/
+    margin: 1%;
+    height: 35px;
+    display: flex;
+}
+.bottom_review_txt{
+    margin: 1%;
+    min-height: 60px;
+    /*border: 1px solid red;*/
+    font-size: 14px;
+    padding: 1%;
+    color: #838383;
+    /*overflow: hidden;*/
+}
+.profile_image{
+    border: 1px solid #616161;
+    color: #616161;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    margin-left: 1%;
+}
+.profile-image{
+    height: 21px;
+}
+.profile_name{
+    /*border: 1px solid red;*/
+    margin: 1%;
+    font-size: 16px;
+    color: #616161;
+}
+
+
+
+/*LISTING REPORT DIV*/
+#listing_report_div{
+    border: solid 1px white;
+    display: none;
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 450px;
+    width: 700px;
+    background: white;
+    z-index: 50;
+    box-shadow: 2px 2px 8px -2px #d3dee2;
+    z-index: 105;
+}
+#listing_top{
+    /*border: 1px solid red;*/
+    margin: 1%;
+    height: 8%;
+    display: flex;
+    border-bottom: 1px solid #EBEBEB;
+}
+#listing_id{
+    /*border: 1px solid red;*/
+    align-content: center;
+    padding-left: 1%;
+    color: #9b9b9b;
+    width: 95%;
+}
+#exit_report_button{
+    width: 30px;
+    border-radius: 50%;
+    align-self: center;
+    height: 30px;
+    align-content: center;
+    text-align: center;
+    font-size: 24px;
+    color: #898989;
+    
+}
+#exit_report_button:hover{
+    color: #000;
+    transform: scale(0.95);
+}
+#report_div{
+    /*border: 1px solid red;*/
+    height: 75%;
+    margin: 1%;
+    border-bottom: 1px solid #EBEBEB;
+}
+#reporting_category{
+    border: 1px solid #86D5EE;
+    margin: 1%;
+    height: 50px;
+    border-radius: 9px;
+    width: 96%;
+    background-color: white;
+    font-size: 18px;
+    color: #9b9b9b;
+    outline: none;
+}
+#report_description{
+    border: 1px solid #86D5EE;
+    margin: 1%;
+    height: 70%;
+    border-radius: 9px;
+    color: #9b9b9b;
+    width: 95%;
+    padding: 1%;
+    outline: none;
+}
+#send_report_div{
+    /*border: 1px solid red;*/
+    height: 50px;
+    text-align: center;
+}
+#report_button{
+    border: 1px solid #38baee;
+    margin: 1%;
+    height: 40px;
+    width: 150px;
+    background-color: #38baee;
+    font-weight: 800;
+    border-radius: 9px;
+    color: white;
+}
+#report_button:hover{
+    opacity: 0.75;
+}
+
 
 /*LOCATION DIV STATISTICS*/
 #listing_location_div{
