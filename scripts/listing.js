@@ -175,6 +175,68 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //SHOW AND HIDE REPORT DIV
+    function showReportDiv() {
+        const reportDiv = document.getElementById('listing_report_div');
+        const computedStyle = window.getComputedStyle(reportDiv);
+      
+        if (computedStyle.display === 'none') {
+            reportDiv.style.display = 'block';
+        }
+    }
+    function hideReportDiv() {
+        const reportDiv = document.getElementById('listing_report_div');
+        const computedStyle = window.getComputedStyle(reportDiv);
+      
+        if (computedStyle.display === 'block') {
+            reportDiv.style.display = 'none';
+        }
+    }
+
+    const reportButton = document.getElementById('report_misuse');
+    reportButton.addEventListener('click', () =>{
+        showReportDiv();
+        showOverlay();
+    })
+
+    const hideReportButton = document.getElementById('exit_report_button');
+    hideReportButton.addEventListener('click', () =>{
+        hideReportDiv();
+        hideOverlay();
+    })
+    
+    //SHOW AND HIDE REVIEWS DIV
+    function showReviewDiv() {
+        const reviewDiv = document.getElementById('listing_reviews');
+        const computedStyle = window.getComputedStyle(reviewDiv);
+    
+        if (computedStyle.display === 'none') {
+            reviewDiv.style.display = 'block';
+        }
+    }
+    function hideReviewDiv() {
+        const reviewDiv = document.getElementById('listing_reviews');
+        const computedStyle = window.getComputedStyle(reviewDiv);
+    
+        if (computedStyle.display === 'block') {
+            reviewDiv.style.display = 'none';
+        }
+    }
+
+    const reviewButton = document.getElementById('see_all_reviews');
+    reviewButton.addEventListener('click', () =>{
+        showReviewDiv();
+        showOverlay();
+    })
+
+    const hideReviewButton = document.getElementById('exit_reviews_button');
+    hideReviewButton.addEventListener('click', () =>{
+        hideReviewDiv();
+        hideOverlay();
+    })
+
+
+
     //HANDLES TOP AND BOTTOM
     const menuButton = document.getElementById('top_menu_icon');
     menuButton.addEventListener('click', () => {
