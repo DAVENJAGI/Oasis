@@ -239,8 +239,9 @@ body {
 }
 #others_you_may_like{
     /*border: 1px solid red;*/
-    width: 80%;
-    margin-left: 11%;
+    width: auto;
+    margin-left: 15%;
+    /*padding-left: 1%;*/
     font-size: 20px;
     color: #87d0e9;
     font-weight: 700;
@@ -253,9 +254,9 @@ body {
     height: auto;
     width: auto;
     overflow: visible;
-    margin: 3% auto;
-    justify-content: space-between;
-    width: 80%;
+    margin: 2% auto;
+    justify-content: space-evenly;
+    width: 88rem;
 }
 
 #listing_features{
@@ -1451,7 +1452,7 @@ body {
 /*OTHER SIMILAR LISTINGS*/
 
 .listing_overview_container{
-    /*border: 1px solid red;*/
+    border: 1px solid #f1f1f1;
     height: 350px;
     margin: 1%;
     width: 280px;
