@@ -87,14 +87,13 @@ body {
 
 .div_names{
     /*border: 1px solid black;*/
-    min-width: 25%;
+    width: 110px;
     color: #38baee;
     font-size: 15px;
-    height: 35px;
+    /*height: 35px;*/
     padding: 1%;
     text-align: center;
     align-content: center;
-    border-radius: 9px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -133,6 +132,7 @@ body {
     width: 40%;
     
 }
+
 #ticket_detail_head{
     /*border: 1px solid red;*/
     margin: 1% 2%;
@@ -314,6 +314,6 @@ body {
     opacity: 0.8;
 }
 #create_ticket_page{
-    background-color: #D0EFFB;
-    border: 1px solid #A1DFF7;
+    /*background-color: #D0EFFB;*/
+    border-bottom: 2px solid #A1DFF7;
 }
