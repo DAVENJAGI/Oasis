@@ -54,7 +54,7 @@ def del_review(review_id):
 @app_views.route('/listings/<string:listing_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/reviews/post.yml', methods=['POST'])
-@require_admin_or_user_auth
+@require_user_or_admin_auth
 def create_obj_review(listing_id):
     """ create new instance """
     listing = storage.get(Listing, listing_id)
