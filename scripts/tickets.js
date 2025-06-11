@@ -40,9 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
         hideTicketInfo();
     })
 
-    const showTicketFeedbackDivButton = document.getElementById('ticket_div');
+    /*
+    const showTicketFeedbackDivButton = document.getElementById('ticket_div_body');
     showTicketFeedbackDivButton.addEventListener('click', () => {
         showOverlay1();
         showTicketInfo();
-    })
+    })*/
 })

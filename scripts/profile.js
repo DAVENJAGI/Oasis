@@ -90,4 +90,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     });
-  });
+
+    //SHOW AND HIDE OVERLAY
+    function showOverlay() {
+      const overlayDiv = document.getElementById('overlay');
+      const computedStyle = window.getComputedStyle(overlayDiv);
+    
+      if (computedStyle.display === 'none') {
+        overlayDiv.style.display = 'block';
+      }
+  }
+  function hideOverlay() {
+      const overlayDiv = document.getElementById('overlay');
+      const computedStyle = window.getComputedStyle(overlayDiv);
+    
+      if (computedStyle.display === 'block') {
+        overlayDiv.style.display = 'none';
+      }
+  }
+
+
+
+    //SHOW AND HIDE PROFLE EDIT DIV
+    function showProfileEditDiv() {
+      const reviewDiv = document.getElementById('whole_profile_div_edit');
+      const computedStyle = window.getComputedStyle(reviewDiv);
+  
+      if (computedStyle.display === 'none') {
+          reviewDiv.style.display = 'block';
+      }
+  }
+  function hideProfileEditDiv() {
+      const reviewDiv = document.getElementById('whole_profile_div_edit');
+      const computedStyle = window.getComputedStyle(reviewDiv);
+  
+      if (computedStyle.display === 'block') {
+          reviewDiv.style.display = 'none';
+      }
+  }
+
+  const editProfileButton = document.getElementById('edit_button');
+  editProfileButton.addEventListener('click', () =>{
+      showProfileEditDiv();
+      showOverlay();
+  })
+
+  const hideEditProfileButton = document.getElementById('exit_edit_button');
+  hideEditProfileButton.addEventListener('click', () =>{
+      hideProfileEditDiv();
+      hideOverlay();
+  })
+});

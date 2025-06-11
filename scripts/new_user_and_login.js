@@ -1,4 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    //HEADER COLOR ON SCROLLING
+    const scrollableDiv = document.getElementById("whole_body");
+    if (scrollableDiv) {
+        scrollableDiv.addEventListener("scroll", function() {
+            if (scrollableDiv.scrollTop > 10) {
+                header.classList.add("scrolled");
+                console.log("I am Scrolled (from div)");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        });
+    }
+
     //SHOW AND HIDE login OVERLAY
     function showLoginOverlay() {
         const overlayDiv = document.getElementById('login_overlay');

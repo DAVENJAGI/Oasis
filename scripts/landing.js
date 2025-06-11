@@ -1,5 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    const scrollableDiv = document.getElementById("whole_body");
+    if (scrollableDiv) {
+        scrollableDiv.addEventListener("scroll", function() {
+            if (scrollableDiv.scrollTop > 10) {
+                header.classList.add("scrolled");
+                console.log("I am Scrolled (from div)");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        });
+    }
+
     function showOverlay1() {
         const overlayDiv1 = document.getElementById('overlay1');
         const computedStyle = window.getComputedStyle(overlayDiv1);

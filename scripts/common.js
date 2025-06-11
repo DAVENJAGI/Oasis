@@ -115,6 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
         "3769951-hd_1920_1080_25fps.mp4",
         "4477613-hd_1920_1080_30fps.mp4",
         "7578541-uhd_3840_2160_30fps.mp4",
+        "3773486-hd_1920_1080_30fps.mp4",
+        "6498270-hd_1920_1080_25fps.mp4",
+        "8045841-hd_1080_1920_25fps.mp4",
+        "7820474-hd_1920_1080_25fps.mp4",
+        "7578540-uhd_3840_2160_30fps.mp4",
+        "7578540-uhd_3840_2160_30fps.mp4",
+        "5148363-hd_1080_1920_30fps.mp4",
+        "3780054-hd_1920_1080_25fps.mp4",
+        "3255326-uhd_3840_2160_25fps.mp4",
     ];
 
     function changeRandomVideo() {

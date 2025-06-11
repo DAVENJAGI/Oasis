@@ -63,4 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ROUTE TO HOME PAGE FROM EVERYWHERE
+    const siteLogo = document.getElementById('site_text');
+    if (siteLogo) {
+        siteLogo.addEventListener('click', function () {
+            window.location.href = 'landing.html';
+        });
+    }
+
 });
