@@ -18,7 +18,7 @@ from models.tag import Tag
 from models.listing_image import listingImage
 from flasgger.utils import swag_from
 from utils.file_utils import save_image, save_cover_image
-from auth.authorization import require_admin_auth, require_agent_or_admin_auth, require_agent_or_admin_or_user_auth, require_support_agent_or_admin_or_user_auth
+from auth.authorization import require_admin_auth, require_agent_or_admin_auth, require_agent_or_admin_or_user_auth, require_support_agent_or_admin_or_user_auth, require_user_or_admin_auth
 
 
 @listing_views.route('/town/<string:town_id>/listings',
