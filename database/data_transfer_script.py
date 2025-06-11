@@ -5,10 +5,10 @@ from os import getenv
 import subprocess
 import mysql.connector
 
-DB_HOST = getenv("HBNB_MYSQL_HOST")
-DB_USER = getenv("HBNB_MYSQL_USER")
-DB_PASSWORD = getenv("HBNB_MYSQL_USER_PASSWORD")
-DB_NAME = getenv("HBNB_MYSQL_DATABASE")
+DB_HOST = os.getenv("OASIS_MYSQL_HOST")
+DB_USER = os.getenv("OASIS_MYSQL_USER")
+DB_PASSWORD = os.getenv("OASIS_MYSQL_USER_PASSWORD")
+DB_NAME = os.getenv("OASIS_MYSQL_DATABASE")
 
 """connection to the database"""
 conn = mysql.connector.connect(
