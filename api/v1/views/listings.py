@@ -79,10 +79,15 @@ def create_obj_listing(town_id):
     kwargs = request.form.to_dict()
     kwargs['town_id'] = town_id
     agent = storage.get(Agent, kwargs['agent_id'])
+    listing_is_verified = False
+
     if agent is None:
         return make_respomse(jsonify({"error": "Agent not found."}), 404)
+    if agent.is_verified is True:
+        listing_is_verified = True
 
-    obj = Listing(**kwargs)
+
+    obj = Listing(**kwargs, is_verified=listing_is_verified)
     obj.save()
 
     if "cover_image" in request.files:
