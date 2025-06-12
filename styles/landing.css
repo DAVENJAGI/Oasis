@@ -249,7 +249,7 @@ body {
     overflow: visible;
     margin: 3%;
     margin-top: 65vh;
-    justify-content: space-between;
+    justify-content: space;
 
 }
 
@@ -448,7 +448,7 @@ body {
 .listing_overview_container{
     border: 1px solid #f1f1f1;
     height: 350px;
-    margin: 1%;
+    margin: 2%;
     width: 280px;
     background-color: white;
     border-radius: 20px;
@@ -467,8 +467,7 @@ body {
     /*border: 1px solid red;*/
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
-    height: 55%;
-    background-image: url('../images/point3d-commercial-imaging-ltd-oxeCZrodz78-unsplash.jpg');
+    min-height: 55%;
     background-size: cover;
     background-repeat: no-repeat;
     background-position-y: 50%;
@@ -477,16 +476,38 @@ body {
     /*border: 0.5px solid #30B3DE;*/
     margin: 2%;
     min-width: 18%;
+    padding: 0% 2px 0% 2px;
     height: 20px;
     border-radius: 8px;
     float: right;
-    font-size: 12px;
+    font-size: 10px;
     text-align: center;
     align-content: center;
     background-color: white;
     font-weight: bold;
     box-shadow: 2px 2px 8px -2px #d3dee2;
-    color: rgba(135, 208, 233, 0.8);
+    color: #87d0e9cc;
+    color: rgb(0, 0, 0, 0.5);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+#distance_item{
+    /*border: 0.5px solid #30B3DE;*/
+    margin: 2%;
+    min-width: 18%;
+    padding-left: 1%;
+    padding-right: 1%;
+    height: 20px;
+    border-radius: 8px;
+    float: right;
+    font-size: 10px;
+    text-align: center;
+    align-content: center;
+    background-color: white;
+    font-weight: bold;
+    box-shadow: 2px 2px 8px -2px #d3dee2;
+    color: #87d0e9cc;
     color: rgb(0, 0, 0, 0.5);
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -523,9 +544,12 @@ body {
     margin: 1%;
     align-content: center;
     font-weight: 900;
-    font-size: 20px;
+    font-size: 15px;
     color: #898989;
     min-width: 55%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .listing_type{
     /*border: 1px solid red;*/
