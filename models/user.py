@@ -22,6 +22,7 @@ class User(BaseModel, Base):
         is_verified = Column(Boolean, default=False, nullable=False)
         user_latitude = Column(Float, nullable=False)
         user_longitude = Column(Float, nullable=False)
+        profile_image = Column(String(256), nullable=True)
         reviews = relationship("Review", backref="user")
         ratings = relationship("userRating", backref="user")
         tickets = relationship("Ticket", backref="user")
