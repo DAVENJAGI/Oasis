@@ -2,7 +2,6 @@ import os
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = 'static/images/listings'
-
 def save_image(file, listing_id):
     """Saves an image file locally and returns the storage location file path"""
     if not os.path.exists(UPLOAD_FOLDER):
@@ -13,8 +12,8 @@ def save_image(file, listing_id):
     file.save(filepath)
     return filepath
 
-COVER_UPLOAD_FOLDER = 'static/images/listings/cover_photos'
 
+COVER_UPLOAD_FOLDER = 'static/images/listings/cover_photos'
 def save_cover_image(file, listing_id):
     """Saves a cover photo file locally and returns the storage location file path"""
     if not os.path.exists(COVER_UPLOAD_FOLDER):
@@ -22,6 +21,18 @@ def save_cover_image(file, listing_id):
 
     filename = secure_filename(f"{listing_id}_{file.filename}")
     filepath = os.path.join(COVER_UPLOAD_FOLDER, filename)
+    file.save(filepath)
+    return filepath
+
+
+USER_PROFILE_IMAGE_UPLOAD_FOLDER = 'static/images/users/profile_images'
+def save_user_profile_image(file, user_id):
+    """Saves an image file locally and returns the storage location file path"""
+    if not os.path.exists(USER_PROFILE_IMAGE_UPLOAD_FOLDER):
+        os.makedirs(USER_PROFILE_IMAGE_UPLOAD_FOLDER)
+
+    filename = secure_filename(f"{user_id}_{file.filename}")
+    filepath = os.path.join(USER_PROFILE_IMAGE_UPLOAD_FOLDER, filename)
     file.save(filepath)
     return filepath
 
