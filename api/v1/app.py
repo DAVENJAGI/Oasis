@@ -35,7 +35,7 @@ app.register_blueprint(tag_views)
 app.register_blueprint(support_agent_views)
 app.register_blueprint(login_views)
 
-cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
+cors = CORS(app, resources={"/*": {"origins": ["http://127.0.0.1:5500", "http://localhost:5500"]}})
 
 @app.teardown_appcontext
 def teardown(exception=None):
