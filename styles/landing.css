@@ -235,10 +235,22 @@ body {
     overflow: visible;
     margin: 3%;
     margin-top: 60vh;
-    justify-content: space-between;
+    justify-content: space;
 
 }
 
+#landing_body_div{
+    /*border: 1px solid black;*/
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+    width: auto;
+    overflow: visible;
+    margin: 3%;
+    margin-top: 60vh;
+    justify-content: space;
+}
 #login_body_div{
     /*border: 1px solid black;*/
     position: relative;
