@@ -11,6 +11,7 @@ from models.favorite_listing import favoriteListing
 from models.listing import Listing
 from flasgger.utils import swag_from
 from werkzeug.security import generate_password_hash
+from utils.file_utils import save_user_profile_image
 from auth.authorization import require_admin_auth, require_user_or_admin_auth, require_agent_or_admin_or_user_auth, require_support_agent_or_admin_or_user_auth
 
 @user_views.route('/users', methods=['GET'], strict_slashes=False)
@@ -84,17 +85,27 @@ def create_obj_user():
 @require_user_or_admin_auth
 def put_user(user_id):
     """ put user data endpoint  """
-    if not request.form:
-        return make_response(jsonify({"error": "Missing form data"}), 400)
+    if not request.form and 'profile_image' not in request.files:
+        return make_response(jsonify({"error": "Missing form data or file"}), 400)
+
     obj = storage.get(User, user_id)
     if obj is None:
         abort(404)
     for key, value in request.form.to_dict().items():
         if key not in ['id', 'email', 'created_at', 'updated']:
             setattr(obj, key, value)
-    if 'password' in request.form:
+
+    if 'password' in request.form.to_dict():
         hashed_password = generate_password_hash(request.form['password'])
         setattr(obj, 'password', hashed_password)
+
+    if "profile_image" in request.files:
+        file = request.files['profile_image']
+        if file.filename == '':
+            return jsonify({"error": "No selected file"}), 400
+        filepath = save_user_profile_image(file, obj.id)
+        obj.profile_image = filepath
+
 
     storage.save()
     return jsonify(obj.to_dict())
