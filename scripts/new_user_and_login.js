@@ -1,3 +1,4 @@
+//HIDING AND SHOWING ALL DIVS
 document.addEventListener('DOMContentLoaded', () => {
 
     //HEADER COLOR ON SCROLLING
@@ -61,31 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
         hideLoginOverlay();
         hideLoginDiv();
     })
-
-    //SHOW AND HIDE LOADING DIV
-    function showLoadingDiv() {
-        const loadingDiv = document.getElementById('loading_div');
-        const computedStyle = window.getComputedStyle(loadingDiv);
-      
-        if (computedStyle.display === 'none') {
-            loadingDiv.style.display = 'flex';
-        }
-    }
-    function hideLoadingDiv() {
-        const loadingDiv = document.getElementById('loading_div');
-        const computedStyle = window.getComputedStyle(loadingDiv);
-      
-        if (computedStyle.display === 'flex') {
-            loadingDiv.style.display = 'none';
-        }
-    }
-    
-    const loginButtonButton = document.getElementById('enter_login_button');
-    loginButtonButton.addEventListener('click', () => {
-        showLoadingDiv();
-    })
 })
 
+//GETTING DATA FROM THE BACKEND AND DISPLAYING TO THE LANDING PAGE
 document.addEventListener('DOMContentLoaded', () => {
     
     function fetchLatestOrNearbyListing(lat = null, lng = null) {
