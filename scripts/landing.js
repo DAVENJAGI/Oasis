@@ -56,6 +56,23 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
+    const userProfileImage = document.getElementById("user_profile_icon");
+    const imageUrl = localStorage.getItem('profile_image');
+
+    if(userProfileImage && imageUrl) {
+        userProfileImage.style.backgroundImage = `url('${imageUrl}')`;
+        userProfileImage.style.backgroundSize = "cover";
+        userProfileImage.style.backgroundPosition = "center";     
+        userProfileImage.style.borderRadius = "50%";   
+        console.log('This is image path', imageUrl);
+    } else {
+        const defaultProfileIconHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>
+        `;
+        userProfileImage.outerHTML = defaultProfileIconHTML;
+    }
     
     function fetchLatestOrNearbyListing(lat = null, lng = null) {
         let requestUrl = 'http://0.0.0.0:5000/api/v1/listings/latest/';
