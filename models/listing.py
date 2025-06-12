@@ -4,7 +4,7 @@ import models
 from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
-from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import Enum
 
@@ -50,6 +50,7 @@ class Listing(BaseModel, Base):
         cover_image = Column(String(256), nullable=True)
         total_area = Column(String(256), nullable=True)
         listing_tag = Column(String(64), nullable=True)
+        is_verified = Column(Boolean, default=False, nullable=False)
         favorited_by = relationship("favoriteListing", backref="listing")
         reviews = relationship("Review", backref="listing")
         amenities = relationship("Amenity", secondary="listing_amenity",
