@@ -45,16 +45,32 @@ def get_listings_similar_to_viewed(listing_id):
 
     return(similar_listings)
 
-
 @recommendation_views.route('/listings/latest', methods=['GET'], strict_slashes=False)
 def get_latest_listing():
-    """Get the most recently created listing, limiting it to 20 maximum"""
+    """Get the most recently created listings (max 20), with optional distance from user"""
+    usr_latitude = request.args.get('lat', type=float)
+    usr_longitude = request.args.get('lng', type=float)
+
+    # Get all listings and sort by most recent
     all_listings = storage.all(Listing).values()
     sorted_listings = sorted(all_listings, key=lambda l: l.created_at, reverse=True)
-
     latest_listings = sorted_listings[:20]
-    return jsonify([listing.to_dict() for listing in latest_listings])
 
+    response_data = []
+    for listing in latest_listings:
+        data = listing.to_dict()
+
+        # If coordinates are provided, calculate distance
+        if usr_latitude is not None and usr_longitude is not None:
+            if listing.latitude is None or listing.longitude is None:
+                continue
+
+            distance = haversine(usr_latitude, usr_longitude, listing.latitude, listing.longitude)
+            data['distance_km'] = round(distance, 2)
+        
+        response_data.append(data)
+
+    return jsonify(response_data)
 
 
 @recommendation_views.route('/user/<string:user_id>/nearby_listings', methods=['GET'], strict_slashes=False)
