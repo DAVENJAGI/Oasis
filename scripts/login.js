@@ -41,8 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         showLoadingDiv();
 
-        setTimeout(() => {
-
             const loginData = {
                 email: emailValue,
                 password: passwordValue,
@@ -72,9 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('Data:', data);
                 
                 if (data.Message === 'Login sucessful') {
-                    localStorage.setItem('id', data.user.id)
+                    localStorage.setItem('user_id', data.user.id)
                     localStorage.setItem('profile_image', data.user.profile_image)
-                    window.location.href = 'landing.html'; 
+                    
+                    setTimeout(() => {
+                        window.location.href = 'landing.html';
+                    }, 100);
                 } else if(data.Message === 'Login failed: User not found') {
                     email.style.border = '2px solid red';
                 } else if(data.Message === 'Login failed: Incorrect password') {
@@ -85,6 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Error:', error);
                 alert('An error occurred during login. Please try again.');
             });
-        }, 5000);
+        
     })
 });

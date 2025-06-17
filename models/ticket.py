@@ -13,7 +13,7 @@ ticket_category = Enum("App & Account Support", "Lease & Rent", "Move-In & Move-
                        "Maintenance & Repairs", name="ticket_category")
 
 ticket_processing_status = Enum("Open", "Closed", "Pending", "On-hold",
-                                "Solved", name="ticket_processing_status")
+                                "Solved", "Awaiting-response", name="ticket_processing_status")
 ticket_priority = Enum("Low", "Medium", "High", name="ticket_priority")
 
 class Ticket(BaseModel, Base):

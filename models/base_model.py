@@ -18,7 +18,7 @@ if models.storage_type == "db":
 else:
     Base = object
 
-classes = {"Amenity": "amn", "City": "cty", "supportAgent": "spa", "supportAgentRating": "sar", "supportAgentSession": "sas", "userSession": "uss", "agentSession": "ags", "adminSession": "ads", "agentRating": "agr", "listingImage": "limg", "Tag": "tag", "Lease": "lse", "Report": "rpt", "Town": "twn", "Country": "ctr", "Listing": "lst", "favoriteListing": "fav", "Agent": "agt", "userRating": "usr", "Ticket": "tkt", "Review": "rev", "Booking": "bkg", "State": "stt", "Admin": "adm", "User": "usr"}
+classes = {"Amenity": "amn", "apiKey": "api_k", "City": "cty", "supportAgent": "spa", "supportAgentRating": "sar", "supportAgentSession": "sas", "userSession": "uss", "agentSession": "ags", "adminSession": "ads", "agentRating": "agr", "listingImage": "limg", "Tag": "tag", "Lease": "lse", "Report": "rpt", "Town": "twn", "Country": "ctr", "Listing": "lst", "favoriteListing": "fav", "Agent": "agt", "userRating": "usr", "Ticket": "tkt", "Review": "rev", "Booking": "bkg", "State": "stt", "Admin": "adm", "User": "usr"}
 
 
 class BaseModel:

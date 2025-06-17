@@ -99,15 +99,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (computedStyle.display === 'none') {
         overlayDiv.style.display = 'block';
       }
-  }
-  function hideOverlay() {
-      const overlayDiv = document.getElementById('overlay');
-      const computedStyle = window.getComputedStyle(overlayDiv);
-    
-      if (computedStyle.display === 'block') {
-        overlayDiv.style.display = 'none';
-      }
-  }
+    }
+    function hideOverlay() {
+        const overlayDiv = document.getElementById('overlay');
+        const computedStyle = window.getComputedStyle(overlayDiv);
+      
+        if (computedStyle.display === 'block') {
+          overlayDiv.style.display = 'none';
+        }
+    }
 
 
 
@@ -119,25 +119,108 @@ document.addEventListener('DOMContentLoaded', () => {
       if (computedStyle.display === 'none') {
           reviewDiv.style.display = 'block';
       }
-  }
-  function hideProfileEditDiv() {
-      const reviewDiv = document.getElementById('whole_profile_div_edit');
-      const computedStyle = window.getComputedStyle(reviewDiv);
-  
-      if (computedStyle.display === 'block') {
-          reviewDiv.style.display = 'none';
-      }
-  }
+    }
+    function hideProfileEditDiv() {
+        const reviewDiv = document.getElementById('whole_profile_div_edit');
+        const computedStyle = window.getComputedStyle(reviewDiv);
+    
+        if (computedStyle.display === 'block') {
+            reviewDiv.style.display = 'none';
+        }
+    }
 
-  const editProfileButton = document.getElementById('edit_button');
-  editProfileButton.addEventListener('click', () =>{
-      showProfileEditDiv();
-      showOverlay();
-  })
+    const editProfileButton = document.getElementById('edit_button');
+    editProfileButton.addEventListener('click', () =>{
+        showProfileEditDiv();
+        showOverlay();
+    })
 
-  const hideEditProfileButton = document.getElementById('exit_edit_button');
-  hideEditProfileButton.addEventListener('click', () =>{
-      hideProfileEditDiv();
-      hideOverlay();
-  })
+    const hideEditProfileButton = document.getElementById('exit_edit_button');
+    hideEditProfileButton.addEventListener('click', () =>{
+        hideProfileEditDiv();
+        hideOverlay();
+    })
+
+    //headers
+    const userProfileImage = document.getElementById("user_profile_icon");
+    const imageUrl = localStorage.getItem('profile_image');
+    const userId = localStorage.getItem('user_id');
+    const customToken = localStorage.getItem('X-Custom-Token');
+
+    function getAuthHeaders() {
+        return {
+            'X-Custom-Token': customToken
+        };
+    }
+
+    //FETCH USER DETAILS AND LOAD THEM TO USER PROFILE
+    function fetchUserDetails() {
+      fetch (`http://0.0.0.0:5000/api/v1/user/${userId}`, {
+          headers: {
+              ...getAuthHeaders(),
+          },
+      })
+      .then(response => response.json())
+      .then(data => {
+          const LeftProfileImage = document.getElementById('profile_image_icon');
+          if(LeftProfileImage && imageUrl) {
+            LeftProfileImage.style.backgroundImage = `url('${imageUrl}')`;
+            LeftProfileImage.style.backgroundSize = "cover";
+            LeftProfileImage.style.backgroundPosition = "center";     
+            LeftProfileImage.style.borderRadius = "50%";   
+            console.log('This is image path', imageUrl);
+          } else {
+              const defaultProfileIconHTML = `
+              <div id="profile_image_icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6 profile-icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>
+              </div>
+              `;
+              LeftProfileImage.outerHTML = defaultProfileIconHTML;
+          }
+
+          console.log('User fetched:', data);
+          const firstName = document.getElementById('user_first_name');
+          const lastName = document.getElementById('user_last_name');
+          const userEmail = document.getElementById('user_email');
+          const telNo = document.getElementById('user_primary_tel_no');
+          const priAddress = document.getElementById('user_primary_address');
+          const userGender = document.getElementById('user_gender');
+
+          const wholeName = document.getElementById('user_name_txt');
+          const verificationDiv = document.getElementById('verification_div');
+          const userTelNo = document.getElementById('user_tel_no');          
+
+          firstName.textContent = data.first_name || "-----";
+          lastName.textContent = data.last_name || "-----";
+          userEmail.textContent = data.email || "-----";
+          telNo.textContent = data.telephone_no || "-----";
+          priAddress.textContent = data.address || "-----";
+          userGender.textContent = data.sex || "-----";
+
+          wholeName.textContent = `${data.first_name}` + " " + `${data.last_name}`;
+          userTelNo.textContent = data.telephone_no;
+          if(data.is_verified == true) {
+            verificationDiv.style.visibility = "visible";
+          }
+
+          fetch(`http://0.0.0.0:5000/api/v1/user/${userId}/ratings`, {
+            headers: {
+              ...getAuthHeaders(),
+            },
+          })
+          .then(response => response.json())
+          .then(ratingData => {
+            console.log("Rating data:", ratingData);
+            const ratingDiv = document.getElementById('total_score');
+            ratingDiv.textContent = parseFloat(ratingData.average_rating).toFixed(1);
+          })
+          .catch(err => {
+            console.error("Error fetching user rating:", err);
+          });
+        })
+        .catch(error => console.error("Error fetching doctors:", error));
+    }
+    fetchUserDetails();
 });

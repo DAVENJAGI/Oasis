@@ -8,7 +8,7 @@ from api.v1.views import listing_views, agent_views
 from api.v1.views import amenity_views, user_views, location_views
 from api.v1.views import ticket_views, admin_views, lease_views
 from api.v1.views import review_views, report_views, recommendation_views
-from api.v1.views import tag_views, support_agent_views, login_views
+from api.v1.views import tag_views, support_agent_views, login_views, api_key_views
 from models import storage
 import os
 from flask import jsonify
@@ -34,8 +34,9 @@ app.register_blueprint(recommendation_views)
 app.register_blueprint(tag_views)
 app.register_blueprint(support_agent_views)
 app.register_blueprint(login_views)
+app.register_blueprint(api_key_views)
 
-cors = CORS(app, resources={"/*": {"origins": ["http://127.0.0.1:5500", "http://localhost:5500"]}})
+cors = CORS(app, resources={"/*": {"origins": ["http://127.0.0.1:5500", "http://localhost:5500"]}}, supports_credentials=True, expose_headers=["X-Custom-Token"])
 
 @app.teardown_appcontext
 def teardown(exception=None):

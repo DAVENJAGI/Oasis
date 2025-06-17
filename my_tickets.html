@@ -14,7 +14,6 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="./styles/my_ticket.css">
-    <script type="text/javascript" src="./scripts/common.js"></script>
     <script type="text/javascript" src="./scripts/routing.js"></script>
     <script type="text/javascript" src="./scripts/tickets.js"></script>
     <title>Tickets</title>
@@ -31,7 +30,7 @@
                 <div id="my_ticket_page" class="div_names">My Tickets</div>
 
                 <div class="third_header_div_components tooltip-container" id="user_profile_icon">
-                    <div>JD</div>                        
+                    <!--<div>JD</div>-->                        
                 </div>
                 
             </div>
@@ -88,15 +87,15 @@
                     </div>
                     <div id="all_tickets" class="side_bar_items">
                         <div class="ticket_status">All Tickets</div>
-                        <div class="type_number">1</div>
+                        <div id="all_ticket_number" class="type_number">0</div>
                     </div>
                     <div class="side_bar_items">
                         <div class="ticket_status">Pending Tickets</div>
-                        <div class="type_number">0</div>
+                        <div id="pending_ticket_number" class="type_number">0</div>
                     </div>
                     <div class="side_bar_items">
                         <div class="ticket_status">Closed Tickets</div>
-                        <div class="type_number">0</div>
+                        <div id="closed_ticket_number" class="type_number">0</div>
                     </div>
                 </div>
 
@@ -106,18 +105,23 @@
                     </div>
                     <div class="side_bar_items">
                         <div  class="ticket_status">New</div>
+                        <div id="new_ticket_number" class="type_number">0</div>
                     </div>
                     <div class="side_bar_items">
                         <div  class="ticket_status">In Progress</div>
+                        <div id="in_progress_ticket_number" class="type_number">0</div>
                     </div>
                     <div class="side_bar_items">
                         <div  class="ticket_status">On Hold</div>
+                        <div id="on_hold_ticket_number" class="type_number">0</div>
                     </div>
                     <div class="side_bar_items">
                         <div  class="ticket_status">Awaiting Response</div>
+                        <div id="awaiting_response_ticket_number" class="type_number">0</div>
                     </div>
                     <div class="side_bar_items">
                         <div  class="ticket_status">Resolved/Closed</div>
+                        <div id="resolved_ticket_number" class="type_number">0</div>
                     </div>
                 </div>
             </div>
@@ -135,34 +139,21 @@
                         <div class="ticket_div_title_items">TICKET ID</div>
                         <div class="ticket_div_title_items">LAST UPDATED</div>
                     </div>
+                    <!--
                     <div id="ticket_div_body">
+                    
                         <div id="checkbox_box" class="ticket_div_body_items">
                             <input type="checkbox" id="ticket_checkbox" name="ticket_checkbox">
                         </div>
                         <div class="ticket_div_body_items">
-                            <div id="resolved_div">Resolved/Closed</div>
+                            <div class="resolved_div">Resolved/Closed</div>
                         </div>
                         <div id="subject_txt" class="ticket_div_body_items">Unable to log into my account</div>
                         <div class="ticket_div_body_items">Jane Doe</div>
                         <div class="ticket_div_body_items">App & Account management</div>
                         <div class="ticket_div_body_items">tkt_e3492-546a-asdf3</div>
                         <div class="ticket_div_body_items">12-4-2025</div>
-                        
-                    </div>
-
-                    <div id="ticket_div_body">
-                        <div id="checkbox_box" class="ticket_div_body_items">
-                            <input type="checkbox" id="ticket_checkbox" name="ticket_checkbox">
-                        </div>
-                        <div class="ticket_div_body_items">
-                            <div id="resolved_div">Resolved/Closed</div>
-                        </div>
-                        <div id="subject_txt" class="ticket_div_body_items">Unable to log into my account</div>
-                        <div class="ticket_div_body_items">Jane Doe</div>
-                        <div class="ticket_div_body_items">App & Account management</div>
-                        <div class="ticket_div_body_items">tkt_e3492-546a-asdf3</div>
-                        <div class="ticket_div_body_items">12-4-2025</div>
-                        
+                    -->
                     </div>
                 </div>
             </div>

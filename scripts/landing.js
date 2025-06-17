@@ -58,6 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const userProfileImage = document.getElementById("user_profile_icon");
     const imageUrl = localStorage.getItem('profile_image');
+    const userId = localStorage.getItem('user_id');
+    const customToken = localStorage.getItem('X-Custom-Token');
+
+    function getAuthHeaders() {
+        return {
+            'X-Custom-Token': customToken
+        };
+    }
 
     if(userProfileImage && imageUrl) {
         userProfileImage.style.backgroundImage = `url('${imageUrl}')`;
@@ -67,13 +75,18 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('This is image path', imageUrl);
     } else {
         const defaultProfileIconHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6">
+        <div class="third_header_div_components tooltip-container" id="my_messages_icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"  class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
             </svg>
+        </div
         `;
         userProfileImage.outerHTML = defaultProfileIconHTML;
     }
     
+
+
+    // GET NEARBY OR LATEST LISTINGS
     function fetchLatestOrNearbyListing(lat = null, lng = null) {
         let requestUrl = 'http://0.0.0.0:5000/api/v1/listings/latest/';
         if (lat !== null && lng !== null) {
@@ -96,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 listingsData.forEach(listing => {
                     const listingDiv = document.createElement("div");
                     listingDiv.className = "listing_overview_container";
+                    listingDiv.setAttribute("data-id", listing.id);
                     const hasImage = listing.cover_image && listing.cover_image.trim() !== "";
                     let html = '';
                     const availabilityStatus = (() => {
@@ -128,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>`
                         : ''
                     ;
-
 
                     listingDiv.innerHTML = `
                     
@@ -186,6 +199,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="listing_properties_div"></div>
                     `;
                     container.appendChild(listingDiv);
+
+                    listingDiv.addEventListener("click", () => {
+                        const listingId = listingDiv.getAttribute("data-id");
+                        localStorage.setItem('listing_id', listingId);
+                        window.location.href = "item.html";
+                    });
                 })
             })
             .catch(error => {
@@ -207,5 +226,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const container = document.getElementById("listings_container");
 
-    
 })

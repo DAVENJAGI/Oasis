@@ -204,6 +204,9 @@ body {
 .third_header_div_components:hover{
     background-color: #D7F1F9;
 }
+#user_profile_icon{
+    border: 1px solid white;
+}
 
 #first_part_header{
     /*border: 1px solid red;*/
@@ -238,10 +241,11 @@ body {
     
 }
 #others_you_may_like{
-    /*border: 1px solid red;*/
-    width: auto;
-    margin-left: 15%;
-    /*padding-left: 1%;*/
+    height: auto;
+    margin: 2% auto;
+    padding-left: 2%;
+    width: 88rem;
+    display: flex;
     font-size: 20px;
     color: #87d0e9;
     font-weight: 700;
@@ -251,12 +255,23 @@ body {
     position: relative;
     display: flex;
     flex-wrap: wrap;
+    min-height: 100px;
     height: auto;
     width: auto;
     overflow: visible;
+    margin: 1%;
+    justify-content: space;
     margin: 2% auto;
-    justify-content: space-evenly;
     width: 88rem;
+    display: flex;
+}
+#no_similar_listings{
+    /*border: 1px solid red;*/
+    align-self: center;
+    margin-left: 1%;
+    font-size: 20px;
+    color: rgb(255, 0, 0, 0.4);
+    display: none;
 }
 
 #listing_features{
@@ -391,31 +406,40 @@ body {
     height: 35px;
     width: 35px;
 }
-
-#agent_name{
+#agent_name_and_verification{
     /*border: 1px solid red;*/
     height: 30%;
     margin: 1%;
     align-content: center;
     color: #898989;
+    display: flex;
 }
-#agent_verified{
-    border: 1px solid #D7F1F9;
-    background-color: #D7F1F9;
+#agent_name{
+    /*border: 1px solid red;*/
+    height: 100%;
+    width: auto;
+    align-content: center;
+    color: #898989;
+}
+#agent_last_seen{
+    /*border: 1px solid #D7F1F9;
+    background-color: #D7F1F9;*/
     height: 20%;
     margin: 1%;
-    width: 40%;
-    font-size: 15px;
+    width: auto;
+    font-size: 10px;
+    color: #838383;
     display: flex;
     border-radius: 15px;
     align-items: center;
+    overflow: hidden;
 }
 #verified_img{
     /*border: solid 1px black;*/
-    width: 30%;
-    height: 98%;
+    height: 100%;
+    font-weight: 800;
+    display: flex;
     align-items: center;
-    text-align: start;
 }
 #verified_name{
     /*border: 1px solid red;*/
@@ -775,7 +799,6 @@ body {
     overflow: hidden;
     margin: 1%;
     height: 60vh;
-    background-image: url('../images/house1.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
     box-shadow: 4px 4px 8px -2px #d3dee2;
@@ -794,33 +817,6 @@ body {
     width: 30%;
     border-radius: 5px;
 }
-#img_1{
-    background-image: url('../images/house2.jpeg');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-#img_2{
-    background-image: url('../images/house3.jpeg');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-#img_3{
-    background-image: url('../images/house4.jpeg');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-#img_4{
-    background-image: url('../images/house5.jpeg');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-#img_5{
-    background-image: url('../images/image.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-
 
 /*LISTING DESCRIPTION*/
 #listing_amenity_description{
@@ -1448,19 +1444,20 @@ body {
 
 /*LOCATION DIV STATISTICS*/
 #listing_location_div{
-    border: solid 1px white;
-    display: none;
     border-radius: 8px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 450px;
-    width: 700px;
+    height: 55vh;
+    width: 50rem;
+    min-height: 450px;
+    min-width: 700px;
     background: white;
     z-index: 50;
-    box-shadow: 2px 2px 8px -2px #d3dee2;
+    /*box-shadow: 2px 2px 0px -2px #d3dee2;*/
     z-index: 105;
+    display: none;
 }
 #listing_top{
     /*border: 1px solid red;*/
@@ -1487,11 +1484,10 @@ body {
 #exit_location_button:hover{
     color: #000;
     transform: scale(0.95);
-    background-color: #D7F1F9;
 }
 #location_div{
     /*border: 1px solid red;*/
-    height: 75%;
+    height: 85%;
     margin: 1%;
     border-bottom: 1px solid #EBEBEB;
 }
@@ -1690,48 +1686,35 @@ body {
 
 
 /*OTHER SIMILAR LISTINGS*/
-
 .listing_overview_container{
     border: 1px solid #f1f1f1;
     height: 350px;
-    margin: 1%;
+    margin: 2%;
     width: 280px;
     background-color: white;
     border-radius: 20px;
     box-shadow: 4px 4px 8px -2px #d3dee2;
+    cursor: pointer;
 }
-.listing_overview_container:hover{
+.listing_overview_container:hover {
     transition: transform ease-in-out 1s;
     transform: scale(1.05);
+    color: #86D5EE;
     border: solid 1px #86D5EE;
+    z-index: 1;
 }
 
 .listing_image_div{
     /*border: 1px solid red;*/
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
-    height: 55%;
-    background-image: url('../images/point3d-commercial-imaging-ltd-oxeCZrodz78-unsplash.jpg');
+    min-height: 55%;
     background-size: cover;
     background-repeat: no-repeat;
     background-position-y: 50%;
 }
-#nairobi_image{
-    background-image: url('../images/point3d-commercial-imaging-ltd-5BV56SdvLmo-unsplash.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-#mombasa_home{
-    background-image: url('../images/collov-home-design-n9CzpBTNElo-unsplash.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-#precious{
-    background-image: url('../images/spacejoy-umAXneH4GhA-unsplash.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position-y: 50%;
-}
+
+
 .listing_name{
     /*border: 1px solid red;*/
     margin: 1%;
@@ -1921,4 +1904,24 @@ body {
 #apartment_select{
     width: 300px;
 }
-  
+
+.distance_div{
+    /*border: 0.5px solid #30B3DE;*/
+    margin: 2%;
+    min-width: 18%;
+    padding: 0% 2px 0% 2px;
+    height: 20px;
+    border-radius: 8px;
+    float: right;
+    font-size: 10px;
+    text-align: center;
+    align-content: center;
+    background-color: white;
+    font-weight: bold;
+    box-shadow: 2px 2px 8px -2px #d3dee2;
+    color: #87d0e9cc;
+    color: rgb(0, 0, 0, 0.5);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

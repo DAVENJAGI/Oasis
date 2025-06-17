@@ -25,6 +25,7 @@ from models.support_agent_session import supportAgentSession
 from models.user_session import userSession
 from models.agent_session import agentSession
 from models.admin_session import adminSession
+from models.api_key import apiKey
 from models.ticket import Ticket
 from models.booking import Booking
 from models.admin import Admin
@@ -35,7 +36,7 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {"Amenity": Amenity, "City": City, "supportAgent": supportAgent, "supportAgentRating": supportAgentRating, "supportAgentSession": supportAgentSession, "userSession": userSession, "agentSession": agentSession, "adminSession": adminSession, "agentRating": agentRating, "listingImage": listingImage, "Tag": Tag, "Lease": Lease, "Report": Report, "Town": Town, "Country": Country, "Listing": Listing, "favoriteListing": favoriteListing, "Agent": Agent, "userRating": userRating, "Ticket": Ticket, "Review": Review, "Booking": Booking,  "State": State, "Admin": Admin, "User": User}
+classes = {"Amenity": Amenity, "apiKey": apiKey, "City": City, "supportAgent": supportAgent, "supportAgentRating": supportAgentRating, "supportAgentSession": supportAgentSession, "userSession": userSession, "agentSession": agentSession, "adminSession": adminSession, "agentRating": agentRating, "listingImage": listingImage, "Tag": Tag, "Lease": Lease, "Report": Report, "Town": Town, "Country": Country, "Listing": Listing, "favoriteListing": favoriteListing, "Agent": Agent, "userRating": userRating, "Ticket": Ticket, "Review": Review, "Booking": Booking,  "State": State, "Admin": Admin, "User": User}
 
 
 class DBStorage:

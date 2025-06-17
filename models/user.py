@@ -23,6 +23,7 @@ class User(BaseModel, Base):
         user_latitude = Column(Float, nullable=False)
         user_longitude = Column(Float, nullable=False)
         profile_image = Column(String(256), nullable=True)
+        address = Column(String(256), nullable=True)
         reviews = relationship("Review", backref="user")
         ratings = relationship("userRating", backref="user")
         tickets = relationship("Ticket", backref="user")
