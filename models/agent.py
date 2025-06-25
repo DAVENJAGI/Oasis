@@ -19,6 +19,7 @@ class Agent(BaseModel, Base):
         telephone_no = Column(String(64), nullable=False)
         sex = Column(String(64), nullable=False)
         bio = Column(String(1024), nullable=False)
+        profile_image = Column(String(256), nullable=True)
         is_verified = Column(Boolean, default=False, nullable=False)
         listings = relationship("Listing", backref="agent")
         ratings = relationship("agentRating", backref="agent")

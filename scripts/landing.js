@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    
     const scrollableDiv = document.getElementById("whole_body");
     if (scrollableDiv) {
         scrollableDiv.addEventListener("scroll", function() {
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const imageUrl = localStorage.getItem('profile_image');
     const userId = localStorage.getItem('user_id');
     const customToken = localStorage.getItem('X-Custom-Token');
+    let favoritedListings = [];
 
     function getAuthHeaders() {
         return {
@@ -85,6 +87,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
 
+    //FETCH LISTING topReviews DETAILS
+    function fetchUserFavorites(){
+        return fetch(`http://0.0.0.0:5000/api/v1/user/${userId}/favorites`, {
+            headers: {
+                ...getAuthHeaders(),
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            favoritedListings = data;
+        })
+        .catch(error => {
+            console.error("Error fetching favorites listing:", error);
+            return "Unknown User";
+        });
+    }fetchUserFavorites();
 
     // GET NEARBY OR LATEST LISTINGS
     function fetchLatestOrNearbyListing(lat = null, lng = null) {
@@ -105,12 +123,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("This is the data for all latest listing: ", data);
                 const container = document.getElementById("landing_body_div");
                 const verification_div_div = document.getElementsByClassName('verification_div');
+                const favoritedIds = favoritedListings.map(fav => fav.listing_id);
 
                 listingsData.forEach(listing => {
                     const listingDiv = document.createElement("div");
                     listingDiv.className = "listing_overview_container";
                     listingDiv.setAttribute("data-id", listing.id);
                     const hasImage = listing.cover_image && listing.cover_image.trim() !== "";
+                    const isFavorited = favoritedIds.includes(listing.id);
+                    console.log("I am favorited:", isFavorited);
+
                     let html = '';
                     const availabilityStatus = (() => {
                         let status = listing.rental_status;
@@ -143,8 +165,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         : ''
                     ;
 
-                    listingDiv.innerHTML = `
-                    
+                    // Heart Icon (SVG)
+                    const heartIcon = `
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                    </svg>`;
+
+
+                    listingDiv.innerHTML = `                    
                     <div class="listing_image_div" style="background: ${hasImage ? `url('${listing.cover_image}') center/cover` : `#f0f0f0`}; height: 40%; background-color: white; color: #838383; border-radius: 20px 20px 0 0; display: flex; align-items: center; justify-content: center; position: relative;">
                         ${availabilityStatus}
                         ${!hasImage ? `
@@ -185,20 +213,57 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="room_amt">${listing.number_rooms}</div>
                     </div>
                     <div class="price_per_night">
-                        <div class="from_text">from</div>
-                        <div class="amount_text">Ksh ${listing.price_by_night.toLocaleString()}</div>
-                        <div class="per_night_txt">per night</div>
-                        <div class="like_button_div">
+                        <div class="price_amount">
+                            <div class="from_text">from</div>
+                            <div class="amount_text">Ksh ${listing.price_by_night.toLocaleString()}</div>
+                            <div class="per_night_txt">per night</div>
+                        </div
+                        
                         <div class="like_button" id="saved_icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                            </svg> 
+                            <div class="like_button_div" id="saved_icon">
+                               <div class="like_button ${isFavorited ? 'liked' : ''}" id="saved_icon">${heartIcon}</div>
+                            </div>
                         </div>
-                        </div>
+                        
                     </div>
                     <div class="listing_properties_div"></div>
                     `;
-                    container.appendChild(listingDiv);
+                    container.appendChild(listingDiv)
+                    
+                    // SAVE TO FAVORITE LISTING
+                    const likeButton = listingDiv.querySelector(".like_button");
+                    likeButton.addEventListener("click", (event) => {
+                        event.stopPropagation();
+                        const userId = localStorage.getItem("user_id");
+
+                        if (!userId) {
+                            alert("Please log in to save to favorites.");
+                            return;
+                        }
+
+                        fetch(`http://0.0.0.0:5000/api/v1/user/${userId}/favorites/`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                ...getAuthHeaders(),
+                            },
+                            body: JSON.stringify({
+                                listing_id: listing.id
+                            })
+                        })
+                        .then(res => {
+                            if (!res.ok) throw new Error("Failed to add to favorites");
+                            return res.json();
+                        })
+                        .then(data => {
+                            console.log("Listing added to favorites:", data);
+                            likeButton.classList.add("liked");
+                        })
+                        .catch(err => {
+                            console.error("Error saving to favorites:", err);
+                            alert("Failed to save. Try again.");
+                        });
+                    });
 
                     listingDiv.addEventListener("click", () => {
                         const listingId = listingDiv.getAttribute("data-id");

@@ -380,6 +380,7 @@ body {
 }
 #profile_photo_side{
     /*border: 1px solid red;*/
+    color: white;
     width: 25%;
     margin: 1%;
 }
@@ -500,9 +501,10 @@ body {
     font-weight: 700;
 }
 #contact_info:hover{
-    transition: transform 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
     transform: scale(1.025);
     opacity: 0.85;
+    border: 1px solid white;
 }
 #call_icon{
     /*border: 1px solid red;*/
@@ -534,10 +536,10 @@ body {
     align-items: center;
 }
 #message_agent:hover{
-    transition: transform 0.5s ease-in-out;
-    transform: scale(1.025);
+    transition: all ease-in-out 0.5s;
     color: white;
     background-color: #38baee;
+    transform: scale(1.025);
 }
 
 #message_agent_icon{
@@ -612,7 +614,7 @@ body {
 }
 .star-rating__stars {
     display: flex;
-    flex-direction: row-reverse;
+    /*flex-direction: row-reverse;*/
     gap: 6px;
     padding-left: 1%;
 }
@@ -630,12 +632,13 @@ body {
     cursor: pointer;
 }
 
+/*
 .star-rating__label:hover svg,
 .star-rating__label:hover ~ .star-rating__label svg {
     fill: gold;
     color: gold;
 }
-
+*/
 .star-rating__input:checked ~ .star-rating__label svg {
     fill: gold;
     color: gold;
@@ -648,7 +651,7 @@ body {
     /*border: 1px red solid;*/
     margin: 1% auto;
     margin-left: 3%;
-    height: 25%;
+    height: auto;
     width: 90%;
     display: flex;
     justify-content: space-between;
@@ -809,19 +812,22 @@ body {
     margin: 1%;
     height: 15vh;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     gap: 1%;
+    position: relative;
+    overflow: hidden;
 }
 .other_images{
-    border: 1px solid #86D5EE;
-    width: 30%;
+    /*border: 1px solid #86D5EE;*/
+    min-width: 154px;
     border-radius: 5px;
+    background-color: white;
 }
 
 /*LISTING DESCRIPTION*/
 #listing_amenity_description{
     margin: 1%;
-    height: 42em;
+    height: auto;
     background-color: white;
     border: 1px solid white;
     border-radius: 6px;
@@ -892,9 +898,13 @@ body {
     display: block;
     justify-items: center;
     margin-left: 1%;
+    font-weight: 500;
 }
 #first_amenity{
     margin-left: 0%;
+}
+.user-group{
+    height: 20px;
 }
 .amenities_icon{
     border: 1px solid #EBEBEB;
@@ -920,11 +930,52 @@ body {
 #brief_description{
     /*border: 1px solid red;*/
     margin: 1%;
-    min-height: 120px;
+    min-height: 30px;
+    max-height: 120px;
     padding: 1%;
     font-size: 12px;
     color: #9b9b9b;
     border-bottom: 1px solid #EBEBEB;
+}
+#other_amenities{
+    /*border: 1px solid red;*/
+    margin: 1%;
+    min-height: 30px;
+    max-height: 120px;
+    padding: 1%;
+    font-size: 12px;
+    color: #9b9b9b;
+    border-bottom: 1px solid #EBEBEB;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2%;
+}
+.other_amenity_div{
+    border: 1px solid white;
+    width: 10%;
+    height: 30px;
+    border-right: 1px solid #EBEBEB;
+    cursor: pointer;
+    align-content: center;
+    transition: all ease-in-out 0.3s;
+}
+
+.other_amenity_div:hover{
+    transform: scale(1.05);
+    border: 1px solid #86D5EE;
+    border-radius: 10px;
+    text-align: center;
+    align-content: center;
+    padding-left: 1%;
+}
+.amenity_data{
+    /*border: 1px solid black;*/
+    /*height: 100%;*/
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 
 #previous_positive_comments{
@@ -946,7 +997,7 @@ body {
     min-width: 32%;
     align-content: center;
     align-items: center;
-    border: 1px solid #86D5EE;
+    /*border: 1px solid #86D5EE;*/
     border-radius: 20px;
     box-shadow: 2px 2px 16px -2px #d3dee2;
     display: block;
@@ -955,6 +1006,7 @@ body {
 .customer_comment:hover{
     transition: transform ease-in-out 0.5s;
     transform: scale(1.025);
+    border: 1px solid #86D5EE;
 }
 #first_comment{
     margin-left: 0;
@@ -1031,15 +1083,18 @@ body {
     align-content: center;
     text-align: center;
     justify-items: center;
+    
 }
 #left_chevron{
     /*border: 1px solid red;*/
     float: left;
+    cursor: pointer;
 }
 #right_chevron{
     /*border: 1px solid red;*/
     float: right;
     margin: auto;
+    cursor: pointer;
 }
 
 #left_icon{
@@ -1265,8 +1320,10 @@ body {
 }
 #reviews_div{
     /*border: 1px solid red;*/
+    z-index: 9;
     margin: 1%;
-    max-height: 98%;
+    height: 88%;
+    overflow-y: auto;
     /*background-color: #f1f1f1;*/
 }
 .whole_parent_div{
@@ -1279,7 +1336,7 @@ body {
     height: 20px;
     max-width: 60%;
     width: 45%;
-    margin: 1% 2%;
+    margin: 1%;
     display: flex;
 }
 .date_div{
@@ -1329,8 +1386,8 @@ body {
     /*overflow: hidden;*/
 }
 .profile_image{
-    border: 1px solid #616161;
-    color: #616161;
+    border: 1px solid #86D5EE;
+    color: #86D5EE;
     width: 30px;
     height: 30px;
     display: flex;
@@ -1343,9 +1400,10 @@ body {
 }
 .profile_name{
     /*border: 1px solid red;*/
-    margin: 1%;
+    margin-left: 1%;
     font-size: 16px;
     color: #616161;
+    height: 100%;
 }
 
 
@@ -1924,4 +1982,58 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+
+#notification_body{
+    /*border: 1px solid red;*/
+    height: 60%;
+    margin: 2%;
+    align-content: center;
+    display: none;
+}
+#notification_txt{
+    /*border: 1px solid red;*/
+    width: 70%;
+    align-content: center;
+    padding-left: 1%;
+    font-size: 20px;
+    color: #616161;
+}
+#no_nots_emoji{
+    /*border: 1px solid red;*/
+    height: 40%;
+    width: 26%;
+    background-image: url('../images/no_notifs.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: auto;
+    justify-self: center;
+}
+#no_nots_text{
+    /*border: 1px solid red;*/
+    height: 20%;
+    width: 40%;
+    align-content: end;
+    text-align: center;
+    margin: auto;
+    color: #838383;
+    font-size: 12px;
+}
+
+#agent_profile_image_icon{
+    border: 1px solid white;
+    height: 70px;
+    width: 70px;
+    align-self: center;
+    margin: auto;
+    text-align: center;
+    align-content: center;
+    border-radius: 50%;
+    background-color: #B1E1F1;
+}
+
+.profile-icon{
+    height: 50px;
+    width: 50px;
+    color: white;
 }

@@ -24,7 +24,6 @@ if models.storage_type == 'db':
                         Column('tag_id', String(60), ForeignKey('tags.id'), primary_key=True)
                         )
 
-
 rental_status_enum = Enum("Available", "Occupied", "Pending", name="rental_status_enum")
 property_type_enum = Enum("Apartment", "Bungalow", "Maisonette", "Bedsitter", "Single Room",
                        "Studio", "Villa", "Townhouse", "Mansion", "Duplex", "Penthouse", 
@@ -53,6 +52,7 @@ class Listing(BaseModel, Base):
         is_verified = Column(Boolean, default=False, nullable=False)
         favorited_by = relationship("favoriteListing", backref="listing")
         reviews = relationship("Review", backref="listing")
+        ratings = relationship("listingRating", backref="listings")
         amenities = relationship("Amenity", secondary="listing_amenity",
                                  backref="listing_amenities",
                                  viewonly=False)

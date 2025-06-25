@@ -36,3 +36,16 @@ def save_user_profile_image(file, user_id):
     file.save(filepath)
     return filepath
 
+
+AGENT_PROFILE_IMAGE_UPLOAD_FOLDER = 'static/images/agents/profile_images'
+def save_agent_profile_image(file, agent_id):
+    """Saves an image file locally and returns the storage location file path"""
+    if not os.path.exists(AGENT_PROFILE_IMAGE_UPLOAD_FOLDER):
+        os.makedirs(AGENT_PROFILE_IMAGE_UPLOAD_FOLDER)
+
+    filename = secure_filename(f"{agent_id}_{file.filename}")
+    filepath = os.path.join(AGENT_PROFILE_IMAGE_UPLOAD_FOLDER, filename)
+    file.save(filepath)
+    return filepath
+
+

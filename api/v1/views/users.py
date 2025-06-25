@@ -131,6 +131,14 @@ def create_obj_favorites(user_id):
     if not listing:
         return make_response(jsonify({"error": "Listing not found. Please choose a valid lising"}), 400)
 
+    new_id = user_id
+    all_favorites = storage.all(favoriteListing).values()
+    for fav in all_favorites:
+        if fav.user_id == user.id and fav.listing_id == listing.id:
+            fav.delete()
+            storage.save()
+            return make_response(jsonify({"message": "Listing removed from favorites"}), 200)
+
     js = request.get_json()
     obj = favoriteListing(**js, user_id=user.id)
     obj.save()

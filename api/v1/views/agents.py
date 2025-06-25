@@ -8,6 +8,7 @@ from models import storage
 from models.agent import Agent
 from models.agent_rating import agentRating
 from flasgger.utils import swag_from
+from utils.file_utils import save_agent_profile_image
 from werkzeug.security import generate_password_hash
 from auth.authorization import require_admin_auth, require_user_or_admin_auth, require_agent_or_admin_auth, require_agent_or_admin_or_user_auth, require_support_agent_or_admin_or_agent_auth
 
@@ -82,15 +83,24 @@ def create_obj_agent():
 @swag_from('documentation/agent/put.yml', methods=['PUT'])
 @require_agent_or_admin_auth
 def post_agent(agent_id):
-    """  """
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    """ Update agent data """
+    if not request.form and 'profile_image' not in request.files:
+        return make_response(jsonify({"error": "Missing form data or file"}), 400)
+
     obj = storage.get(Agent, agent_id)
     if obj is None:
         abort(404)
-    for key, value in request.get_json().items():
+    for key, value in request.form.to_dict().items():
         if key not in ['id', 'email', 'created_at', 'updated']:
             setattr(obj, key, value)
+
+    if "profile_image" in request.files:
+        file = request.files['profile_image']
+        if file.filename == '':
+            return jsonify({"error": "No selected file"}), 400
+        filepath = save_agent_profile_image(file, obj.id)
+        obj.profile_image = filepath
+
     storage.save()
     return jsonify(obj.to_dict())
 

@@ -693,6 +693,7 @@ body {
     /*border: 1px solid red;*/
     align-content: flex-end;
     color: #000;
+    /*width: 40%;*/
     font-weight: 800;
     gap: 2%;
     font-size: 18px;
@@ -704,7 +705,14 @@ body {
 }
 
 .like_button_div{
-    margin-left: 8%;
+    /*border: 1px solid red;*/
+    margin-left: 1%;
+}
+.price_amount{
+    /*border: 1px solid red;*/
+    width: 75%;
+    display: flex;
+    gap: 2%;
 }
 
 .like_button{
@@ -714,8 +722,10 @@ body {
     color: #86D5EE;
     display: flex;
     justify-content: center;
+    text-align: center;
     align-items: center;
     border-radius: 50%;
+    padding: 1px;
     background-color: #F7F7F7;
     border: 1px solid #86D5EE;
 }
@@ -1130,4 +1140,18 @@ body {
     /*border: 1px solid red;*/
     margin-left: 50%;
     align-items: center;
+}
+.like_button.liked {
+    background-color: #86D5EE;
+    color: white;
+}
+.like_button.liked {
+    background-color: #86D5EE;
+    border-radius: 50%;
+    padding: 3px;
+}
+
+.like_button.liked svg {
+    stroke: white;
+    color: white;
 }

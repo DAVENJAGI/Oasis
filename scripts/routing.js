@@ -47,6 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ROUTE TO AGENT PROFILE FROM ITEM PAGE
+    const agentRouteButton = document.getElementById('contact_info');
+    if (agentRouteButton) {
+        agentRouteButton.addEventListener('click', function () {
+            window.location.href = 'agent_profile.html';
+        });
+    }
+
     // ROUTE TO LOGOUT
     const myLoginPage = document.getElementById('logout_div');
     if (myLoginPage) {

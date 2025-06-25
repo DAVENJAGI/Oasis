@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return "Unknown User";
         });
     }
+    
     function fetchUserTicketDetails() {
         fetch (`http://0.0.0.0:5000/api/v1/user/${userId}/tickets`, {
             headers: {
