@@ -44,3 +44,4 @@ from api.v1.views.tags import *
 from api.v1.views.support_agents import *
 from api.v1.views.login import *
 from api.v1.views.api_keys import *
+from api.v1.views.towns import *

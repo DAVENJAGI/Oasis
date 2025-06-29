@@ -199,7 +199,10 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    border: 1px solid #86D5EE;
+    /*border: 1px solid #86D5EE;
+    background-color: #D7F1F9;*/
+    background-color: #F7F7F7;
+    border: 1px solid rgb(134, 213, 238, 0.4);
 }
 .third_header_div_components:hover{
     background-color: #D7F1F9;
@@ -249,6 +252,7 @@ body {
     font-size: 20px;
     color: #87d0e9;
     font-weight: 700;
+    /*border: 1px solid red;*/
 }
 #more_similar_properties{
     /*border: 1px solid black;*/
@@ -279,20 +283,22 @@ body {
     margin: 1%;
     height: auto;
     /*height: 90%;*/
-    width: calc(100% - 360px);
+    width: calc(100% - 410px);
 }
 #listing_side_info{
     /*border: 1px solid red;*/
     margin: 1%;
-    height: auto;
-    width: 360px;
+    width: 410px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2%;
 }
 
 /*LISTING SIDEBAR INFO*/
 
 #listing_price{
-    border: 1px solid white;
-    margin: 1%;
+    /*border: 1px solid red;*/
+    margin: 2% 1%;
     height: 162px;
     color: #464b4f;
     border-radius: 8px;
@@ -344,8 +350,8 @@ body {
     border: 1px solid #86D5EE;
     margin: 1% auto;
     margin-left: 3%;
-    height: 25%;
-    width: 80%;
+    height: 28%;
+    width: 94%;
     border-radius: 8px;
     color: #86D5EE;
     align-content: center;
@@ -358,13 +364,12 @@ body {
 
 /*LISTING AGENT*/
 #listing_agent{
-    /*border: 1px solid red;*/
-    margin: 1%;
-    margin-top: 6%;
-    height: 210px;
+    border: 1px solid white;
+    min-height: 210px;
     border-radius: 8px;
     background-color: white;
     box-shadow: 4px 4px 8px -2px #d3dee2;
+    min-width: 360px;
 }
 .phone-icon{
     height: 20px;
@@ -375,7 +380,7 @@ body {
     margin: 2%;
     margin-left: 3%;
     width: 90%;
-    height: 44%;
+    height: 40%;
     display: flex;
 }
 #profile_photo_side{
@@ -439,7 +444,7 @@ body {
     /*border: solid 1px black;*/
     height: 100%;
     font-weight: 800;
-    display: flex;
+    display: none;
     align-items: center;
 }
 #verified_name{
@@ -455,43 +460,59 @@ body {
     color: #38baee;
 }
 
-#agent_time_around{
+#agent_location_div{
     /*border: 1px solid red;*/
     height: 30%;
     margin: 1%;
     margin-left: 0;
-    padding-left: 0;
     display: flex;
-    font-style: italic;
     color: #86D5EE;
+    display: none;
 }
 .chat-icon{
-    height: 14px;
+    height: 100%;
+    width: 17px;
+    height: 30px;
+    align-content: flex-end;
+    /*border: 1px solid red;*/
 }
 #message_icon{
-    /*border: 1px solid red;*/
-    width: 12%;
-    height: 98%;
+    /*border: 1px solid black;*/
+    width: 10%;
+    height: 95%;
     text-align: start;    
-    align-content: center;
+    align-content: flex-end;
 }
 
-#message_txt{
+#location_txt{
     /*border: 1px solid red;*/
-    font-size: 9px;
+    font-size: 12px;
+    width: 100%;
+    display: flex;
     align-content: center;
 }
-
-
-
+#town_div{
+    /*border: 1px solid red;*/
+    height: 100%;
+    align-content: flex-end;
+}
+#constituency_div{
+    /*border: 1px solid red;*/
+    height: 100%;
+    font-size: 10px;
+    align-content: flex-end;
+}
+#spacing{
+    width: 2px;
+}
 
 #contact_info{
     border: 1px solid #86D5EE;
     margin: 1%;
     margin-bottom: 2%;
     margin-left: 3%;
-    width: 90%;
-    height: 22%;
+    width: 94%;
+    height: 50px;
     border-radius: 8px;
     background-color: #38baee;
     display: flex;
@@ -525,8 +546,8 @@ body {
     border: 1px solid #38baee;
     margin: 1% auto;
     margin-left: 3%;
-    width: 90%;
-    height: 22%;
+    width: 94%;
+    height: 50px;
     border-radius: 8px;
     background-color: white;
     display: flex;
@@ -558,21 +579,20 @@ body {
     font-size: auto;
 }
 #listing_rating{
-    /*border: 1px solid red;*/
-    margin: 1%;
-    margin-top: 4%;
+    border: 1px solid white;
     height: 160px;
     border-radius: 8px;
     background-color: white;
     box-shadow: 4px 4px 8px -2px #d3dee2;
 }
 #rating_out_of{
-    /*border: 1px red solid;*/
+    border: 1px white solid;
     margin: 1% auto;
     margin-left: 3%;
-    height: 40%;
+    height: 38%;
     width: 90%;
-    display: flex;
+    display: none;
+    /*visibility: hidden;*/
     gap: 2%;
 }
 #real_rating{
@@ -580,30 +600,28 @@ body {
     min-width: 16%;
     font-size: 33px;
     font-weight: 600;
-    color: #9b9b9b;
     text-align: start;
     align-content: center;
 }
 #out_of_rating{
     /*border: 1px solid red;*/
-    min-width: 16%;
-    color: #9b9b9b;
+    width: auto;
     text-align: center;
     align-content: center;
-    font-size: 16px;
+    font-size: 20px;
 }
 #maximum_rating{
     /*border: 1px solid red;*/
     width: 14%;
     font-size: 33px;
     font-weight: 600;
-    color: #898989;
     align-content: center;
     text-align: center;
 }
 
 #rating_stars{
     /*border: 1px red solid;*/
+    display: none;
     margin: 1%;
     height: 20%;
     min-width: 38%;
@@ -659,6 +677,7 @@ body {
 .review_buttons{
     /*border: 1px solid red;*/
     width: 45%;
+    min-height: 45px;
     font-size: 14px;
     text-align: center;
     align-content: center;
@@ -668,7 +687,6 @@ body {
 #see_all_reviews{
     color: #38baee;
     border: 1px solid #38baee;
-    height: 35px;
 }
 #see_all_reviews:hover{
     transition: all ease-in-out 0.5s;
@@ -681,7 +699,6 @@ body {
     background-color: #38baee;
     color: white;
     border: 1px solid #38baee;
-    height: 35px;
 }
 #write_a_review:hover{
     transition: transform ease-in-out 0.5s;
@@ -691,8 +708,6 @@ body {
 
 #listing_disclaimer{
     /*border: 1px solid red;*/
-    margin: 1%;
-    margin-top: 4%;
     height: 60px;
     border-radius: 8px;
     background-color: white;
@@ -769,8 +784,6 @@ body {
 
 #listing_safety_precautions{
     border: 1px solid white;
-    margin: 1%;
-    margin-top: 6%;
     height: 185px;
     border-radius: 8px;
     background-color: white;
@@ -816,6 +829,7 @@ body {
     gap: 1%;
     position: relative;
     overflow: hidden;
+    box-shadow: 4px 2px 8px -2px #d3dee2;
 }
 .other_images{
     /*border: 1px solid #86D5EE;*/
@@ -1519,7 +1533,14 @@ body {
 }
 #listing_top{
     /*border: 1px solid red;*/
-    margin: 1%;
+    margin: 1% 1% 0 1%;
+    height: 8%;
+    display: flex;
+    border-bottom: 1px solid #EBEBEB;
+}
+#listing_location_top{
+    /*border: 1px solid red;*/
+    margin: 1% 1% 0 1%;
     height: 8%;
     display: flex;
     border-bottom: 1px solid #EBEBEB;
@@ -1546,7 +1567,7 @@ body {
 #location_div{
     /*border: 1px solid red;*/
     height: 85%;
-    margin: 1%;
+    margin: 0% 1%;
     border-bottom: 1px solid #EBEBEB;
 }
 
@@ -2036,4 +2057,414 @@ body {
     height: 50px;
     width: 50px;
     color: white;
+}
+
+/*LISTING REVIEW DIV*/
+#listing_review_div{
+    border: solid 1px white;
+    display: none;
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 450px;
+    width: 700px;
+    background: white;
+    z-index: 50;
+    box-shadow: 2px 2px 8px -2px #d3dee2;
+    z-index: 105;
+}
+#listing_review_top{
+    /*border: 1px solid red;*/
+    margin: 1%;
+    height: 8%;
+    display: flex;
+    border-bottom: 1px solid #EBEBEB;
+}
+#listing_id{
+    /*border: 1px solid red;*/
+    align-content: center;
+    padding-left: 1%;
+    color: #9b9b9b;
+    width: 95%;
+}
+#exit_review_button{
+    width: 30px;
+    border-radius: 50%;
+    align-self: center;
+    height: 30px;
+    align-content: center;
+    text-align: center;
+    font-size: 24px;
+    color: #898989;
+    
+}
+#exit_review_button:hover{
+    color: #000;
+    transform: scale(0.95);
+}
+#review_div{
+    /*border: 1px solid red;*/
+    height: 75%;
+    margin: 1%;
+    border-bottom: 1px solid #EBEBEB;
+}
+#review_description{
+    border: 1px solid #86D5EE;
+    margin: 1%;
+    height: 90%;
+    border-radius: 9px;
+    color: #9b9b9b;
+    width: 95%;
+    padding: 1%;
+    outline: none;
+}
+
+#review_button{
+    border: 1px solid #38baee;
+    margin: 1%;
+    height: 40px;
+    width: 150px;
+    background-color: #38baee;
+    font-weight: 800;
+    border-radius: 9px;
+    color: white;
+}
+#review_button:hover{
+    opacity: 0.75;
+}
+#send_review_div{
+    /*border: 1px solid red;*/
+    height: 50px;
+    text-align: center;
+}
+
+/*LISTING REVIEW DIV*/
+#listing_booking_div{
+    border: solid 1px white;
+    display: none;
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 800px;
+    width: 700px;
+    background: white;
+    z-index: 50;
+    box-shadow: 2px 2px 8px -2px #d3dee2;
+    z-index: 105;
+}
+#listing_booking_top{
+    /*border: 1px solid red;*/
+    margin: 1% 0%;
+    height: 8%;
+    display: flex;
+    border-bottom: 1px solid #EBEBEB;
+}
+#listing_id{
+    /*border: 1px solid red;*/
+    align-content: center;
+    padding-left: 1%;
+    color: #9b9b9b;
+    width: 92%;
+}
+
+#booking_div{
+    /*border: 1px solid red;*/
+    height: 90%;
+    margin: 0% 1% 0 1%;
+    border-bottom: 1px solid #EBEBEB;
+    overflow-y: auto;
+}
+#booking_description{
+    /*border: 1px solid #86D5EE;*/
+    margin: 1%;
+    height: 95%;
+    border-radius: 9px;
+    color: #9b9b9b;
+    width: 95%;
+    padding: 1%;
+    outline: none;
+}
+
+#booking_button{
+    border: 1px solid #38baee;
+    margin: 1%;
+    margin-top: 3%;
+    height: 45px;
+    width: 150px;
+    background-color: #38baee;
+    font-weight: 800;
+    border-radius: 9px;
+    color: white;
+}
+#booking_button:hover{
+    opacity: 0.75;
+}
+#send_booking_div{
+    /*border: 1px solid red;*/
+    height: 50px;
+    text-align: center;
+}
+
+.div_title{
+    /*border: 1px solid red;*/
+    height: 30%;
+    text-align: start;
+    padding-left: 2%;
+    font-size: 16px;
+    color: #616161;
+}
+
+.booking_inner_div{
+    /*border: 1px solid red;*/
+    height: 95px;
+    margin-top: 1%;
+    position: relative;
+}
+.lower_title_div{
+    /*border: 1px solid red;*/
+    display: flex;
+    position: relative;
+    height: 65%;
+}
+.user_name{
+    /*border: 1px solid red;*/
+    /*margin: 1%;*/
+    width: 50%;
+    height: 100%;
+}
+.name_input{
+    border: 1px solid #86D5EE;
+    border-radius: 5px;
+    height: 60%;
+    width: 91%;
+    margin-top: 1%;
+    outline: none;
+    padding-left: 2%;
+    color: #838383;
+}
+.name_label{
+    /*border: 1px solid red;*/
+    width: 90%;
+    margin-left: 3.5%;
+    text-align: start;
+    font-size: 13px;
+}
+#enter_booking_description{
+    height: 200px;
+}
+#describe_top{
+    height: 40px;
+}
+#describe_lower{
+    height: 77%;
+}
+#describe_div{
+    width: 100%;
+}
+#description_text_input{
+    margin: 1%;
+    width: 96%;
+    height: 90%;
+    padding: 1%;
+}
+#booking_listing_id{
+    /*border: 1px solid red;*/
+    align-content: center;
+    padding-left: 3%;
+    font-size: 20px;
+    color: #838383;
+    width: 70%;
+}
+#booking_available_status{
+    /*border: 1px solid red;*/
+    max-width: 15%;
+    padding: 0% 1% 0% 1%;
+    border-radius: 15px;
+    align-self: center;
+    height: 50%;
+    align-content: center;
+    text-align: center;
+    font-size: 24px;
+    color: #898989;
+}
+#currently_txt{
+    font-size: 15px;
+}
+
+#booking_exit_div{
+    /*border: 1px solid red;*/
+    width: 30px;
+    border-radius: 50%;
+    align-self: center;
+    height: 30px;
+    align-content: center;
+    text-align: center;
+    font-size: 22px;
+    color: #898989;
+    margin-left: 5%;
+}
+#choose_time{
+    /*border: 1px solid red;*/
+    display: flex;
+}
+.choose_time_and_hour{
+    /*border: 1px solid red;*/
+    width: 20%;
+}
+#time_name{
+    text-align: center;
+}
+#time_label{
+    font-size: 12px;
+    padding-left: 2%;
+}
+#am_pm_time{
+    height: 65%;
+    background-color: white;
+}
+
+/*CONFIRMATION DIV*/
+#confirmation_div{
+    /*border: solid 1px RED;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 200px;
+    width: 550px;
+    background: white;
+    display: none;
+    border-radius: 5px;
+}
+#head_caps_text{
+    color: #86D5EE;
+}
+
+#returned_info{
+    border: solid 1px #ecebeb;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 200px;
+    width: 550px;
+    background: white;
+    display: none;
+    border-radius: 5px;
+    z-index: 299;
+}
+#ok_button{
+    border: 1px solid #38baee;
+    width: 90px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #38baee;
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    outline: none;
+}
+#ok_button:hover{
+    opacity: 0.85;
+    /*transform: scale(1.0001);
+    box-shadow: 1px 1px 4px #9b9a9a;*/
+}
+#head_text_div{
+    /*border: 1px solid red;*/
+    margin: 1%;
+    height: 20%;
+    text-align: center;
+    align-content: center;
+    color: #898989;
+    font-weight: 700;
+    font-size: 22px;
+    
+}
+#saved_confirmation_text_text{
+    margin: 1%;
+    height: 35%;
+    /*font-weight: 550;*/
+    text-align: center;
+    align-content: center;
+    color: #898989;
+    font-size: 16px;
+    
+}
+
+#confirmation_buttons{
+    /*border: solid 1px red;*/
+    height: 20%;
+    margin: 1%;
+    align-content: center;
+}
+#confirmation_buttons_inner{
+    /*border: 1px solid red;*/
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    gap: 5%;
+}
+
+#confirmation_text{
+    /*border: solid 1px red;*/
+    height: 40%;
+    margin: 1%;
+    align-content: center;
+}
+#confirmation_text_text{
+    margin: 1%;
+    height: 35%;
+    /*font-weight: 550;*/
+    text-align: center;
+    align-content: center;
+    color: #898989;
+    font-size: 16px;
+}
+
+#yes_button, #no_button {
+    padding: 10px 24px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+#no_button {
+    background-color: red;
+    color: white;
+}
+
+#no_button:hover {
+    background-color: #bbb;
+}
+
+#yes_button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#yes_button:hover {
+    background-color: #45a049;
+}
+@keyframes popUp {
+    from {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+}
+
+.side_listing_info_div{
+    min-width: 360px;
+}
+.buttons{
+    cursor: pointer;
 }

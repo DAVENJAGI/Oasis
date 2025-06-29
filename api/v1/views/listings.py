@@ -3,6 +3,7 @@
 This file contains the Listing module
 """
 from api.v1.views import listing_views
+from datetime import datetime
 from flask import jsonify, abort, request, make_response
 from models import storage
 from models.listing import Listing
@@ -368,9 +369,24 @@ def create_obj_bookings(listing_id):
         return make_response(jsonify({"error": "Missing end date."}), 400)
 
 
-    obj = Booking(**js, listing_id=listing.id)
+    try:
+        start_date = datetime.strptime(js['start_date'], "%Y-%m-%d")
+        end_date = datetime.strptime(js['end_date'], "%Y-%m-%d")
+    except ValueError:
+        return make_response(jsonify({"error": "Invalid date format. Use YYYY-MM-DD."}), 400)
+
+    duration_days = (end_date - start_date).days
+    if duration_days <= 0:
+        return make_response(jsonify({"error": "End date must be after start date."}), 400)
+
+    total_booking_price = duration_days * listing.price_by_night
+
+    obj = Booking(**js, listing_id=listing.id, total_price=total_booking_price)
     obj.save()
-    return (jsonify(obj.to_dict()), 201)
+    return jsonify({
+        "message": "New booking created successfully. Go to my bookings page to track its approval status.",
+        "booking": obj.to_dict()
+    }), 201
 
 @listing_views.route('/listing/<string:listing_id>/bookings',
                  methods=['GET'], strict_slashes=False)

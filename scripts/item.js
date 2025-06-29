@@ -1,10 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     const listingId = localStorage.getItem('listing_id');
+    const userId = localStorage.getItem('user_id');
     const customToken = localStorage.getItem('X-Custom-Token');
     const userProfileImage = document.getElementById("user_profile_icon");
     const imageUrl = localStorage.getItem('profile_image');
     let listingImages = [];
     let currentImageIndex = 0;
+
+    const picker = new Litepicker({
+        element: document.getElementById('litepicker'),
+        singleMode: false,
+        format: 'YYYY-MM-DD'
+    });
 
     function getAuthHeaders() {
         return {
@@ -41,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    //FETCH USER DETAILS
+    //FETCH AGENT DETAILS
     function fetchAgentDetails(agentId) {
         return fetch(`http://0.0.0.0:5000/api/v1/agent/${agentId}`, {
             headers: {
@@ -86,9 +93,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if(data.is_verified !== true){
                 agentVerificationDiv.style.display = "none";
+            } else{
+                agentVerificationDiv.style.display = "flex";
             }
             agentLastSeen.textContent = `${"Agent active since"}  ${activeSince}`;
             agentName.textContent = `${data.first_name} ${data.last_name}` || "-----";
+
+            if(data.town_id !== null){
+                const locationDiv = document.getElementById('agent_location_div');
+                locationDiv.style.display = "flex";
+                const townId = data.town_id;
+
+                function fetchAgentLocation() {
+                    return fetch(`http://0.0.0.0:5000/api/v1/towns/${townId}`, {
+                        headers: {
+                            ...getAuthHeaders(),
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('This is town data; ', data);
+                        const townName = document.getElementById('town_div');
+                        townName.textContent += `${data.town_name }, `;
+
+                        const cityId = data.city_id;
+
+                        function fetchAgentCityLocation() {
+                            return fetch(`http://0.0.0.0:5000/api/v1/cities/${cityId}`, {
+                                headers: {
+                                    ...getAuthHeaders(),
+                                },
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('This is city data; ', data);
+                                const cityName = document.getElementById('constituency_div');
+                                cityName.textContent = `${data.constituency_name}`; 
+                            })
+                            .catch(error => {
+                                console.error("Error fetching user name:", error);
+                                return "Unknown User";
+                            });
+                        } fetchAgentCityLocation();
+                    })
+                    .catch(error => {
+                        console.error("Error fetching user name:", error);
+                        return "Unknown User";
+                    });
+                }fetchAgentLocation();
+            }
         })
         .catch(error => {
             console.error("Error fetching user name:", error);
@@ -133,6 +186,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const listingPrice = document.getElementById('amount_data');
             listingPrice.textContent = `${data.price_by_night}` + " " + "per night";
+
+            const availabilityStatusDiv = document.getElementById('currently_txt');
+            const availabilityStatusBackground = document.getElementById('booking_available_status');
+            availabilityStatusDiv.textContent = data.rental_status;
+            if(data.rental_status === "Pending"){
+                availabilityStatusDiv.style.color = "white";
+                availabilityStatusBackground.style.backgroundColor = '#C700C7';
+            } else if (data.rental_status === "Available"){
+                availabilityStatusDiv.style.color = "white";
+                availabilityStatusBackground.style.backgroundColor = "#00C200";
+            } else {
+                availabilityStatusDiv.style.color = 'white';
+                availabilityStatusBackground.style.backgroundColor = "#FF1A1A";
+            }
+
 
             const listingName = document.getElementById('listing_name');
             listingName.textContent = data.property_name;
@@ -265,8 +333,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 .then(response => response.json())
                 .then(data => {
-
+                    
                     if(data.length !== 0){
+                        const listingRatingDiv = document.getElementById('rating_out_of');
+                        const listingStars = document.getElementById('rating_stars');
+                        listingRatingDiv.style.display = "flex";
+                        listingStars.style.display = "flex";
                         ratingList = data.map(rating => rating.score)
                         console.log("This is the listing rating: ", ratingList);
                         const total = ratingList.reduce((acc, score) => acc + score, 0);
@@ -278,6 +350,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         const starLabels = document.querySelectorAll("#rating_stars label svg");
 
                         const avgRating = parseFloat(average);
+
+                        if(avgRating > 4){
+                            listingRatingDiv.style.color = 'green';
+                        } else if (avgRating => 3.0){
+                            listingRating.style.color = 'f4c542';
+                        } else{
+                            listingRating.style.color = "red";
+                        }
+
                         if (!isNaN(avgRating)) {
                             starLabels.forEach((svg, index) => {
                                 if (index < Math.floor(avgRating)) {
@@ -648,6 +729,78 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     } fetchSimilarListings();
 
+
+    //FETCH USER DETAILS
+    function fetchUserDetails() {
+        fetch (`http://0.0.0.0:5000/api/v1/user/${userId}`, {
+            headers: {
+                ...getAuthHeaders(),
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('first_name').value = data.first_name;
+            document.getElementById('last_name').value = data.last_name;
+            document.getElementById('email_input').value = data.email;
+            document.getElementById('number_input').value  = data.telephone_no;
+          })
+          .catch(error => console.error("Error fetching doctors:", error));
+    }
+
+    // CREATE NEW BOOKING
+    function createNewBooking() {
+
+        const originalBookingData = {
+            user_id: userId,
+            start_date: picker.getStartDate()?.format('YYYY-MM-DD'),
+            end_date: picker.getEndDate()?.format('YYYY-MM-DD'),
+            status: "Pending",
+            description: document.getElementById('description_text_input').value
+        };
+        
+        const jsonData = JSON.stringify(originalBookingData);
+    
+        const request = new Request(`http://0.0.0.0:5000/api/v1/listing/${listingId}/book`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            ...getAuthHeaders()
+        },
+        body: jsonData,
+        });
+
+        fetch(request)
+        .then(response => {
+            if (!response.ok) {
+                return response.json()
+                .then(errorData => {
+                    console.log(errorData);
+                    hideConfirmCreateNewBooking();
+                    showFeedbackDiv();
+                    console.log("Here's the error data", errorData);
+                    const message = errorData.message;
+                    const confirmationTextDiv = document.getElementById('saved_confirmation_text_text');
+                    confirmationTextDiv.textContent = message || 'An error occurred. Try again.';
+                    confirmationTextDiv.style.color = "red";
+                });
+            }
+            else {
+                return response.json();
+            }
+        })
+        .then(jsonData => {
+            showOverlay1();
+            showFeedbackDiv();
+            const confirmationTextDiv = document.getElementById('saved_confirmation_text_text');
+            const message = jsonData.message;
+            confirmationTextDiv.textContent = message;
+        })
+        .catch(err => {
+            console.error("Error fetching user rating:", err);
+        });
+    }
+
+    
     
 
 
@@ -659,6 +812,9 @@ document.addEventListener('DOMContentLoaded', () => {
       
         if (computedStyle.display === 'none') {
           overlayDiv1.style.display = 'block';
+          overlayDiv1.style.zIndex = "219";
+        } else{
+            overlayDiv1.style.zIndex = "";
         }
     }
     function hideOverlay1() {
@@ -669,6 +825,64 @@ document.addEventListener('DOMContentLoaded', () => {
           overlayDiv1.style.display = 'none';
         }
     }
+
+
+    // FEEDBACK DIVS
+    function showFeedbackDiv() {
+        const feedbackDiv = document.getElementById("returned_info");
+        feedbackDiv.style.display = "block";
+        feedbackDiv.style.zIndex = "450";
+        showOverlay1();
+    }
+    function hideFeedbackDiv() {
+        const feedbackDiv = document.getElementById("returned_info");
+        feedbackDiv.style.display = "none";
+        window.location.reload();
+    }
+    
+    const okButton = document.getElementById('ok_button');
+    okButton.addEventListener('click', () => {
+        hideFeedbackDiv();
+    });
+
+
+    //FUNCTIONS TO SHOW AND HIDE CREATE BOKING DIV
+    function showConfirmCreateNewBooking() {
+        const doctorDeleteDiv = document.getElementById('confirmation_div');
+        const computedStyle = window.getComputedStyle(doctorDeleteDiv);
+        if (computedStyle.display === "none") {
+            doctorDeleteDiv.style.display = 'block';
+            if(doctorDeleteDiv.style.display = 'block'){
+                doctorDeleteDiv.style.zIndex = "220";
+                showOverlay1();
+            }
+        }
+    }
+    const openConfirmCreateNewBooking = document.getElementById('booking_button');
+    openConfirmCreateNewBooking.addEventListener('click', () => {
+        showConfirmCreateNewBooking();
+    });
+
+    function hideConfirmCreateNewBooking() {
+        const doctorDeleteDiv = document.getElementById('confirmation_div');
+        const computedStyle = window.getComputedStyle(doctorDeleteDiv);
+        if (computedStyle.display === "block") {
+            doctorDeleteDiv.style.display = 'none';            
+        }
+    }
+
+    const closeDeleteDoctorButton = document.getElementById('no_button');
+    closeDeleteDoctorButton.addEventListener('click', () => {
+        hideConfirmCreateNewBooking();
+        hideOverlay1();
+    });
+
+    const createBookingButton = document.getElementById('yes_button');
+    createBookingButton.addEventListener('click', () => {
+        hideConfirmCreateNewBooking();
+        createNewBooking();
+    });
+
 
     //SHOW AND HIDE OVERLAY
     function showOverlay() {
@@ -717,6 +931,71 @@ document.addEventListener('DOMContentLoaded', () => {
         hideReportDiv();
         hideOverlay();
     })
+
+
+    //SHOW AND HIDE REVIEW DIVS
+    function showWriteReviewDiv() {
+        const reviewDiv = document.getElementById('listing_review_div');
+        const computedStyle = window.getComputedStyle(reviewDiv);
+      
+        if (computedStyle.display === 'none') {
+            reviewDiv.style.display = 'block';
+        }
+    }
+    function hideWriteReviewDiv() {
+        const reviewDiv = document.getElementById('listing_review_div');
+        const computedStyle = window.getComputedStyle(reviewDiv);
+      
+        if (computedStyle.display === 'block') {
+            reviewDiv.style.display = 'none';
+        }
+    }
+
+    const writeReviewButton = document.getElementById('write_a_review');
+    writeReviewButton.addEventListener('click', () =>{
+        showWriteReviewDiv();
+        showOverlay();
+    })
+
+    const hideWriteReviewButton = document.getElementById('exit_review_button');
+    hideWriteReviewButton.addEventListener('click', () =>{
+        hideWriteReviewDiv();
+        hideOverlay();
+    })
+
+
+    //SHOW AND HIDE BOOKING LISTING DIVS
+    function showBookListingDiv() {
+        const reviewDiv = document.getElementById('listing_booking_div');
+        const computedStyle = window.getComputedStyle(reviewDiv);
+        fetchUserDetails();
+        
+        
+        if (computedStyle.display === 'none') {
+            reviewDiv.style.display = 'block';
+        }
+    }
+    function hideBookListingDiv() {
+        const reviewDiv = document.getElementById('listing_booking_div');
+        const computedStyle = window.getComputedStyle(reviewDiv);
+    
+        if (computedStyle.display === 'block') {
+            reviewDiv.style.display = 'none';
+        }
+    }
+
+    const showBookingDivButton = document.getElementById('book_button');
+    showBookingDivButton.addEventListener('click', () =>{
+        showBookListingDiv();
+        showOverlay();
+    })
+
+    const hideBookingDivButton = document.getElementById('booking_exit_div');
+    hideBookingDivButton.addEventListener('click', () =>{
+        hideBookListingDiv();
+        hideOverlay();
+    })
+
 
     
     //SHOW AND HIDE REVIEWS DIV
@@ -819,13 +1098,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const showListingLocatinButton = document.getElementById('location_map');
     showListingLocatinButton.addEventListener('click', () => {
-        showOverlay1();
+        showOverlay();
         showListingLocationDiv();
     })
 
     const hideListingLocatinButton = document.getElementById('exit_location_button');
     hideListingLocatinButton.addEventListener('click', () => {
-        hideOverlay1();
+        hideOverlay();
         hideListingLocationDiv();
     })
 
@@ -838,4 +1117,57 @@ document.addEventListener('DOMContentLoaded', () => {
           noReviewsDiv.style.display = 'block';
         }
     }
+
+
+    function toggleListingProperties() {
+        const listingDiv = document.getElementById("listing_properties");
+        const similarListingDiv = document.getElementById("more_similar_properties");
+        const othersYouMayLikeListingDiv = document.getElementById("others_you_may_like");
+        const listingBodyDiv = document.getElementById("listing_info_divs");
+        const fullBodyDiv = document.getElementById("body_div");
+        const listingOtherFeaturesDiv = document.getElementById("listing_side_info");
+        const listingDescription = document.getElementById("listing_features");
+        const userProfile = document.getElementById('listing_agent');
+        const listingRating = document.getElementById('listing_rating');
+        const listingDisclaimer = document.getElementById('listing_disclaimer');
+        const listingPrecaution = document.getElementById('listing_safety_precautions');
+        const screenWidth = window.innerWidth;
+
+        const originalFullScreenWidth = 1440;
+        const halfScreen = 1200;
+    
+        if (screenWidth <= halfScreen) {
+            listingDiv.style.display = "block";
+            listingDescription.style.width = screenWidth + "px";
+            listingOtherFeaturesDiv.style.width = screenWidth + "px";
+            listingBodyDiv.style.maxWidth = screenWidth + "px";
+            listingDiv.style.maxWidth = screenWidth + "px";
+            similarListingDiv.style.maxWidth = screenWidth + "px";
+            othersYouMayLikeListingDiv.style.maxWidth = "950px";
+            fullBodyDiv.style.width = "960px";
+            listingOtherFeaturesDiv.style.display = "flex"
+            listingOtherFeaturesDiv.style.flexWrap = "wrap";
+            userProfile.style.margin = "1%";
+            listingRating.style.margin = "1%";
+            listingDisclaimer.style.margin = "1%";
+            listingPrecaution.style.margin = "1%";
+        } else {
+            listingDiv.style.display = "flex";
+            listingDescription.style.width = "";
+            listingDiv.style.width = "";
+            fullBodyDiv.style.width = "";
+            listingBodyDiv.style.width = "";
+            listingOtherFeaturesDiv.style.width = "";
+            listingOtherFeaturesDiv.style.display = "";
+            listingOtherFeaturesDiv.style.flexWrap = "";
+            userProfile.style.margin = "";
+            listingRating.style.margin = "";
+            listingDisclaimer.style.margin = "";
+            listingPrecaution.style.margin = ""
+            
+        }
+        console.log(screenWidth);
+    }
+    window.addEventListener('load', toggleListingProperties);
+    window.addEventListener('resize', toggleListingProperties);
 })

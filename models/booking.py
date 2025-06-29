@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ A model that handles bookings """
-from sqlalchemy import Column, Integer, Date, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, Date, String, DateTime, ForeignKey, Float
 from sqlalchemy.orm import relationship
 from .base_model import BaseModel, Base
 import models 
@@ -15,6 +15,8 @@ class Booking(BaseModel, Base):
         listing_id = Column(String(64), ForeignKey('listings.id'), nullable=False)
         start_date = Column(Date, nullable=False)
         end_date = Column(Date, nullable=False)
+        description = Column(String(512), nullable=True)
+        total_price = Column(Float, default=0.0)
         status = Column(booking_status_enum, default='pending') 
         user = relationship('User', back_populates='bookings')
         listing = relationship('Listing', back_populates='bookings')

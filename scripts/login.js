@@ -77,8 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.location.href = 'landing.html';
                     }, 100);
                 } else if(data.Message === 'Login failed: User not found') {
+                    hideLoadingDiv();
                     email.style.border = '2px solid red';
                 } else if(data.Message === 'Login failed: Incorrect password') {
+                    hideLoadingDiv();
                     password.style.border = '2px solid red';
                 }
             })

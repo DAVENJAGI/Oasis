@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=cabin" />
     <link href='https://unpkg.com/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css">
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link href='https://unpkg.com/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -164,7 +166,7 @@
             </div>
 
             <div id="listing_location_div">
-                <div id="listing_top">
+                <div id="listing_location_top">
                     <div id="listing_id"></div>
                     <div id="exit_location_button">
                         <i class='bx bx-x'></i>
@@ -211,6 +213,135 @@
 
                 
             </div>
+
+            <div id="listing_review_div">
+                <div id="listing_review_top">
+                    <div id="listing_id"></div>
+                    <div id="exit_review_button">
+                        <i class='bx bx-x'></i>
+                    </div>
+                </div>
+                <div id="review_div">
+                    <textarea id="review_description">Write your review here.</textarea>
+                </div>
+                <div id="send_review_div">
+                    <button id="review_button">Send Review</button>
+                </div>
+            </div>
+
+            <div id="returned_info">
+                <div id="head_text_div">
+                    <div id="head_caps_text">Listing Booking</div>
+                </div>
+                <div id="confirmation_text">
+                    <div id="saved_confirmation_text_text"></div>
+                </div>
+                <div id="confirmation_buttons">
+                    <div id="confirmation_buttons_inner">
+                        <button id="ok_button" onclick="hideFeedbackDiv()">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="confirmation_div">
+                <div id="head_text_div">
+                    <div id="head_caps_text">Book the listing</div>
+                </div>
+                <div id="confirmation_text">
+                    <div id="confirmation_text_text">Are you sure you want to book the listing above?</div>
+                </div>
+                <div id="confirmation_buttons">
+                    <div id="confirmation_buttons_inner">
+                        <button id="no_button">No</button>
+                        <button id="yes_button">Yes</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="listing_booking_div">
+                <div id="listing_booking_top">
+                    <div id="booking_listing_id">Book Your Stay Here</div>
+                    <div id="booking_available_status">
+                        <div id="currently_txt"></div>
+                        <div></div>
+                    </div>
+                    
+                    <div id="booking_exit_div">
+                        <i class='bx bx-x'></i>
+                    </div>
+                </div>
+                <div id="booking_div">
+                    <div id="booking_description">
+                        <div id="send_booking_div">
+                            <div id="full_name" class="booking_inner_div">
+                                <div class="div_title">Fullname</div>
+                                <div class="lower_title_div">
+                                    <div class="user_name">
+                                        <input id="first_name" class="name_input"></input>
+                                        <div class="name_label">First Name</div>
+                                    </div>
+                                    <div class="user_name">
+                                        <input id="last_name" class="name_input"></input>
+                                        <div class="name_label">Last Name</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="booking_inner_div">
+                                <div class="div_title">Email</div>
+                                <div class="lower_title_div">
+                                    <div class="user_name">
+                                        <input id="email_input" placeholder="ex: myname@example.com" class="name_input"></input>
+                                        <div class="name_label">example@example.com</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="booking_inner_div">
+                                <div class="div_title">Phone Number</div>
+                                <div class="lower_title_div">
+                                    <div class="user_name">
+                                        <input id="number_input" placeholder="(000)-000000" class="name_input"></input>
+                                        <div class="name_label"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="booking_inner_div">
+                                <div class="div_title">Desired Booking Date & Time</div>
+                                <div class="lower_title_div">
+                                    <div class="user_name">
+                                        <input id="litepicker" placeholder="25-06-2025" type="text" class="name_input"></input>
+                                        <div class="name_label"></div>
+                                    </div>
+                                    <div id="choose_time" class="user_name">
+                                        <div class="choose_time_and_hour">
+                                            <input id="time_name" placeholder="00:00" class="name_input"></input>
+                                            <div id="time_label" class="name_label">Hours</div>
+                                        </div>
+                                        <div class="choose_time_and_hour">
+                                            <select id="am_pm_time" class="name_input">
+                                                <option value="A.M">A.M</option>
+                                                <option value="P.M">P.M</option>
+                                            </select>
+                                            <div class="name_label"></div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div id="enter_booking_description" class="booking_inner_div">
+                                <div id="describe_top" class="div_title">Care Describing Your Booking For Us??</div>
+                                <div id="describe_lower" class="lower_title_div">
+                                    <div id="describe_div" class="user_name">
+                                        <textarea id="description_text_input" class="name_input"></textarea>
+                                        <div class="name_label"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="booking_button">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>            
 
             <div id="listing_report_div">
                 <div id="listing_top">
@@ -427,19 +558,19 @@
                         </div>
                     </div>
                     <div id="listing_side_info">
-                        <div id="listing_price">
+                        <div class="side_listing_info_div" id="listing_price">
                             <div id="listing_price_amount">
                                 <div id="amount_title">Ksh:</div>
                                 <div id="amount_data"></div>
                             </div>
-                            <button id="listing_price_statistics">Price stats</button>
-                            <button id="listing_price_request_callback">Request call back</button>
+                            <button class="buttons" id="listing_price_statistics">Price stats</button>
+                            <button class="buttons" id="listing_price_request_callback">Request call back</button>
                         </div>
 
-                        <div id="listing_agent">
+                        <div class="side_listing_info_div" id="listing_agent">
                             <div id="agent_top_detail">
                                 <div id="profile_photo_side">
-                                    <div id="profile_photo">
+                                    <div class="buttons" id="profile_photo">
                                         <!--
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6 user-icon">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
@@ -458,17 +589,23 @@
                                     </div>
                                     
                                     <div id="agent_last_seen"></div>
-                                    <div id="agent_time_around">
+                                    <div id="agent_location_div">
                                         <div id="message_icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6 chat-icon">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
-                                            </svg>                                              
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 chat-icon">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                                              </svg>
+                                                                                          
                                         </div>
-                                        <div id="message_txt">Typically replies within minutes</div>
+                                        <div id="location_txt">
+                                            <div id="town_div"></div>
+                                            <div id="spacing"> </div>
+                                            <div id="constituency_div"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <button id="contact_info">
+                            <button class="buttons" id="contact_info">
                                 <div id="call_icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 phone-icon">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
@@ -476,7 +613,7 @@
                                 </div>
                                 <div id="call_text">View Profile</div>
                             </button>
-                            <button id="message_agent">
+                            <button class="buttons" id="message_agent">
                                 <div id="message_agent_icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 phone-icon">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
@@ -486,11 +623,11 @@
                             </button>
                         </div>
 
-                        <div id="listing_rating">
+                        <div class="side_listing_info_div" id="listing_rating">
                             <div id="rating_out_of">
-                                <div id="real_rating">--</div>
-                                <div id="out_of_rating">out of </div>
-                                <div id="maximum_rating">5</div>
+                                <div class="rating_color" id="real_rating">--</div>
+                                <div class="rating_color" id="out_of_rating">/</div>
+                                <div class="rating_color"id="maximum_rating">5</div>
                             </div>
                             <div id="rating_stars" class="star-rating__stars">
                                 <input class="star-rating__input" type="radio" name="rating" value="1" id="rating-1" />
@@ -530,13 +667,13 @@
                             </div>
                             
                             <div id="rating_info">
-                                <div class="review_buttons" id="see_all_reviews">See all reviews</div>
-                                <div class="review_buttons" id="write_a_review">Write a review</div>
+                                <div class="review_buttons buttons" id="see_all_reviews">See all reviews</div>
+                                <div class="review_buttons buttons" id="write_a_review">Write a review</div>
                             </div>                            
                         </div>
 
-                        <div  id="listing_disclaimer">
-                            <div class="dislaimer_buttons" id="availability_status">
+                        <div class="side_listing_info_div" id="listing_disclaimer">
+                            <div class="dislaimer_buttons buttons" id="availability_status">
                                 <div id="happy_icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flag-icon">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
@@ -544,7 +681,7 @@
                                 </div>
                                 <div id="available_txt" class="inner_disclaimer_buttons">Available</div>
                             </div>
-                            <button class="dislaimer_buttons" id="report_misuse">
+                            <button class="dislaimer_buttons buttons" id="report_misuse">
                                 <div id="report_icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 flag-icon">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5M3 15V4.5" />
@@ -554,7 +691,7 @@
                             </button>
                         </div>
 
-                        <div id="listing_safety_precautions">
+                        <div class="side_listing_info_div" id="listing_safety_precautions">
                             <div id="precaution_header">Disclaimer Information</div>
                             <div class="precautions_info">* We do not do due dilligence or investigate agents.</div>
                             <div class="precautions_info">* Chat within the app to prevent users from being scammed off-platform.</div>
