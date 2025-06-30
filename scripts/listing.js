@@ -1,61 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const ctx = document.getElementById('price_fluctuations').getContext('2d');
-
-    const priceFluctuationChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: [
-                'January', 'February', 'March', 'April', 'May', 'June',
-                'July', 'August', 'September', 'October', 'November', 'December'
-            ],
-            datasets: [{
-                label: 'Listing Price (KES)',
-                data: [120000, 115000, 118000, 125000, 130000, 128000, 132000, 127000, 129000, 135000, 133000, 140000], // replace with your own data
-                borderColor: '#4bc0c0',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                fill: true,
-                tension: 0.4,
-                pointRadius: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Listing Price Fluctuations (Jan - Dec)'
-                },
-                tooltip: {
-                    mode: 'index',
-                    intersect: false
-                }
-            },
-            interaction: {
-                mode: 'nearest',
-                axis: 'x',
-                intersect: false
-            },
-            scales: {
-                y: {
-                    beginAtZero: false,
-                    title: {
-                        display: true,
-                        text: 'Price in KES'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Month'
-                    }
-                }
-            }
-        }
-    });
-
-
+    
     function displayListingLocation () {
         const apiKey = '';
         const latitude = '-1.071981';

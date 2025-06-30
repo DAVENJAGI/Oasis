@@ -1,64 +1,115 @@
-function createNewBooking() {
-        
-        const originalUserData = {
-            user_id: userId,
-            listing_id: listingId,
-            start_date: picker.getStartDate()?.format('YYYY-MM-DD'),
-            end_date: picker.getEndDate()?.format('YYYY-MM-DD'),
-            status: "Pending",
-            description: document.getElementById('booking_description').value || null
-        };
-    
-        
-        
-        const jsonData = JSON.stringify(originalBookingData);
-                
-    
-        const request = new Request(`http://0.0.0.0:5000/api/v1/listing/${listingId}/book`, {
-        method: "POST",
+//FETCH LISTING RATING
+function fetchListingRating() {
+    let ratingList = [];
+    return fetch(`http://0.0.0.0:5000/api/v1/listing/${listingId}/ratings`, {
         headers: {
-            "Content-Type": "application/json",
-            ...getAuthHeaders()
+            ...getAuthHeaders(),
         },
-        body: jsonData,
-        });
+    })
+    .then(response => response.json())
+    .then(data => {
+        
+        if(data.length !== 0){
+            const userRatingDiv = document.getElementById('rating_out_of');
+            const listingStars = document.getElementById('rating_stars');
+            userRatingDiv.style.display = "flex";
+            listingStars.style.display = "flex";
+            ratingList = data.map(rating => rating.score)
+            console.log("This is the listing rating: ", ratingList);
+            const total = ratingList.reduce((acc, score) => acc + score, 0);
+            const average = ratingList.length > 0 ? (total / ratingList.length).toFixed(1) : "0.0";
 
-        fetch(request)
-        .then(response => {
-            if (!response.ok) {
-                return response.json()
-                .then(errorData => {
-                    console.log(errorData);
-                    hideConfirmCreateNewBooking();
-                    showFeedbackDiv();
-                    const message = errorData.message;
-                    const confirmationTextDiv = document.getElementById('saved_confirmation_text_text');
-                    confirmationTextDiv.textContent = message || 'An error occurred. Try again.';
-                    confirmationTextDiv.style.color = "red";
+            const listingRating = document.getElementById('real_rating');
+            listingRating.textContent = average;
+
+            const starLabels = document.querySelectorAll("#rating_stars label svg");
+
+            const avgRating = parseFloat(average);
+
+            if(avgRating > 4){
+                userRatingDiv.style.color = 'green';
+            } else if (avgRating => 3.0){
+                listingRating.style.color = 'f4c542';
+            } else{
+                listingRating.style.color = "red";
+            }
+
+            if (!isNaN(avgRating)) {
+                starLabels.forEach((svg, index) => {
+                    if (index < Math.floor(avgRating)) {
+                        svg.style.fill = "gold";
+                        svg.style.color = "gold";
+                    }  else if (avgRating >= starIndex - 0.5) {
+                        svg.style.fill = "url(#half-gold)";
+                    } else {
+                        svg.style.fill = "none";
+                    }
                 });
-            }
-            else {
-                return response.json();
-            }
-        })
-        .then(jsonData => {
-            if (jsonData.error) {
-                hideNewUserEditDiv();
-                showOverlay1();
-                showFeedbackDiv();
-                hideDoctorStatusDiv();
-                const confirmationTextDiv = document.getElementById('saved_confirmation_text_text');
-                confirmationTextDiv.style.color = "red";
-                confirmationTextDiv.textContent = jsonData.error.message || 'An error occurred. Try again.';
             } else {
-                hideNewUserEditDiv();
-                showFeedbackDiv();
-                console.log(jsonData);
-                const confirmationTextDiv = document.getElementById('saved_confirmation_text_text');
-                const message = jsonData.message;
-                console.log(message);
-                confirmationTextDiv.textContent = message;
+                starLabels.forEach(svg => svg.style.fill = "none");
             }
-        })
-        .catch(error);
+        } else{
+            const listingRating = document.getElementById('rating_out_of');
+            const ratingStars = document.getElementById('rating_stars');
+            const ratingDiv = document.getElementById('listing_rating');
+            ratingStars.style.display = "none";
+            listingRating.style.display = "none";
+            ratingDiv.style.height = "70px";
+            ratingDiv.style.alignContent = "center";
+        }
+    })
+    .catch(error => {
+        console.error("Error fetching listing details:", error);
+        return "Unknown rating";
+    });
+} fetchListingRating();
+
+
+if(data.length !== 0){
+    const userRatingDiv = document.getElementById('rating_out_of');
+    const listingStars = document.getElementById('rating_stars');
+    userRatingDiv.style.display = "flex";
+    listingStars.style.display = "flex";
+    ratingList = data.map(rating => rating.score)
+    console.log("This is the listing rating: ", ratingList);
+    const total = ratingList.reduce((acc, score) => acc + score, 0);
+    const average = ratingList.length > 0 ? (total / ratingList.length).toFixed(1) : "0.0";
+
+    const listingRating = document.getElementById('real_rating');
+    listingRating.textContent = average;
+
+    const starLabels = document.querySelectorAll("#rating_stars label svg");
+
+    const avgRating = parseFloat(average);
+
+    if(avgRating > 4){
+        userRatingDiv.style.color = 'green';
+    } else if (avgRating => 3.0){
+        listingRating.style.color = 'f4c542';
+    } else{
+        listingRating.style.color = "red";
     }
+
+    if (!isNaN(avgRating)) {
+        starLabels.forEach((svg, index) => {
+            if (index < Math.floor(avgRating)) {
+                svg.style.fill = "gold";
+                svg.style.color = "gold";
+            }  else if (avgRating >= starIndex - 0.5) {
+                svg.style.fill = "url(#half-gold)";
+            } else {
+                svg.style.fill = "none";
+            }
+        });
+    } else {
+        starLabels.forEach(svg => svg.style.fill = "none");
+    }
+} else{
+    const listingRating = document.getElementById('rating_out_of');
+    const ratingStars = document.getElementById('rating_stars');
+    const ratingDiv = document.getElementById('listing_rating');
+    ratingStars.style.display = "none";
+    listingRating.style.display = "none";
+    ratingDiv.style.height = "70px";
+    ratingDiv.style.alignContent = "center";
+}

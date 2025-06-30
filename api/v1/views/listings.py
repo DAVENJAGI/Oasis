@@ -257,7 +257,11 @@ def create_listing_revire(listing_id):
     js = request.get_json()
     obj = Review(**js, listing_id=listing.id)
     obj.save()
-    return (jsonify(obj.to_dict()), 201)
+    return jsonify({
+        "message": "New review created successfully.",
+        "review": obj.to_dict()
+    }), 201
+
 
 
 @listing_views.route('/listing/<string:listing_id>/reviews',
@@ -293,7 +297,10 @@ def create_obj_report(listing_id):
 
     obj = Report(**js, listing_id=listing.id)
     obj.save()
-    return (jsonify(obj.to_dict()), 201)
+    return jsonify({
+        "message": "You reported the listing successfully. We'll follow up on the issue. Thank you",
+        "report": obj.to_dict()
+    }), 201
 
 @listing_views.route('/listing/<string:listing_id>/reports',
                  methods=['GET'], strict_slashes=False)

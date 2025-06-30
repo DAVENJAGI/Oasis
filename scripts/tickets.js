@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
           overlayDiv1.style.display = 'none';
         }
     }
-
+    
+    /*
     //SHOW AND HIDE TICKET INFO DIV
     function showTicketInfo() {
         const ticketFeedbackDiv = document.getElementById('ticket_feedback_div');
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     hideTicketFeedbackDiv.addEventListener('click', () => {
         hideOverlay1();
         hideTicketInfo();
-    })
+    }) */
 
     
     //headers

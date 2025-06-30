@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    
     const monthlyUserStats = {
         months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         spending:       [100, 120, 95, 130, 110, 125, 108, 96, 120, 115, 100, 90],
@@ -153,6 +154,43 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    let authCheckInterval = null;
+    let redirected = false;
+
+    function checkAuthStatus() {
+        if (redirected) return;
+
+        fetch(`http://0.0.0.0:5000/api/v1/user/status`, {
+            headers: {
+                ...getAuthHeaders(),
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Non-200 response");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("This is the data", data);
+            console.log("I am being called");
+
+            if (data.Message === "Sorry, you do not have the valid authorization to perform the operation") {
+                console.log("Authorization failed, stopping interval and redirecting.");
+                redirected = true;
+                clearInterval(authCheckInterval);
+                authCheckInterval = null;
+                setTimeout(() => {
+                    window.location.href = "error_page.html";
+                }, 50);
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching user name:", error);
+        });
+    }checkAuthStatus();
+    authCheckInterval = setInterval(checkAuthStatus, 20000);
+
     //FETCH USER DETAILS AND LOAD THEM TO USER PROFILE
     function fetchUserDetails() {
       fetch (`http://0.0.0.0:5000/api/v1/user/${userId}`, {
@@ -212,9 +250,74 @@ document.addEventListener('DOMContentLoaded', () => {
           })
           .then(response => response.json())
           .then(ratingData => {
-            console.log("Rating data:", ratingData);
-            const ratingDiv = document.getElementById('total_score');
-            ratingDiv.textContent = parseFloat(ratingData.average_rating).toFixed(1);
+            let ratingList = [];
+            const ratingAmountClass = document.getElementById('rating_number');
+
+            if (ratingData.length !== 0) {
+              const userRatingDiv = document.getElementById('total_score');
+              const userStars = document.getElementById('rating_stars');
+              const userRating = document.getElementById('total_score');
+              const numberOfRaters = document.getElementById('rate_total');
+              
+              userRatingDiv.style.display = "flex";
+              userStars.style.display = "flex";
+
+              console.log("This is the listing rating: ", ratingData);
+          
+              ratingList = ratingData.map(rating => rating.score);
+              numberOfRaters.textContent = ratingList.length;
+              
+          
+              const total = ratingList.reduce((acc, score) => acc + score, 0);
+              const average = ratingList.length > 0 ? (total / ratingList.length).toFixed(1) : "0.0";
+              const avgRating = parseFloat(average);
+
+              function getRatingColor(avgRating) {
+                const rounded = Math.floor(avgRating);
+                switch (rounded) {
+                  case 5: return '#00c853';
+                  case 4.5: return '#26de81';
+                  case 4: return '#00b894'; 
+                  case 3.5: return '#66bb6a';
+                  case 3: return '#81c784';
+                  default: return '#a5d6a7';
+                }
+              }
+              ratingAmountClass.style.color = getRatingColor(avgRating);  
+          
+              userRating.textContent = average;
+          
+              if (avgRating > 4) {
+                userRatingDiv.style.color = 'green';
+              } else if (avgRating >= 3.0) {
+                userRating.style.color = '#f4c542';
+              } else {
+                userRating.style.color = "red";
+              }
+          
+              const starLabels = document.querySelectorAll("#rating_stars label svg");
+          
+              if (!isNaN(avgRating)) {
+                starLabels.forEach((svg, index) => {
+                  if (index < Math.floor(avgRating)) {
+                    svg.style.fill = "gold";
+                    svg.style.color = "gold";
+                  } else if (avgRating >= index + 0.5) {
+                    svg.style.fill = "url(#half-gold)";
+                  } else {
+                    svg.style.fill = "none";
+                    svg.style.color = "#838383";
+                  }
+                });
+              } else {
+                starLabels.forEach(svg => svg.style.fill = "none");
+              }
+          
+            } else {
+              const ratingAmount = document.getElementById('total_score');
+              ratingAmount.textContent = `${"0.0"}`;
+              ratingAmountClass.style.color = 'red';
+            }
           })
           .catch(err => {
             console.error("Error fetching user rating:", err);

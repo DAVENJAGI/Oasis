@@ -7,6 +7,12 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey
 import models
 from sqlalchemy.orm import relationship
+from sqlalchemy.types import Enum
+
+
+report_category = Enum("Illegal or Fraudulent", "Listing is a Spam", "Wrong Pricing",
+                       "Already Booked", "User is Unreachable",
+                    name="report_category")
 
 class Report(BaseModel, Base):
     """Representation of a report listing"""
@@ -16,6 +22,7 @@ class Report(BaseModel, Base):
         agent_id = Column(String(64), ForeignKey('agents.id'), nullable=True)
         listing_id = Column(String(64), ForeignKey('listings.id'), nullable=False)
         reason = Column(String(1024), nullable=False)
+        report_category = Column(report_category)
         listing = relationship("Listing", back_populates="reports")
     else:
         user_id = ""
@@ -24,6 +31,6 @@ class Report(BaseModel, Base):
         reason = ""
     
     def __init__(self, *args, **kwargs):
-        """Initializes userRating"""
+        """Initializes listing report"""
         super().__init__(*args, **kwargs)
 

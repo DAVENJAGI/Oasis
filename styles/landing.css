@@ -182,21 +182,20 @@ body {
     width: 30px;
 }
 #list_button{
-    width: 140px;
+    width: auto;
     border-radius: 8px;
-    background-color: white;
-    border: 1px solid white;
-    color: #87d0e9;
-    font-weight: 600;
+    color: white;
+    background-color: transparent;
+    border: transparent;
+    font-weight: 700;
     font-size: 16px;
     height: 40px;
     margin-left: 5%;
     
 }
+
 #list_button:hover{
-    transition: transform ease-in-out 0.5s;
     opacity: 0.85;
-    transform: scale(1.05);
 }
 
 .third_header_div_components{

@@ -23,10 +23,24 @@ from models.agent_session import agentSession
 from models.support_agent_session import supportAgentSession
 from models.booking import Booking
 import json
-from auth.authorization import require_admin_auth
+from auth.authorization import require_user_auth, require_agent_auth, require_admin_auth, require_agent_or_admin_auth, require_agent_or_admin_or_user_auth, require_support_agent_or_admin_or_user_auth, require_user_or_admin_auth
 
-@app_views.route("/status", methods=['GET'], strict_slashes=False)
-def status_returns():
+
+@app_views.route("/user/status", methods=['GET'], strict_slashes=False)
+@require_user_auth
+def user_status_checker():
+    """returns a json file"""
+    return jsonify({"status": "OK"})
+
+@app_views.route("/agent/status", methods=['GET'], strict_slashes=False)
+@require_agent_auth
+def agent_status_checker():
+    """returns a json file"""
+    return jsonify({"status": "OK"})
+
+@app_views.route("/admin/status", methods=['GET'], strict_slashes=False)
+@require_admin_auth
+def admin_status_checker():
     """returns a json file"""
     return jsonify({"status": "OK"})
 

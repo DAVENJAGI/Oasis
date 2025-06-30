@@ -63,6 +63,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const customToken = localStorage.getItem('X-Custom-Token');
     let favoritedListings = [];
 
+    let authCheckInterval = null;
+    let redirected = false;
+
+    function checkAuthStatus() {
+        if (redirected) return;
+
+        fetch(`http://0.0.0.0:5000/api/v1/user/status`, {
+            headers: {
+                ...getAuthHeaders(),
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Non-200 response");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("This is the data", data);
+            console.log("I am being called");
+
+            if (data.Message === "Sorry, you do not have the valid authorization to perform the operation") {
+                console.log("Authorization failed, stopping interval and redirecting.");
+                redirected = true;
+                clearInterval(authCheckInterval);
+                authCheckInterval = null;
+                setTimeout(() => {
+                    window.location.href = "error_page.html";
+                }, 50);
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching user name:", error);
+        });
+    }checkAuthStatus();
+    authCheckInterval = setInterval(checkAuthStatus, 20000);
+
+
     function getAuthHeaders() {
         return {
             'X-Custom-Token': customToken

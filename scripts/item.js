@@ -7,6 +7,46 @@ document.addEventListener('DOMContentLoaded', () => {
     let listingImages = [];
     let currentImageIndex = 0;
 
+    let authCheckInterval = null;
+    let redirected = false;
+
+    function checkAuthStatus() {
+        if (redirected) return;
+
+        fetch(`http://0.0.0.0:5000/api/v1/user/status`, {
+            headers: {
+                ...getAuthHeaders(),
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Non-200 response");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("This is the data", data);
+            console.log("I am being called");
+
+            if (data.Message === "Sorry, you do not have the valid authorization to perform the operation") {
+                console.log("Authorization failed, stopping interval and redirecting.");
+                redirected = true;
+                clearInterval(authCheckInterval);
+                authCheckInterval = null;
+                setTimeout(() => {
+                    window.location.href = "error_page.html";
+                }, 50);
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching user name:", error);
+        });
+    }checkAuthStatus();
+    authCheckInterval = setInterval(checkAuthStatus, 20000);
+
+
+    const returnConfirmationDiv = document.getElementById('head_caps_text');
+
     const picker = new Litepicker({
         element: document.getElementById('litepicker'),
         singleMode: false,
@@ -18,6 +58,62 @@ document.addEventListener('DOMContentLoaded', () => {
             'X-Custom-Token': customToken
         };
     }
+
+
+    //SHOW PRICE FLUCTUATIONS FOR THE LISTING
+    const ctx = document.getElementById('price_fluctuations').getContext('2d');
+    const priceFluctuationChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ],
+            datasets: [{
+                label: 'Listing Price (KES)',
+                data: [120000, 115000, 118000, 125000, 130000, 128000, 132000, 127000, 129000, 135000, 133000, 140000], // replace with your own data
+                borderColor: '#4bc0c0',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true,
+                tension: 0.4,
+                pointRadius: 4,
+                pointBackgroundColor: '#86D5EE'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Listing Price Fluctuations with seasons'
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
+            },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    title: {
+                        display: true,
+                        text: 'Price in KES'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                }
+            }
+        }
+    });
 
     //PROFILE IMAGE
     if(userProfileImage && imageUrl) {
@@ -156,7 +252,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 ...getAuthHeaders(),
             },
         })
-        .then(response => response.json())
+        .then(async (response) => {
+            if (!response.ok) {
+                const error = new Error("Failed to fetch listings");
+                error.response = response;
+                throw error;
+            }
+            return response.json();
+        })
         .then(data => {
             fetchAgentDetails(data.agent_id);
             console.log("This is the listing details: ", data);
@@ -599,7 +702,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
         })
-        .catch(error => console.error("Error fetching listings:", error));
+        .catch( async (error) => {
+            if (error.response) {
+                const headers = error.response.headers;
+            } else {
+                console.error("Network or unexpected error:", error);
+            }
+        });
     }fetchListingDetails();
 
 
@@ -789,6 +898,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .then(jsonData => {
+            returnConfirmationDiv.textContent = "Listing Booked";
+            hideReviewDiv();
             showOverlay1();
             showFeedbackDiv();
             const confirmationTextDiv = document.getElementById('saved_confirmation_text_text');
@@ -800,7 +911,107 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    
+    // CREATE NEW REVIEW
+    function createNewReview() {
+
+        const originalReviewData = {
+            user_id: userId,
+            text: document.getElementById('review_description').value
+        };
+        
+        const jsonData = JSON.stringify(originalReviewData);
+
+        const request = new Request(`http://0.0.0.0:5000/api/v1/listings/${listingId}/review`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            ...getAuthHeaders()
+        },
+        body: jsonData,
+        });
+
+        fetch(request)
+        .then(response => {
+            if (!response.ok) {
+                return response.json()
+                .then(errorData => {
+                    console.log(errorData);
+                    showFeedbackDiv();
+                    console.log("Here's the error data", errorData);
+                    const message = errorData.message;
+                    const confirmationTextDiv = document.getElementById('saved_confirmation_text_text');
+                    confirmationTextDiv.textContent = message || 'An error occurred. Try again.';
+                    confirmationTextDiv.style.color = "red";
+                });
+            }
+            else {
+                return response.json();
+            }
+        })
+        .then(jsonData => {
+            returnConfirmationDiv.textContent = "Review a listing";
+            showOverlay1();
+            showFeedbackDiv();
+            const confirmationTextDiv = document.getElementById('saved_confirmation_text_text');
+            const message = jsonData.message;
+            confirmationTextDiv.textContent = message;
+        })
+        .catch(err => {
+            console.error("Error fetching user rating:", err);
+        });
+    }
+
+    // CREATE NEW REPORT
+    function createNewReport() {
+
+        const originalReportData = {
+            user_id: userId,
+            report_category: document.getElementById('reporting_category').value,
+            reason: document.getElementById('report_description').value
+        };
+        
+        const jsonData = JSON.stringify(originalReportData);
+
+        const request = new Request(`http://0.0.0.0:5000/api/v1/listings/${listingId}/report`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            ...getAuthHeaders()
+        },
+        body: jsonData,
+        });
+
+        fetch(request)
+        .then(response => {
+            if (!response.ok) {
+                return response.json()
+                .then(errorData => {
+                    console.log(errorData);
+                    showFeedbackDiv();
+                    console.log("Here's the error data", errorData);
+                    const message = errorData.message;
+                    const confirmationTextDiv = document.getElementById('saved_confirmation_text_text');
+                    confirmationTextDiv.textContent = message || 'An error occurred. Try again.';
+                    confirmationTextDiv.style.color = "red";
+                });
+            }
+            else {
+                return response.json();
+            }
+        })
+        .then(jsonData => {
+            returnConfirmationDiv.textContent = "Reported a Listing";
+            showOverlay1();
+            showFeedbackDiv();
+            const confirmationTextDiv = document.getElementById('saved_confirmation_text_text');
+            const message = jsonData.message;
+            confirmationTextDiv.textContent = message;
+        })
+        .catch(err => {
+            console.error("Error fetching user rating:", err);
+        });
+    }
+        
     
 
 
@@ -812,9 +1023,9 @@ document.addEventListener('DOMContentLoaded', () => {
       
         if (computedStyle.display === 'none') {
           overlayDiv1.style.display = 'block';
-          overlayDiv1.style.zIndex = "219";
+          //overlayDiv1.style.zIndex = "299";
         } else{
-            overlayDiv1.style.zIndex = "";
+            // overlayDiv1.style.zIndex = "101";
         }
     }
     function hideOverlay1() {
@@ -826,6 +1037,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //CLICKING SEND REVIEW BUTTON
+    const sendReviewButton = document.getElementById('review_button');
+    sendReviewButton.addEventListener('click', () => {
+        createNewReview();
+    });
+
+    //CLICKING SEND REPORT BUTTON
+    const sendReportButton = document.getElementById('report_button');
+    sendReportButton.addEventListener('click', () => {
+        createNewReport();
+    });
 
     // FEEDBACK DIVS
     function showFeedbackDiv() {
@@ -1052,6 +1274,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showPriceChangeDiv() {
         const priceChangeDiv = document.getElementById('price_statistics_div');
         const computedStyle = window.getComputedStyle(priceChangeDiv);
+        priceFluctuationChart;
       
         if (computedStyle.display === 'none') {
             priceChangeDiv.style.display = 'block';
@@ -1068,13 +1291,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const showPriceStatisticsButton = document.getElementById('listing_price_statistics');
     showPriceStatisticsButton.addEventListener('click', () => {
-        showOverlay1();
+        showOverlay();
         showPriceChangeDiv();
     })
 
     const hidePriceStatisticsButton = document.getElementById('exit_price_button');
     hidePriceStatisticsButton.addEventListener('click', () => {
-        hideOverlay1();
+        hideOverlay();
         hidePriceChangeDiv();
     })
 

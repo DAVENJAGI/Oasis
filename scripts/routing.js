@@ -56,12 +56,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ROUTE TO LOGOUT
-    const myLoginPage = document.getElementById('logout_div');
+    const myLoginPage = document.getElementById('logout_parent_div');
     if (myLoginPage) {
         myLoginPage.addEventListener('click', function () {
+            localStorage.clear();
             window.location.href = 'new_visitor.html';
         });
     }
+
+    // ROUTE TO LOGOUT
+    const logOutFromLanding = document.getElementById('list_button');
+    if (logOutFromLanding) {
+        logOutFromLanding.addEventListener('click', function () {
+            localStorage.clear();
+            window.location.href = 'new_visitor.html';
+        });
+    }
+
 
     // ROUTE TO MESSAGES PAGE FROM USER LISTING
     const chatMessage = document.getElementById('message_agent');
@@ -76,6 +87,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (siteLogo) {
         siteLogo.addEventListener('click', function () {
             window.location.href = 'landing.html';
+        });
+    }
+
+    // ROUTE TO LOGIN PAGE FROM ERROR PAGE
+    const logoutErrorButton = document.getElementById('logout_error_button');
+    if (logoutErrorButton) {
+        logoutErrorButton.addEventListener('click', function () {
+            window.location.href = 'new_visitor.html';
         });
     }
 

@@ -192,16 +192,8 @@ def get_all_user_ratings(user_id):
     if user is None:
         return make_response(jsonify({"error": "User not found"}), 404)
     
-    ratings = user.ratings
-    rating_list = [obj.to_dict() for obj in ratings]
-    scores = [r.score for r in ratings if r.score is not None]
-    average_rating = round(sum(scores) / len(scores), 2) if scores else 0.0
-
-    return jsonify({
-        "average_rating": average_rating,
-        "count": len(scores),
-        "ratings": rating_list
-    })
+    ratings = [obj.to_dict() for obj in user.ratings]
+    return jsonify(ratings)    
 
 
 @user_views.route('/user/<string:user_id>/leases',

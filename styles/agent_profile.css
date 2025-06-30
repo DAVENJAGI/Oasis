@@ -887,7 +887,7 @@ body {
 
 
 #rating_stars{
-    /*border: 1px red solid;*
+    /*border: 1px red solid;*/
     height: 40%;
     min-width: 38%;
     max-width: 54%;
@@ -912,12 +912,8 @@ body {
     fill: #9b9b9b;
     color: #9b9b9b;
     transition: fill 0.2s;
-    cursor: pointer;
 }
-.star-rating__input:checked ~ .star-rating__label svg {
-    fill: gold;
-    color: gold;
-}
+
 #ad_amounts{
     margin-left: 1%;
 }

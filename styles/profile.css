@@ -236,7 +236,7 @@ body {
 #user_name_no{
     /*border: 1px solid red;*/
     margin: 1%;
-    height: 11%;
+    height: 10%;
     text-align: center;
     align-items: center;
     justify-content: center;
@@ -250,7 +250,7 @@ body {
 #user_tel_no{
     /*border: 1px solid red;*/
     margin: 1%;
-    height: 9%;
+    height: 5%;
     text-align: center;
     font-size: 18px;
     color: #838383;
@@ -291,7 +291,7 @@ body {
 
 
 #user_rating{
-    /*border: 1px solid red;*/
+    border: 1px solid white;
     height: 10vh;
     margin: 0 7% 0 7%;
     background-color: white;
@@ -299,12 +299,155 @@ body {
     box-shadow: 4px 4px 8px -2px #d3dee2;
     align-items: center;
     justify-content: flex-start;
-    display: flex;
+    display: block;
     color: #616161;
 }
-#user_rating:hover{
+#user_rating_div{
+    height: 75px;
+    color: #3CB371; 
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: flex;
+}
+#profile_bio_head{
+    color: #86D5EE;
+    margin: 1%;
+    padding-left: 1%;
+    border-bottom: 1px solid white;
+}
+#rating_out_of{
+    /*border: 1px red solid;*/
+    margin: 1% auto;
+    margin-left: 3%;
+    height: 38%;
+    width: 30%;
+    display: none;
+    /*visibility: hidden;*/
+    gap: 2%;
+}
+#real_rating{
+    /*border: 1px solid red;*/
+    min-width: 16%;
+    font-size: 33px;
+    font-weight: 600;
+    text-align: start;
+    align-content: center;
+}
+#out_of_rating{
+    /*border: 1px solid red;*/
+    width: auto;
+    text-align: center;
+    align-content: center;
+    font-size: 20px;
+}
+#maximum_rating{
+    /*border: 1px solid red;*/
+    width: 14%;
+    font-size: 33px;
+    font-weight: 600;
+    align-content: center;
+    text-align: center;
+}
+
+#rating_number{
+    /*border: 1px solid red;*/
+    display: flex;
+    height: 60px;
+    width: 100px;
+}
+#rating_stars_and_amount{
+    /*border: 1px solid red;*/
+    height: 60px;
+    width: 80%;
+}
+#number_of_raters{
+    /*border: 1px solid red;*/
+    display: flex;
+    height: 44%;
+}
+.head-icon{
+    height: 20px;
+    fill: #e6fff2;
+}
+#rate_total{
+    /*border: 1px solid red;*/
+    font-weight: 500;
+    font-size: 12px;
+    align-content: center;
+    width: auto;
+    padding-left: 1%;
     color: #86D5EE;
 }
+#rate_total_people{
+    /*border: 1px solid red;*/
+    align-content: center;
+    color: #86D5EE;
+    padding-left: 1%;
+    font-weight: 500;
+    font-size: 12px;
+}
+.rat_amount_class{
+    /*border: 1px solid red;*/
+    width: 30%;
+    gap: 1%;
+    font-size: 20px;
+    text-align: center;
+}
+#total_score{
+    width: auto;
+}
+#over_slash{
+    /*border: 1px solid red;*/
+    font-size: 35px;
+}
+
+#rating_stars{
+    /*border: 1px red solid;*/
+    margin: 1%;
+    height: 40%;
+    min-width: 70%;
+    text-align: start;
+    align-items: center;
+    justify-content: space-around;
+}
+.star-rating__stars {
+    display: flex;
+    /*flex-direction: row-reverse;*/
+    gap: 6px;
+    padding-left: 1%;
+}
+
+.star-rating__input {
+    display: none;
+}
+
+.star-rating__label svg {
+    width: 24px;
+    height: 24px;
+    fill: #838383;
+    color: #838383;
+    transition: fill 0.2s;
+}
+
+.star-rating__input:checked ~ .star-rating__label svg {
+    fill: gold;
+    color: gold;
+    
+}
+
+
+#rating_info{
+    /*border: 1px red solid;*/
+    margin: 1% auto;
+    margin-left: 3%;
+    height: auto;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+}
+
+
 #total_score{
     /*border: 1px solid red;*/
     /*width: 30%;*/
@@ -456,6 +599,7 @@ body {
     margin: 1% 2% 1% 2%;
     height: 15%;
     display: flex;
+    border-radius: 9px;
     align-items: center;
 }
 .other_properties:hover{
@@ -470,12 +614,12 @@ body {
 }
 .other-icon{
     height: 30px;
-    color: #838383;
+    color: #86D5EE;
 }
 .property_name{
     font-size: 16px;
     padding-left: 1%;
-    color: #838383;
+    color: #86D5EE;
 }
 
 #top_activities_div{
