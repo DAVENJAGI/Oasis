@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         '24/7 Security'
     ];
     
+
     const tagsDiv = document.querySelector('.tags_div');
     
     tags.forEach(tagText => {
@@ -162,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             
             pricingInfo.insertAdjacentElement('afterend', chartContainer);
+            chartContainer.style.backgroundColor = "var(--current-glass-bg)"
         }
     }
 
@@ -173,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Destroy existing chart if it exists
         destroyExistingChart();
+        const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-text-color').trim();
         
         const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 200);
         gradient.addColorStop(0, 'rgba(134, 213, 238, 0.8)');
@@ -208,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         display: true,
                         position: 'top',
                         labels: {
-                            color: '#333',
+                            color: primaryColor,
                             font: {
                                 size: 12,
                                 weight: 'bold'
@@ -217,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     tooltip: {
                         backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        titleColor: '#fff',
+                        titleColor: primaryColor,
                         bodyColor: '#fff',
                         borderColor: '#86D5EE',
                         borderWidth: 1,
@@ -238,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         min: 100,
                         max: 240,
                         ticks: {
-                            color: '#666',
+                            color: primaryColor,
                             font: {
                                 size: 11
                             },
@@ -253,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     x: {
                         ticks: {
-                            color: '#666',
+                            color: primaryColor,
                             font: {
                                 size: 11
                             }
@@ -355,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             .chart-header i {
-                color: #86D5EE;
+                color: "var(--primary-color)";
                 font-size: 1.1rem;
             }
             
@@ -416,14 +419,15 @@ document.addEventListener('DOMContentLoaded', () => {
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            z-index: 999;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 1001;
             display: none;
             justify-content: center;
             align-items: center;
             padding: 20px;
             box-sizing: border-box;
+            overflow-y: auto;
         `;
         document.body.appendChild(overlay);
         return overlay;
@@ -469,7 +473,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // SHOWING AND HIDING THE WRITE A REVIEW DIV
     
-    const writeReviewBtn = document.getElementById('write-reviews-btn');
+    const writeReviewBtn1 = document.getElementById('write-reviews-btn');
+    const writeReviewBtn2 = document.getElementById('write-review-btn-2');
     const writeReviewPopup = document.getElementById('write-review-popup');
     const closeWriteReviewBtn = document.getElementById('close-write-review-popup');
     const writeReviewOverlay = createWriteReviewOverlay();
@@ -618,8 +623,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     }
     
-    if (writeReviewBtn) {
-        writeReviewBtn.addEventListener('click', function(e) {
+    if (writeReviewBtn1) {
+        writeReviewBtn1.addEventListener('click', function(e) {
+            e.preventDefault();
+            showWriteReviewPopup();
+        });
+    }
+    if (writeReviewBtn2) {
+        writeReviewBtn2.addEventListener('click', function(e) {
             e.preventDefault();
             showWriteReviewPopup();
         });
@@ -1141,5 +1152,95 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         generateCalendar();
+
+
+        //TOGGLE AND ACTIVATE DARK MODE AND LIGHT MODE
+        
+            // Get the specific dark mode toggle button
+            const themeIcon = document.getElementById('theme-icon');
+            const changeColorButton = document.getElementById('change-color-theme-button');
+            const themeButton = document.querySelector('.theme-toggle');
+            const body = document.body;
     
+            // Moon icon SVG (for light theme)
+            const moonIconSVG = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+            
+            const sunIconSVG = `<circle cx="12" cy="12" r="5"></circle>
+                                <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>`;
+    
+            // Initialize theme
+            function initializeTheme() {
+                const savedTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                
+                if (savedTheme) {
+                    if (savedTheme === 'light') {
+                        setLightTheme();
+                    } else {
+                        setDarkTheme();
+                    }
+                } else if (prefersDark) {
+                    setDarkTheme();
+                } else {
+                    setLightTheme();
+                }
+            }
+    
+            // Set light theme
+            function setLightTheme() {
+                body.classList.add('light-theme');
+                themeIcon.innerHTML = moonIconSVG;
+                themeButton.setAttribute('data-tooltip', 'Dark Mode');
+                localStorage.setItem('theme', 'light');
+            }
+    
+            // Set dark theme
+            function setDarkTheme() {
+                body.classList.remove('light-theme');
+                themeIcon.innerHTML = sunIconSVG;
+                themeButton.setAttribute('data-tooltip', 'Light Mode');
+                localStorage.setItem('theme', 'dark');
+            }
+    
+            function toggleTheme() {
+                const isLightTheme = body.classList.contains('light-theme');
+               
+                themeButton.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    themeButton.style.transform = 'scale(1)';
+                }, 150);
+                
+                if (isLightTheme) {
+                    setDarkTheme();
+                } else {
+                    setLightTheme();
+                }
+            }
+    
+            if(changeColorButton){
+                changeColorButton.addEventListener('click', () => {
+                    console.log("I am changing the color");
+                    toggleTheme();
+                });
+            }
+            
+    
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (!localStorage.getItem('theme')) {
+                    if (e.matches) {
+                        setDarkTheme();
+                    } else {
+                        setLightTheme();
+                    }
+                }
+            });
+    
+            initializeTheme();
+    
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'T') {
+                    e.preventDefault();
+                    toggleTheme();
+                }
+            });    
 });
