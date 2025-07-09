@@ -50,6 +50,7 @@ class DBStorage:
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
+        HBNB_MYSQL_PORT = getenv('HBNB_MYSQL_PORT')
         self.__engine = create_engine('postgresql+psycopg2://{}:{}@{}:{}/{}'.
                                       format(HBNB_MYSQL_USER,
                                              HBNB_MYSQL_PWD,
