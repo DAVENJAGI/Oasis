@@ -5,3 +5,4 @@ flasgger
 gunicorn
 cryptography
 pymysql
+psycopg2-binary
