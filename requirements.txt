@@ -2,5 +2,6 @@ flask
 flask-cors
 Flask-SQLAlchemy
 flasgger
+gunicorn
 cryptography
 pymysql
