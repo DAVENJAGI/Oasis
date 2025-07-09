@@ -1,8 +1,9 @@
--- MariaDB dump 10.19  Distrib 10.11.6-MariaDB, for debian-linux-gnu (x86_64)
+/*M!999999\- enable the sandbox mode */ 
+-- MariaDB dump 10.19-11.8.1-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: oasis
 -- ------------------------------------------------------
--- Server version	10.11.6-MariaDB-2
+-- Server version	11.8.1-MariaDB-2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -13,7 +14,7 @@
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*M!100616 SET @OLD_NOTE_VERBOSITY=@@NOTE_VERBOSITY, NOTE_VERBOSITY=0 */;
 
 --
 -- Table structure for table `listing_images`
@@ -21,7 +22,7 @@
 
 DROP TABLE IF EXISTS `listing_images`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `listing_images` (
   `id` varchar(60) NOT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -41,11 +42,19 @@ CREATE TABLE `listing_images` (
 
 LOCK TABLES `listing_images` WRITE;
 /*!40000 ALTER TABLE `listing_images` DISABLE KEYS */;
+set autocommit=0;
 INSERT INTO `listing_images` VALUES
-('img_1aa7b99a-d548-4e4a-8fd4-1ce4d777bd64','2025-05-11 19:43:16','2025-05-11 19:43:16','lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8','static/images/listings/lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8_efficiency_1593620.png',NULL),
-('img_4e8f6c85-e4d6-44e5-9e09-507b14af3bf2','2025-05-11 19:44:08','2025-05-11 19:44:08','lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8','static/images/listings/lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8_efficiency_1593620.png',NULL);
+('limg_2ae665b3-ece5-43d3-8f0e-8e98d950983f','2025-06-17 21:34:22','2025-06-17 21:34:22','lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8','static/images/listings/lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8_spacejoy-umAXneH4GhA-unsplash.jpg',NULL),
+('limg_59f8bcb8-9a66-4aa6-8965-5685be798687','2025-06-17 21:44:18','2025-06-17 21:44:18','lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8','static/images/listings/lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8_pexels-pixabay-275484.jpg',NULL),
+('limg_60f2e229-7d4d-4f26-b253-ac883078c0f9','2025-06-17 21:35:42','2025-06-17 21:35:42','lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8','static/images/listings/lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8_point3d-commercial-imaging-ltd-n7KC0g1MFLk-unsplash.jpg',NULL),
+('limg_66e69ed3-dd0d-478f-8eac-65a26fe7f3a8','2025-06-17 21:34:50','2025-06-17 21:34:50','lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8','static/images/listings/lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8_collov-home-design-n9CzpBTNElo-unsplash.jpg',NULL),
+('limg_7144f618-9ebb-4a19-9f8e-1e19ffa9424b','2025-06-17 21:35:21','2025-06-17 21:35:21','lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8','static/images/listings/lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8_point3d-commercial-imaging-ltd-5BV56SdvLmo-unsplash.jpg',NULL),
+('limg_a3b3c891-3cb7-41dd-a9e0-6a619e73b5e8','2025-06-17 21:35:06','2025-06-17 21:35:06','lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8','static/images/listings/lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8_mk-s-TD_iJAFo_80-unsplash.jpg',NULL),
+('limg_c97e4ef4-f423-4150-aaf8-1868e436924e','2025-06-17 21:36:00','2025-06-17 21:36:00','lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8','static/images/listings/lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8_point3d-commercial-imaging-ltd-oxeCZrodz78-unsplash.jpg',NULL),
+('limg_e6d8de02-85a6-4dac-b9a4-dddb383e601a','2025-06-17 21:44:02','2025-06-17 21:44:02','lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8','static/images/listings/lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8_pexels-pixabay-276554.jpg',NULL);
 /*!40000 ALTER TABLE `listing_images` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -54,6 +63,6 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-06-11 11:56:32
+-- Dump completed on 2025-07-08 23:35:58

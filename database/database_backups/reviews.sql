@@ -1,8 +1,9 @@
--- MariaDB dump 10.19  Distrib 10.11.6-MariaDB, for debian-linux-gnu (x86_64)
+/*M!999999\- enable the sandbox mode */ 
+-- MariaDB dump 10.19-11.8.1-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: oasis
 -- ------------------------------------------------------
--- Server version	10.11.6-MariaDB-2
+-- Server version	11.8.1-MariaDB-2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -13,7 +14,7 @@
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*M!100616 SET @OLD_NOTE_VERBOSITY=@@NOTE_VERBOSITY, NOTE_VERBOSITY=0 */;
 
 --
 -- Table structure for table `reviews`
@@ -21,7 +22,7 @@
 
 DROP TABLE IF EXISTS `reviews`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reviews` (
   `id` varchar(60) NOT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -43,10 +44,12 @@ CREATE TABLE `reviews` (
 
 LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
+set autocommit=0;
 INSERT INTO `reviews` VALUES
-('a054ab13-e9cb-423a-a96e-1f2ab924fe4b','2025-05-08 22:16:05','2025-05-08 22:16:05','lst_20dfbf89-8dec-45b2-a3ec-59b4c3e64fe8','usr_cc88be0d-2186-457f-b119-7bfeb21eb17a','A very serene property. Enjoyed my stay there. Would definitely recommend');
+('rev_cfda3c47-6117-4eaa-8c26-b0ff71c43fd3','2025-06-29 20:13:55','2025-06-29 20:13:55','lst_04dfe3e5-1f09-4c8c-96b6-132d894207f0','usr_cc88be0d-2186-457f-b119-7bfeb21eb17a','A very great experience with the house above. Enjoyed the stay very much. Highly recommend.');
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -55,6 +58,6 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-06-11 11:56:36
+-- Dump completed on 2025-07-08 23:36:02

@@ -1,0 +1,9 @@
+tic_1,2025-05-07 22:35:45,2025-05-07 22:35:45,App Support Issue,Sample description for app support,App & Account Support,NULL,usr_cc88be0d-2186-457f-b119-7bfeb21eb17a,NULL,Open,Low,NULL,NULL
+tic_2,2025-05-07 22:35:45,2025-05-07 22:35:45,Lease & Rent Issue,Sample description for lease & rent,Lease & Rent,NULL,usr_cc88be0d-2186-457f-b119-7bfeb21eb17a,NULL,Closed,Medium,NULL,NULL
+tic_3,2025-05-07 22:35:45,2025-05-07 22:35:45,Move-In & Move-Out Issue,Sample description for move-in & move-out,Move-In & Move-Out,NULL,usr_cc88be0d-2186-457f-b119-7bfeb21eb17a,NULL,Pending,High,NULL,NULL
+tic_3cac83d1-88b1-4915-b5fc-9618a0426a4a,2025-05-07 22:35:45,2025-05-07 22:35:45,App Support,Unable to log in,App & Account Support,NULL,usr_cc88be0d-2186-457f-b119-7bfeb21eb17a,NULL,On-hold,Low,NULL,NULL
+tic_4,2025-05-07 22:35:45,2025-05-07 22:35:45,Complains Issue,Sample description for complains,Complains,NULL,usr_cc88be0d-2186-457f-b119-7bfeb21eb17a,NULL,Awaiting-response,Low,NULL,NULL
+tic_5,2025-05-07 22:35:45,2025-05-07 22:35:45,Emergencies Issue,Sample description for emergencies,Emergencies,NULL,usr_cc88be0d-2186-457f-b119-7bfeb21eb17a,NULL,Solved,Medium,NULL,NULL
+tic_6,2025-05-07 22:35:45,2025-05-07 22:35:45,Property Issues,Sample description for property issues,Property Issues,NULL,usr_cc88be0d-2186-457f-b119-7bfeb21eb17a,NULL,Open,High,NULL,NULL
+tic_7,2025-05-07 22:35:45,2025-05-07 22:35:45,Maintenance & Repairs Issue,Sample description for maintenance & repairs,Maintenance & Repairs,NULL,usr_cc88be0d-2186-457f-b119-7bfeb21eb17a,NULL,Closed,Low,NULL,NULL
+tic_await_response_001,2025-05-07 22:35:45,2025-05-07 22:35:45,Awaiting Support Response,Still waiting for feedback from support team regarding login failure.,App & Account Support,NULL,usr_cc88be0d-2186-457f-b119-7bfeb21eb17a,NULL,Pending,Medium,NULL,NULL

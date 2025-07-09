@@ -1,8 +1,9 @@
--- MariaDB dump 10.19  Distrib 10.11.6-MariaDB, for debian-linux-gnu (x86_64)
+/*M!999999\- enable the sandbox mode */ 
+-- MariaDB dump 10.19-11.8.1-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: oasis
 -- ------------------------------------------------------
--- Server version	10.11.6-MariaDB-2
+-- Server version	11.8.1-MariaDB-2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -13,7 +14,7 @@
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*M!100616 SET @OLD_NOTE_VERBOSITY=@@NOTE_VERBOSITY, NOTE_VERBOSITY=0 */;
 
 --
 -- Table structure for table `users`
@@ -21,7 +22,7 @@
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` varchar(60) NOT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -36,6 +37,14 @@ CREATE TABLE `users` (
   `user_latitude` float DEFAULT NULL,
   `user_longitude` float DEFAULT NULL,
   `secondary_telephone_no` varchar(64) DEFAULT NULL,
+  `profile_image` varchar(256) DEFAULT NULL,
+  `address` varchar(256) DEFAULT NULL,
+  `facebook_link` varchar(256) DEFAULT NULL,
+  `twitter_link` varchar(256) DEFAULT NULL,
+  `linkedin_link` varchar(256) DEFAULT NULL,
+  `tiktok_link` varchar(256) DEFAULT NULL,
+  `whatsapp_number` varchar(64) DEFAULT NULL,
+  `public_email` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -46,10 +55,12 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+set autocommit=0;
 INSERT INTO `users` VALUES
-('usr_cc88be0d-2186-457f-b119-7bfeb21eb17a','2025-05-04 22:52:44','2025-05-04 22:52:44','janedoe22@gmail.com','pbkdf2:sha256:600000$kaB2MlT9HkKFXqQy$b97d064f5901878bf6ff5ba2b255da33b784b688347c1f963b3a77730aab0d33','Jane','Goiri','+254789452635','Female',0,-1.2648,36.805,NULL);
+('usr_cc88be0d-2186-457f-b119-7bfeb21eb17a','2025-05-04 22:52:44','2025-05-04 22:52:44','janedoe22@gmail.com','pbkdf2:sha256:600000$kaB2MlT9HkKFXqQy$b97d064f5901878bf6ff5ba2b255da33b784b688347c1f963b3a77730aab0d33','Jane','Goiri','+254789452635','Female',0,-1.2648,36.805,NULL,'static/images/users/profile_images/usr_cc88be0d-2186-457f-b119-7bfeb21eb17a_user2.jpeg',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -58,6 +69,6 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-06-11 11:56:46
+-- Dump completed on 2025-07-08 23:36:09

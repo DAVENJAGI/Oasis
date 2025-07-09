@@ -17,34 +17,32 @@
 /*M!100616 SET @OLD_NOTE_VERBOSITY=@@NOTE_VERBOSITY, NOTE_VERBOSITY=0 */;
 
 --
--- Table structure for table `cities`
+-- Table structure for table `api_keys`
 --
 
-DROP TABLE IF EXISTS `cities`;
+DROP TABLE IF EXISTS `api_keys`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cities` (
+CREATE TABLE `api_keys` (
+  `api_key` varchar(256) DEFAULT NULL,
   `id` varchar(60) NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `state_id` varchar(60) NOT NULL,
-  `constituency_name` varchar(128) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `state_id` (`state_id`),
-  CONSTRAINT `cities_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `description` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cities`
+-- Dumping data for table `api_keys`
 --
 
-LOCK TABLES `cities` WRITE;
-/*!40000 ALTER TABLE `cities` DISABLE KEYS */;
+LOCK TABLES `api_keys` WRITE;
+/*!40000 ALTER TABLE `api_keys` DISABLE KEYS */;
 set autocommit=0;
-INSERT INTO `cities` VALUES
-('8da939f8-1035-11f0-90a6-b4b52fcffc4d','2025-05-05 18:23:55','2025-05-05 18:23:55','b69cc7ed-d927-4eee-9170-69533073a61e','Nairobi');
-/*!40000 ALTER TABLE `cities` ENABLE KEYS */;
+INSERT INTO `api_keys` VALUES
+('2555a137b6234b8fad48746f53a12b03','api_k_966b7684-4c31-48bb-b7a0-0791c458dc8a','2025-06-17 00:53:45','2025-06-17 00:53:45','An API Key that allows the external use of open gate location api');
+/*!40000 ALTER TABLE `api_keys` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +55,4 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-07-08 23:35:53
+-- Dump completed on 2025-07-08 23:35:49
