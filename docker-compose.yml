@@ -1,0 +1,38 @@
+services:
+  backend:
+    build: .
+    container_name: oasis-backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    restart: always
+    env_file:
+      - .env
+    environment:
+      environment:
+      HBNB_MYSQL_USER: ${HBNB_MYSQL_USER}
+      HBNB_MYSQL_PWD: ${HBNB_MYSQL_PWD}
+      HBNB_MYSQL_HOST: ${HBNB_MYSQL_HOST}
+      HBNB_MYSQL_DB: ${HBNB_MYSQL_DB}
+      HBNB_ENV: ${HBNB_ENV}
+
+  db:
+    image: mysql:8.0
+    container_name: oasis-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: oasis
+      MYSQL_USER: oasis_admin
+      MYSQL_PASSWORD: keem      
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
+
