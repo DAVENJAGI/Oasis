@@ -1,19 +1,3 @@
-function toggleEdit() {
-  const viewMode = document.getElementById('viewMode');
-  const editMode = document.getElementById('editMode');
-  const editBtn = document.querySelector('.edit-btn');
-  
-  if (editMode.classList.contains('active')) {
-      editMode.classList.remove('active');
-      viewMode.classList.remove('editing');
-      editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
-  } else {
-      editMode.classList.add('active');
-      viewMode.classList.add('editing');
-      editBtn.innerHTML = '<i class="fas fa-times"></i> Cancel';
-  }
-}
-
 function saveProfile() {
   const firstName = document.getElementById('firstName').value;
   const lastName = document.getElementById('lastName').value;
@@ -68,19 +52,44 @@ window.addEventListener('load', function() {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Get the specific dark mode toggle button
+
+  //HIDE AND SHOW EDIT USER PROFILE
+  const editUserProfileBtn = document.getElementById('edit-usr-profile-btn');
+  editUserProfileBtn.addEventListener('click', () => {
+    toggleEdit();
+  })
+
+  function toggleEdit() {
+    const viewMode = document.getElementById('viewMode');
+    const editMode = document.getElementById('editMode');
+    const editBtn = document.querySelector('.edit-btn');
+    
+    if (editMode.classList.contains('active')) {
+        editMode.classList.remove('active');
+        viewMode.classList.remove('editing');
+        editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
+    } else {
+        editMode.classList.add('active');
+        viewMode.classList.add('editing');
+        editBtn.innerHTML = '<i class="fas fa-times"></i> Cancel';
+    }
+  }
+
+
+
+
+  //THEM BUTTON
   const themeIcon = document.getElementById('theme-icon');
   const changeColorButton = document.getElementById('change-color-theme-button');
   const themeButton = document.querySelector('.theme-toggle');
   const body = document.body;
 
-  // Moon icon SVG (for light theme)
   const moonIconSVG = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
   
   const sunIconSVG = `<circle cx="12" cy="12" r="5"></circle>
-                      <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>`;
+                      <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+  `;
 
-  // Initialize theme
   function initializeTheme() {
       const savedTheme = localStorage.getItem('theme');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -98,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   }
 
-  // Set light theme
   function setLightTheme() {
       body.classList.add('light-theme');
       themeIcon.innerHTML = moonIconSVG;
@@ -106,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('theme', 'light');
   }
 
-  // Set dark theme
   function setDarkTheme() {
       body.classList.remove('light-theme');
       themeIcon.innerHTML = sunIconSVG;
