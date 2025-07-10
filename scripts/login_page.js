@@ -1,5 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    window.addEventListener('scroll', function () {
+        const heroBlur = document.querySelector('.hero');
+        
+        if (window.scrollY > 50) {
+          heroBlur.style.backdropFilter = "blur(80px)";
+          heroBlur.style.webkitBackdropFilter = "blur(80px)";
+          heroBlur.style.background = "var(--current-glass-bg)";
+        } else {
+          heroBlur.style.backdropFilter = "blur(0px)";
+          heroBlur.style.webkitBackdropFilter = "blur(0px)";
+          heroBlur.style.background = "";
+        }
+    })
+
     // Add some interactive floating elements
     document.addEventListener('mousemove', (e) => {
         const elements = document.querySelectorAll('.floating-element');
@@ -10,6 +24,20 @@ document.addEventListener('DOMContentLoaded', () => {
             element.style.transform = `translate(${x}px, ${y}px)`;
         });
     });
+
+
+    const searchContainer = document.getElementById('search-container');
+
+    const theme = localStorage.getItem('theme');
+    console.log('Theme:', theme);
+    if (theme === 'light') {
+      searchContainer.style.backgroundColor = 'white';
+      searchContainer.style.border = "none";
+      searchContainer.style.boxShadow = "none";
+      searchContainer.style.backdropFilter = "none";
+      
+    }
+      
 
     //SHOW AND HIDE PASSWORD
     const showHidePassword = document.getElementById('passwordToggle');
@@ -72,5 +100,72 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleSocialLogin(provider) {
         alert(`${provider.charAt(0).toUpperCase() + provider.slice(1)} login clicked`);
     } 
+
+
+    //HIDE AND SHOW LOGIN
+    const seeLoginsBtn = document.getElementById('usr-login-button');
+    const loginsPopup = document.getElementById('login-container');
+    const closeLoginsBtn = document.getElementById('close-logins-popup');
+    const overlay = createOverlay();
+    
+    function createOverlay() {
+        const overlay = document.createElement('div');
+        overlay.id = 'logins-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 1001;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        `;
+        document.body.appendChild(overlay);
+        return overlay;
+    }
+    
+    function showLoginsPopup() {
+        overlay.style.display = 'flex';
+        overlay.appendChild(loginsPopup);
+        loginsPopup.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        loginsPopup.classList.add('popup-visible');
+    }
+    
+    function hideLoginsPopup() {
+        overlay.style.display = 'none';
+        loginsPopup.style.display = 'none';
+        document.body.style.overflow = '';
+        loginsPopup.classList.remove('popup-visible');
+    }
+    
+    if (seeLoginsBtn) {
+        seeLoginsBtn.addEventListener('click', showLoginsPopup);
+    }
+    
+    if (closeLoginsBtn) {
+        closeLoginsBtn.addEventListener('click', hideLoginsPopup);
+    }
+    
+    overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+            hideLoginsPopup();
+        }
+    });
+    
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.style.display === 'flex') {
+            hideLoginsPopup();
+        }
+    });
+    loginsPopup.style.display = 'none';
+    loginsPopup.style.transition = 'all 0.3s ease-out';
 
 })
