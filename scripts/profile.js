@@ -1,34 +1,3 @@
-function saveProfile() {
-  const firstName = document.getElementById('firstName').value;
-  const lastName = document.getElementById('lastName').value;
-  const email = document.getElementById('email').value;
-  const primaryPhone = document.getElementById('primaryPhone').value;
-  const secondaryPhone = document.getElementById('secondaryPhone').value;
-  const gender = document.getElementById('gender').value;
-  const address = document.getElementById('address').value;
-
-  
-  const profileDataElements = document.querySelectorAll('.profile-data');
-  profileDataElements[0].textContent = firstName;
-  profileDataElements[1].textContent = lastName;
-  profileDataElements[2].textContent = email;
-  profileDataElements[3].textContent = primaryPhone;
-  profileDataElements[4].textContent = secondaryPhone;
-  profileDataElements[5].textContent = gender;
-  profileDataElements[6].textContent = address;
-
-  document.querySelector('.profile-name h2').innerHTML = `
-      ${firstName} ${lastName}
-      <span class="verified-badge">
-          <i class="fas fa-check"></i>
-          Verified
-      </span>
-  `;
-
-  alert('Profile updated successfully!');
-  
-  toggleEdit();
-}
 
 document.addEventListener('DOMContentLoaded', function() {
   const menuItems = document.querySelectorAll('.menu-item');
@@ -73,6 +42,44 @@ document.addEventListener('DOMContentLoaded', () => {
         viewMode.classList.add('editing');
         editBtn.innerHTML = '<i class="fas fa-times"></i> Cancel';
     }
+  }
+
+  //SAVE USER INFO UPDATE TO DATABASE
+  const saveUserProfileInfoBtn = document.getElementById('edit-usr-profile-info-btn');
+  saveUserProfileInfoBtn.addEventListener('click', () => {
+      saveProfile();
+  })
+
+  function saveProfile() {
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    const primaryPhone = document.getElementById('primaryPhone').value;
+    const secondaryPhone = document.getElementById('secondaryPhone').value;
+    const gender = document.getElementById('gender').value;
+    const address = document.getElementById('address').value;
+
+    
+    const profileDataElements = document.querySelectorAll('.profile-data');
+    profileDataElements[0].textContent = firstName;
+    profileDataElements[1].textContent = lastName;
+    profileDataElements[2].textContent = email;
+    profileDataElements[3].textContent = primaryPhone;
+    profileDataElements[4].textContent = secondaryPhone;
+    profileDataElements[5].textContent = gender;
+    profileDataElements[6].textContent = address;
+
+    document.querySelector('.profile-name h2').innerHTML = `
+        ${firstName} ${lastName}
+        <span class="verified-badge">
+            <i class="fas fa-check"></i>
+            Verified
+        </span>
+    `;
+
+    alert('Profile updated successfully!');
+    
+    toggleEdit();
   }
 
 
