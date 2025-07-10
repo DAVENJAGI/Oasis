@@ -59,7 +59,7 @@
     --current-shadow-medium: var(--dark-shadow-medium);
     --current-shadow-heavy: var(--dark-shadow-heavy);
 }
-/* Light theme class */
+/* LIGHT THEME DEFAULT VARIASBLES */
 .light-theme {
     --current-bg: var(--light-bg);
     --current-bg-1: var(--light-bg);
@@ -386,6 +386,7 @@ body {
     text-align: center;
     color: white;
 }
+/*HEADER END*/
 
 .demo-content h1 {
     font-size: 3rem;
