@@ -8,6 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./styles/profile.css">
     <script type="text/javascript" src="./scripts/profile.js"></script>
+    <script type="text/javascript" src="./scripts/handle_light_and_dark_mode.js"></script>
 </head>
 <body>
     <div class="animated-bg"></div>
@@ -140,7 +141,7 @@
         <div class="content-area fade-in">
             <div class="content-header">
                 <h1 class="content-title">Profile Information</h1>
-                <button class="edit-btn" onclick="toggleEdit()">
+                <button id="edit-usr-profile-btn" class="edit-btn">
                     <i class="fas fa-edit"></i>
                     Edit Profile
                 </button>
@@ -225,11 +226,11 @@
                     </div>
                 </div>
                 <div>
-                    <button class="save-btn" onclick="saveProfile()">
+                    <button id="save-usr-profile-info-btn" class="save-btn">
                         <i class="fas fa-save"></i>
                         Save Changes
                     </button>
-                    <button class="cancel-btn" onclick="toggleEdit()">
+                    <button id="close-edit-usr-profile-btn" class="cancel-btn">
                         Cancel
                     </button>
                 </div>
