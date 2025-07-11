@@ -1435,7 +1435,7 @@ body.scrolled {
     
     .search-form {
         display: block;
-        gap: 1rem;
+        gap: 0.5rem;
     }
     
     .search-input {
