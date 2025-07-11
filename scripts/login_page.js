@@ -194,6 +194,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    const userName = "<span style='font-size: 1rem; color:#888;'>John...</span>";
+
     function handleSmallScreens() {
         const subText2 = "Finding your dream getaway house?";
             
@@ -231,11 +233,14 @@ document.addEventListener('DOMContentLoaded', () => {
             } type();
         }
 
-        const titleText2 = greetingsFunction() + 'John...';
-        typeWriter(titleText2, titleElement, 60, () => {
+        const greetingText = greetingsFunction(); 
+        typeWriter(greetingText, titleElement, 60, () => {
+            titleElement.innerHTML += userName;
+        
             const t = setTimeout(() => {
-                typeWriter(subText2, subElement, 30);
+                typeWriter(subText, subElement, 30);
             }, 500);
+        
             window.typewriterTimeouts.push(t);
         });
         
