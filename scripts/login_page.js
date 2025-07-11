@@ -184,45 +184,81 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleResize() {
         const isSmallScreen = window.innerWidth < 768;
-
+    
         if (isSmallScreen && !scrollDiv.dataset.duplicated) {
-            scrollDiv.innerHTML += scrollDiv.innerHTML;
+            scrollDiv.innerHTML += originalContent;
             scrollDiv.dataset.duplicated = "true";
         } else if (!isSmallScreen && scrollDiv.dataset.duplicated) {
             scrollDiv.innerHTML = originalContent;
             delete scrollDiv.dataset.duplicated;
         }
     }
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-
-    //TYPEWRITER ON LANDING PAGE
-    const titleText = "A Hassle Finding Your Dream Getaway Home?";
-    const subText = "Look no more. Discover properties around the globe's most desirable locations with our platform.";
-
-    const titleElement = document.getElementById("typewriter-title");
-    const subElement = document.getElementById("typewriter-subtext");
-
-    function typeWriter(text, element, speed = 60, callback = null) {
-    let index = 0;
-    function type() {
-        if (index < text.length) {
-        element.innerHTML += text.charAt(index);
-        index++;
-        setTimeout(type, speed);
-        } else if (callback) {
-        callback();
+    
+    function handleSmallLargeScreen() {
+        const titleText1 = "A Hassle Finding Your Dream Getaway Home?";
+        const subText1 = "Look no more. Discover properties around the globe's most desirable locations with our platform.";
+    
+        const titleText2 = "Finding your dream getaway?";
+        const subText2 = "Explore top properties in the world’s most desirable places.";
+    
+        const titleElement = document.getElementById("typewriter-title");
+        const subElement = document.getElementById("typewriter-subtext");
+    
+        // Clear any previous typing effects
+        if (window.typewriterTimeouts) {
+            window.typewriterTimeouts.forEach(clearTimeout);
+        }
+        window.typewriterTimeouts = [];
+    
+        titleElement.innerHTML = "";
+        subElement.innerHTML = "";
+    
+        function typeWriter(text, element, speed = 60, callback = null) {
+            let index = 0;
+            function type() {
+                if (index < text.length) {
+                    element.innerHTML += text.charAt(index);
+                    const t = setTimeout(type, speed);
+                    window.typewriterTimeouts.push(t);
+                    index++;
+                } else if (callback) {
+                    callback();
+                }
+            }
+            type();
+        }
+    
+        const isSmallScreen = window.innerWidth < 600;
+    
+        if (isSmallScreen) {
+            typeWriter(titleText2, titleElement, 60, () => {
+                const t = setTimeout(() => {
+                    typeWriter(subText2, subElement, 30);
+                }, 500);
+                window.typewriterTimeouts.push(t);
+            });
+        } else {
+            typeWriter(titleText1, titleElement, 60, () => {
+                const t = setTimeout(() => {
+                    typeWriter(subText1, subElement, 30);
+                }, 500);
+                window.typewriterTimeouts.push(t);
+            });
         }
     }
-    type();
-    }
-
-    typeWriter(titleText, titleElement, 60, () => {
-        setTimeout(() => {
-            typeWriter(subText, subElement, 30);
-        }, 5000);
+    
+    // Initial run
+    handleResize();
+    handleSmallLargeScreen();
+    
+    // ✅ Debounced resize handling
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            handleResize();
+            handleSmallLargeScreen();
+        }, 300); // Wait 300ms after last resize
     });
-      
 
 })
