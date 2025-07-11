@@ -679,6 +679,7 @@ body.scrolled {
     border-radius: 1.25rem;
     opacity: 0.8;
     animation: scroll-hint 2s infinite;
+    z-index: 1050;
 }
 
 .scroll-indicator::before {
@@ -1059,7 +1060,7 @@ body.scrolled {
     position: absolute;
     top: 0;
     right: 0;
-    width: 6.25rem; /* Adjust fade width */
+    width: 6.25rem;
     height: 100%;
     pointer-events: none;
     z-index: 1;
@@ -1214,6 +1215,7 @@ body.scrolled {
         width: 100%;
         margin: 0 auto 2rem auto;
         height: auto;
+        border-radius: 0px;
     }
     
     .payments-header {
@@ -1368,6 +1370,8 @@ body.scrolled {
         padding: none;
         align-items: center;
         justify-content: center;
+        position: relative;
+        overflow: hidden;
     }
     
     .payment-scroll-div {
@@ -1381,7 +1385,7 @@ body.scrolled {
         white-space: nowrap;
         animation: scrollLeft 30s linear infinite;
     }
-
+    
     @keyframes bounceGlow {
         10% {
           transform: translateY(0);
