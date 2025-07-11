@@ -1362,6 +1362,13 @@ body.scrolled {
         margin-bottom: 1rem;
         border: none;
     }
+    .search-container{
+        display: block;
+        width: 100%;
+        margin: 0 auto 2rem auto;
+        height: auto;
+        padding: 0;
+    }
     
     .payments-scroll {
         height: auto;
