@@ -1325,6 +1325,7 @@ body.scrolled {
     }
     .listings-card {
         padding: 1rem;
+        width: auto;
     }
     .listings-grid {
         grid-template-columns: 1fr;
