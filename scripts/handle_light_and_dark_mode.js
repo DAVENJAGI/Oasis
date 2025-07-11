@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(changeColorButton){
         changeColorButton.addEventListener('click', () => {
             console.log("I am changing the color");
+            location.reload();
             toggleTheme();
         });
     }
@@ -82,5 +83,5 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             toggleTheme();
         }
-    }); 
+    });
 })
