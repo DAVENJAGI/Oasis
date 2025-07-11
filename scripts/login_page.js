@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (hour >= 17 && hour < 21) {
             return "Good evening ";
         } else {
-            return "Good night ";
+            return "Good evening ";
         }
     }
 
