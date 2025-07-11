@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    const userName = "<span style='font-size: 1rem; color:#888;'>John...</span>";
+    const userName = "<span style='font-size: 1.5rem; color:#888;'>John...</span>";
 
     function handleSmallScreens() {
         const subText2 = "Finding your dream getaway house?";
