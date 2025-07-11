@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
             titleElement.innerHTML += userName;
         
             const t = setTimeout(() => {
-                typeWriter(subText, subElement, 30);
+                typeWriter(subText2, subElement, 30);
             }, 500);
         
             window.typewriterTimeouts.push(t);
