@@ -1323,11 +1323,11 @@ body.scrolled {
         border: 1px solid red;
         padding: 0.5em;
     }
-    .listings-grid{
-        flex-direction: column;
-        text-align: center;
-        position: relative;
-        overflow-x: hidden;
+    .listings-card {
+        padding: 1rem;
+    }
+    .listings-grid {
+        grid-template-columns: 1fr;
     }
     
     .hero-content {
