@@ -1458,7 +1458,7 @@ body.scrolled {
         max-width: 95%;
         margin: 1rem auto;
         padding: 1rem;
-        max-height: 90vh;
+        height: 70vh;
         overflow-y: auto;
         border-radius: 1rem;
         -ms-overflow-style: none;
