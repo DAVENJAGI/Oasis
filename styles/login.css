@@ -1320,7 +1320,6 @@ body.scrolled {
         text-align: center;
         position: relative;
         overflow-x: hidden;
-        border: 1px solid red;
         padding: 0.5em;
     }
     .listings-card {
@@ -1348,6 +1347,7 @@ body.scrolled {
         width: 100%;
         margin: 0 auto 2rem auto;
         height: auto;
+        padding: 0;
     }
     
     .payments-header {
@@ -1355,15 +1355,17 @@ body.scrolled {
         width: 100%;
         text-align: center;
         border-right: none;
-        border-bottom: 0.1875rem solid #A8E0F3;
         height: auto;
         padding-bottom: 1rem;
         margin-bottom: 1rem;
+        border: none;
     }
     
     .payments-scroll {
         height: auto;
-        width: 100%;
+        width: 100vw;
+        margin: none;
+        padding: none;
         align-items: center;
         justify-content: center;
     }
