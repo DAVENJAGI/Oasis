@@ -1325,7 +1325,6 @@ body.scrolled {
     }
     .listings-grid{
         flex-direction: column;
-        padding: 0.25em;
         text-align: center;
         position: relative;
         overflow-x: hidden;
