@@ -168,4 +168,61 @@ document.addEventListener('DOMContentLoaded', () => {
     loginsPopup.style.display = 'none';
     loginsPopup.style.transition = 'all 0.3s ease-out';
 
+
+    //SCROLL TO TOP ON MOUSE CLICKING 
+    document.querySelector('.scroll-indicator').addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+    });
+
+    const scrollDiv = document.querySelector('.payment-scroll-div');
+    if (!scrollDiv) return;
+
+    const originalContent = scrollDiv.innerHTML;
+
+    function handleResize() {
+        const isSmallScreen = window.innerWidth < 768;
+
+        if (isSmallScreen && !scrollDiv.dataset.duplicated) {
+            scrollDiv.innerHTML += scrollDiv.innerHTML;
+            scrollDiv.dataset.duplicated = "true";
+        } else if (!isSmallScreen && scrollDiv.dataset.duplicated) {
+            scrollDiv.innerHTML = originalContent;
+            delete scrollDiv.dataset.duplicated;
+        }
+    }
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    //TYPEWRITER ON LANDING PAGE
+    const titleText = "A Hassle Finding Your Dream Getaway Home?";
+    const subText = "Look no more. Discover properties around the globe's most desirable locations with our platform.";
+
+    const titleElement = document.getElementById("typewriter-title");
+    const subElement = document.getElementById("typewriter-subtext");
+
+    function typeWriter(text, element, speed = 60, callback = null) {
+    let index = 0;
+    function type() {
+        if (index < text.length) {
+        element.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(type, speed);
+        } else if (callback) {
+        callback();
+        }
+    }
+    type();
+    }
+
+    typeWriter(titleText, titleElement, 60, () => {
+        setTimeout(() => {
+            typeWriter(subText, subElement, 30);
+        }, 5000);
+    });
+      
+
 })
