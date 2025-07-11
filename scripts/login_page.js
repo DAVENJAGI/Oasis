@@ -204,7 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const titleElement = document.getElementById("typewriter-title");
         const subElement = document.getElementById("typewriter-subtext");
     
-        // Clear any previous typing effects
         if (window.typewriterTimeouts) {
             window.typewriterTimeouts.forEach(clearTimeout);
         }
@@ -247,18 +246,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Initial run
-    handleResize();
-    handleSmallLargeScreen();
-    
-    // ✅ Debounced resize handling
+    let lastWidth = window.innerWidth;
     let resizeTimer;
-    window.addEventListener("resize", () => {
+    
+    //FUNCTION CHECKS IF TE ACTUAL WIDTH CHANGES TO PREVENT RESIZING RANDOMLY BUG
+    function handleResizeDebounced() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
-            handleResize();
-            handleSmallLargeScreen();
-        }, 300); // Wait 300ms after last resize
-    });
+            if (window.innerWidth !== lastWidth) {
+                handleResize();
+                handleSmallLargeScreen();
+                lastWidth = window.innerWidth;
+            }
+        }, 500);
+    }
+    
+    window.addEventListener("resize", handleResizeDebounced);
+    window.addEventListener("orientationchange", handleResizeDebounced);
 
 })
