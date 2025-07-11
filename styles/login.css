@@ -1321,10 +1321,11 @@ body.scrolled {
         position: relative;
         overflow-x: hidden;
         border: 1px solid red;
+        padding: 0.5em;
     }
     .listings-grid{
-        border: 1px solid red;
         flex-direction: column;
+        padding: 0.25em;
         text-align: center;
         position: relative;
         overflow-x: hidden;
