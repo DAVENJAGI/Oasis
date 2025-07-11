@@ -1151,7 +1151,7 @@ body.scrolled {
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(0.25rem);
-    z-index: 1000;
+    z-index: 1051;
     display: none;
 }
 
@@ -1374,12 +1374,11 @@ body.scrolled {
         width: 100%;
         /*margin: 0 auto 2rem auto;*/
         height: auto;
-        padding: 0.5em;
+        padding: 1em;
     }
     .search-input {
         display: block;
         min-width: 100%;
-        margin-bottom: 1rem;
         min-width: auto;
     }
     
@@ -1484,7 +1483,6 @@ body.scrolled {
         color: var(--secondary-primary-color);
         font-size: 0.75rem;
     }
-
 
     .form-input {
         width: 100%;
