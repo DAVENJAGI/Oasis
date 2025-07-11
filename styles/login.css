@@ -1154,6 +1154,15 @@ body.scrolled {
 }
 
 @media (max-width: 768px) {
+    body{
+        padding: 0 1rem;
+        overflow-x: hidden;
+    }
+    .header {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
     .hero {
         flex-direction: column;
         text-align: center;
