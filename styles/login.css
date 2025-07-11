@@ -1342,7 +1342,6 @@ body.scrolled {
     .left-side-top {
         display: block;
         width: 100%;
-        border: 1px solid red;
     }
     
     .payments-supported {
@@ -1368,7 +1367,19 @@ body.scrolled {
         width: 100%;
         /*margin: 0 auto 2rem auto;*/
         height: auto;
-        border: 1px solid red;
+        padding: 0.5em;
+    }
+    .search-input {
+        display: block;
+        min-width: 100%;
+        margin-bottom: 1rem;
+        min-width: auto;
+    }
+    
+    .search-button {
+        display: block;
+        width: 100%;
+        margin-top: 1rem;
     }
     
     .payments-scroll {
@@ -1429,11 +1440,6 @@ body.scrolled {
         justify-self: center;
     }
     
-    .search-button {
-        display: block;
-        width: 100%;
-        margin-top: 1rem;
-    }
     .properties-grid {
         grid-template-columns: 1fr;
     }
