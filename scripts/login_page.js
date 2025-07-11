@@ -195,12 +195,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function handleSmallLargeScreen() {
-        const titleText1 = "A Hassle Finding Your Dream Getaway Home?";
         const subText1 = "Look no more. Discover properties around the globe's most desirable locations with our platform.";
-    
-        const titleText2 = "Finding your dream getaway?";
-        const subText2 = "Explore top properties in the world’s most desirable places.";
-    
+        const subText2 = "Finding your dream getaway house?";
+            
         const titleElement = document.getElementById("typewriter-title");
         const subElement = document.getElementById("typewriter-subtext");
     
@@ -215,21 +212,29 @@ document.addEventListener('DOMContentLoaded', () => {
         function typeWriter(text, element, speed = 60, callback = null) {
             let index = 0;
             function type() {
-                if (index < text.length) {
+                if (text.charAt(index) === "<") {
+                    const tagEnd = text.indexOf(">", index);
+                    if (tagEnd !== -1) {
+                        element.innerHTML += text.substring(index, tagEnd + 1); // Add the full tag at once
+                        index = tagEnd + 1;
+                    }
+                } else {
                     element.innerHTML += text.charAt(index);
+                    index++;
+                }
+        
+                if (index < text.length) {
                     const t = setTimeout(type, speed);
                     window.typewriterTimeouts.push(t);
-                    index++;
                 } else if (callback) {
                     callback();
                 }
-            }
-            type();
+            } type();
         }
     
-        const isSmallScreen = window.innerWidth < 600;
-    
-        if (isSmallScreen) {
+        
+        if (window.innerWidth < 760) {
+            const titleText2 = greetingsFunction() + 'John...';
             typeWriter(titleText2, titleElement, 60, () => {
                 const t = setTimeout(() => {
                     typeWriter(subText2, subElement, 30);
@@ -237,6 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.typewriterTimeouts.push(t);
             });
         } else {
+            const titleText1 = greetingsFunction() + " John...<br>Finding Your Dream Getaway Home?";
             typeWriter(titleText1, titleElement, 60, () => {
                 const t = setTimeout(() => {
                     typeWriter(subText1, subElement, 30);
@@ -245,23 +251,25 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+
+    function greetingsFunction () {
+        const now = new Date();
+        const hour = now.getHours();
     
-    let lastWidth = window.innerWidth;
-    let resizeTimer;
-    
-    //FUNCTION CHECKS IF TE ACTUAL WIDTH CHANGES TO PREVENT RESIZING RANDOMLY BUG
-    function handleResizeDebounced() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            if (window.innerWidth !== lastWidth) {
-                handleResize();
-                handleSmallLargeScreen();
-                lastWidth = window.innerWidth;
-            }
-        }, 500);
+        if (hour >= 5 && hour < 12) {
+            return "Good morning";
+        } else if (hour >= 12 && hour < 17) {
+            return "Good afternoon ";
+        } else if (hour >= 17 && hour < 21) {
+            return "Good evening ";
+        } else {
+            return "Good night ";
+        }
     }
-    
-    window.addEventListener("resize", handleResizeDebounced);
-    window.addEventListener("orientationchange", handleResizeDebounced);
+
+    window.addEventListener('resize', () => {
+        handleResize();
+        handleSmallLargeScreen();
+    })
 
 })
