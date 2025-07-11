@@ -194,8 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    function handleSmallLargeScreen() {
-        const subText1 = "Look no more. Discover properties around the globe's most desirable locations with our platform.";
+    function handleSmallScreens() {
         const subText2 = "Finding your dream getaway house?";
             
         const titleElement = document.getElementById("typewriter-title");
@@ -231,26 +230,86 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } type();
         }
-    
+
+        const titleText2 = greetingsFunction() + 'John...';
+        typeWriter(titleText2, titleElement, 60, () => {
+            const t = setTimeout(() => {
+                typeWriter(subText2, subElement, 30);
+            }, 500);
+            window.typewriterTimeouts.push(t);
+        });
         
-        if (window.innerWidth < 760) {
-            const titleText2 = greetingsFunction() + 'John...';
-            typeWriter(titleText2, titleElement, 60, () => {
-                const t = setTimeout(() => {
-                    typeWriter(subText2, subElement, 30);
-                }, 500);
-                window.typewriterTimeouts.push(t);
-            });
-        } else {
-            const titleText1 = greetingsFunction() + " John...<br>Finding Your Dream Getaway Home?";
-            typeWriter(titleText1, titleElement, 60, () => {
-                const t = setTimeout(() => {
-                    typeWriter(subText1, subElement, 30);
-                }, 500);
-                window.typewriterTimeouts.push(t);
-            });
-        }
     }
+
+    function handleLargeScreens() {
+        const subText1 = "Look no more. Discover properties around the globe's most desirable locations with our platform.";
+       
+        const titleElement = document.getElementById("typewriter-title");
+        const subElement = document.getElementById("typewriter-subtext");
+    
+        if (window.typewriterTimeouts) {
+            window.typewriterTimeouts.forEach(clearTimeout);
+        }
+        window.typewriterTimeouts = [];
+    
+        titleElement.innerHTML = "";
+        subElement.innerHTML = "";
+    
+        function typeWriter(text, element, speed = 60, callback = null) {
+            let index = 0;
+            function type() {
+                if (text.charAt(index) === "<") {
+                    const tagEnd = text.indexOf(">", index);
+                    if (tagEnd !== -1) {
+                        element.innerHTML += text.substring(index, tagEnd + 1);
+                        index = tagEnd + 1;
+                    }
+                } else {
+                    element.innerHTML += text.charAt(index);
+                    index++;
+                }
+        
+                if (index < text.length) {
+                    const t = setTimeout(type, speed);
+                    window.typewriterTimeouts.push(t);
+                } else if (callback) {
+                    callback();
+                }
+            } type();
+        }
+        
+        const titleText1 = greetingsFunction() + " John...<br>Finding Your Dream Getaway Home?";
+        typeWriter(titleText1, titleElement, 60, () => {
+            const t = setTimeout(() => {
+                typeWriter(subText1, subElement, 30);
+            }, 500);
+            window.typewriterTimeouts.push(t);
+        });
+        
+    }
+
+    let isLargeScreen = window.innerWidth > 760;
+    
+    if (!isLargeScreen) {
+        handleSmallScreens();
+    } else {
+        handleLargeScreens();
+    }
+
+    window.addEventListener("resize", () => {
+        const nowLarge = window.innerWidth > 760;
+        const nowSmall = !nowLarge;
+
+        if (nowSmall && isLargeScreen) {
+            handleSmallScreens();
+        }
+
+        if (nowLarge && !isLargeScreen) {
+            handleLargeScreens();
+        }
+
+        isLargeScreen = nowLarge;
+    });
 
     function greetingsFunction () {
         const now = new Date();
@@ -269,7 +328,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('resize', () => {
         handleResize();
-        handleSmallLargeScreen();
     })
 
 })
