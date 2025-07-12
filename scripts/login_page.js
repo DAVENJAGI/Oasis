@@ -194,8 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    const userName = "<span style='font-size: 1.5rem; color:#888;'>John...</span>";
-
+    
     function handleSmallScreens() {
         const subText2 = "Finding your dream getaway house?";
             
@@ -216,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (text.charAt(index) === "<") {
                     const tagEnd = text.indexOf(">", index);
                     if (tagEnd !== -1) {
-                        element.innerHTML += text.substring(index, tagEnd + 1); // Add the full tag at once
+                        element.innerHTML += text.substring(index, tagEnd + 1);
                         index = tagEnd + 1;
                     }
                 } else {
@@ -233,10 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
             } type();
         }
 
-        const greetingText = greetingsFunction(); 
+        const greetingText = greetingsFunction() + "..."; 
         typeWriter(greetingText, titleElement, 60, () => {
-            titleElement.innerHTML += userName;
-        
             const t = setTimeout(() => {
                 typeWriter(subText2, subElement, 30);
             }, 500);
@@ -283,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } type();
         }
         
-        const titleText1 = greetingsFunction() + " John...<br>Finding Your Dream Getaway Home?";
+        const titleText1 = greetingsFunction() + "...<br>Finding Your Dream Getaway Home?";
         typeWriter(titleText1, titleElement, 60, () => {
             const t = setTimeout(() => {
                 typeWriter(subText1, subElement, 30);
