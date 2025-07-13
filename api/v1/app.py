@@ -35,7 +35,10 @@ app.register_blueprint(tag_views)
 app.register_blueprint(support_agent_views)
 app.register_blueprint(login_views)
 
-cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
+cors = CORS(app, resources={r"/*": {"origins": [
+    "http://127.0.0.1:5500",
+    "https://oasis-listings.netlify.app"
+]}}, supports_credentials=True) 
 
 @app.teardown_appcontext
 def teardown(exception=None):
