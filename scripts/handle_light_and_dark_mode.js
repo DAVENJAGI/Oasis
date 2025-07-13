@@ -84,4 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleTheme();
         }
     });
+
+
+    //LOGO REDIRECTS TO LANDING PAGE ON CLICKNG
+    const logoIcon = document.querySelector('.logo-icon');
+    logoIcon.addEventListener('click', () => {
+        window.location.href = 'landing.html';
+    })
 })
