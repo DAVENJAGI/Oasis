@@ -1067,6 +1067,49 @@ body.scrolled {
     pointer-events: none;
     z-index: 1;
 }
+.connection-status {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    display: none;
+    width: 96%;
+    text-align: center;
+}
+.connection-status.offline {
+    background-color: #e74c3c;
+    color: white;
+    display: block;
+}
+.error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 5px;
+}
+.error-message.show {
+    display: block;
+}
+.loading-spinner {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
 
 .payment-item {
     display: flex;
