@@ -805,6 +805,7 @@ body {
         width: 100%;
     }
 
+
     .search-input {
         width: 100%;
         min-width: auto;
@@ -848,6 +849,9 @@ body {
 
     .theme-toggle:active {
         transform: scale(0.95);
+    }
+    .logo-text{
+        display: none;
     }
 }
 
