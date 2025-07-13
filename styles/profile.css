@@ -919,7 +919,7 @@ body {
         width: 100px;
         height: 100px;
     }
-    #helpBtn{
+    #helpBtn, #likedBtn, #messagesBtn, #notificationsBtn{
         display: none;
     }
     .logo{
