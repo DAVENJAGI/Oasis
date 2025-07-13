@@ -854,6 +854,14 @@ body {
         display: none;
     }
 }
+@media (max-width: 480px) {
+    #helpBtn{
+        display: none;
+    }
+    .logo{
+        margin-right: 0.5em;
+    }
+}
 
 /* Hover Effects */
 .listing-card::before {
