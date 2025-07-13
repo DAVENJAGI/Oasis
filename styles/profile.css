@@ -855,8 +855,9 @@ body {
         flex-wrap: wrap;
         justify-content: center;
     }
-    
-    
+    .logo-text{
+        display: none;
+    }
 }
 
 @media (max-width: 480px) {
@@ -917,6 +918,15 @@ body {
     .profile-avatar {
         width: 100px;
         height: 100px;
+    }
+    #helpBtn{
+        display: none;
+    }
+    .logo{
+        margin-right: 0.5em;
+    }
+    .hero-content{
+        padding-top: 1.5em;
     }
 }
 
