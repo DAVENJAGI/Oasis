@@ -861,6 +861,9 @@ body {
     .logo{
         margin-right: 0.5em;
     }
+    .hero-content{
+        padding-top: 1.5em;
+    }
 }
 
 /* Hover Effects */
