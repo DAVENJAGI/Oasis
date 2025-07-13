@@ -472,7 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(credentials)
             });
 
-            const customToken = response.headers.get('X-Custom-Token');
+            const customToken = response.headers.get('x-custom-token');
             if (customToken) {
                 sessionStorage.setItem('X-Custom-Token', customToken);
             }
