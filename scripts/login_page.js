@@ -64,28 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    //HANDLE LOGIN FUNCTION
-    const loginButton = document.getElementById('user-login-button');
-    loginButton.addEventListener('click', () => {
-        handleLogin();
-    })
-    
-    function handleLogin(event) {
-        event.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        
-        const button = document.querySelector('.login-button');
-        button.textContent = 'Signing in...';
-        button.disabled = true;
-        
-        setTimeout(() => {
-            alert(`Login attempted with email: ${email}`);
-            button.textContent = 'Sign in';
-            button.disabled = false;
-        }, 1500);
-    }
-
     const loginGoogleButton = document.getElementById('google-social-div');
     loginGoogleButton.addEventListener('click', () => {
         handleSocialLogin('google');
@@ -332,4 +310,310 @@ document.addEventListener('DOMContentLoaded', () => {
         handleResize();
     })
 
+})
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const CONFIG = {
+        API_BASE_URL: 'https://oasis-mjmw.onrender.com/api/v1',
+        ENDPOINTS: {
+            LOGIN: '/user/login/'
+        },
+        MESSAGES: {
+            LOGIN_SUCCESS: 'Login sucessful',
+            USER_NOT_FOUND: 'Login failed: User not found',
+            INCORRECT_PASSWORD: 'Login failed: Incorrect password'
+        },
+        TIMEOUTS: {
+            REDIRECT_DELAY: 1000,
+            NOTIFICATION_DURATION: 5000,
+            API_TIMEOUT: 30000
+        }
+    };
+
+    const Utils = {
+        validateEmail: (email) => {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        },
+
+        validatePassword: (password) => {
+            return password.length >= 6;
+        },
+
+        sanitizeInput: (input) => {
+            return input.trim();
+        },
+
+        isOnline: () => {
+            return navigator.onLine;
+        },
+
+        debounce: (func, wait) => {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+    };
+
+    const UI = {
+        showNotification: (message, type = 'info') => {
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notif => notif.remove());
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => notification.classList.add('show'), 100);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, CONFIG.TIMEOUTS.NOTIFICATION_DURATION);
+        },
+
+        showFieldError: (fieldId, message) => {
+            const field = document.getElementById(fieldId);
+            const errorDiv = document.getElementById(fieldId + 'Error');
+            
+            field.classList.add('error');
+            field.classList.remove('success');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+        },
+
+        clearFieldError: (fieldId) => {
+            const field = document.getElementById(fieldId);
+            const errorDiv = document.getElementById(fieldId + 'Error');
+            
+            field.classList.remove('error');
+            errorDiv.classList.remove('show');
+        },
+
+        showFieldSuccess: (fieldId) => {
+            const field = document.getElementById(fieldId);
+            field.classList.add('success');
+            field.classList.remove('error');
+        },
+
+        setLoadingState: (isLoading) => {
+            const button = document.getElementById('user-login-button');
+            const buttonText = button.querySelector('.button-text');
+            const spinner = document.getElementById('loadingSpinner');
+            
+            if (isLoading) {
+                button.disabled = true;
+                buttonText.style.opacity = '0';
+                spinner.style.display = 'block';
+            } else {
+                button.disabled = false;
+                buttonText.style.opacity = '1';
+                spinner.style.display = 'none';
+            }
+        },
+
+        updateConnectionStatus: () => {
+            const statusDiv = document.getElementById('connectionStatus');
+            if (Utils.isOnline()) {
+                statusDiv.classList.remove('offline');
+            } else {
+                statusDiv.classList.add('offline');
+            }
+        }
+    };
+
+    const API = {
+        makeRequest: async (endpoint, options = {}) => {
+            const url = CONFIG.API_BASE_URL + endpoint;
+            const defaultOptions = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                timeout: CONFIG.TIMEOUTS.API_TIMEOUT
+            };
+
+            const finalOptions = { ...defaultOptions, ...options };
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), finalOptions.timeout);
+
+                const response = await fetch(url, {
+                    ...finalOptions,
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+                return response;
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    throw new Error('Request timed out');
+                }
+                throw error;
+            }
+        },
+
+        login: async (credentials) => {
+            const response = await API.makeRequest(CONFIG.ENDPOINTS.LOGIN, {
+                method: 'POST',
+                body: JSON.stringify(credentials)
+            });
+
+            const customToken = response.headers.get('X-Custom-Token');
+            if (customToken) {
+                sessionStorage.setItem('X-Custom-Token', customToken);
+            }
+
+            const data = await response.json();
+            return { response, data };
+        }
+    };
+
+    const FormValidator = {
+        validateField: (fieldId, value) => {
+            UI.clearFieldError(fieldId);
+            
+            switch (fieldId) {
+                case 'email':
+                    if (!value) {
+                        UI.showFieldError(fieldId, 'Email is required');
+                        return false;
+                    }
+                    if (!Utils.validateEmail(value)) {
+                        UI.showFieldError(fieldId, 'Please enter a valid email address');
+                        return false;
+                    }
+                    UI.showFieldSuccess(fieldId);
+                    return true;
+                
+                case 'password':
+                    if (!value) {
+                        UI.showFieldError(fieldId, 'Password is required');
+                        return false;
+                    }
+                    if (!Utils.validatePassword(value)) {
+                        UI.showFieldError(fieldId, 'Password must be at least 6 characters long');
+                        return false;
+                    }
+                    UI.showFieldSuccess(fieldId);
+                    return true;
+                
+                default:
+                    return true;
+            }
+        },
+
+        validateForm: (formData) => {
+            const emailValid = FormValidator.validateField('email', formData.email);
+            const passwordValid = FormValidator.validateField('password', formData.password);
+            
+            return emailValid && passwordValid;
+        }
+    };
+
+    const LoginHandler = {
+        handleLogin: async (formData) => {
+            try {
+                // Check internet connection
+                if (!Utils.isOnline()) {
+                    UI.showNotification('No internet connection. Please check your connection and try again.', 'error');
+                    return;
+                }
+
+                UI.setLoadingState(true);
+
+                const { response, data } = await API.login(formData);
+
+                if (data.Message === CONFIG.MESSAGES.LOGIN_SUCCESS) {
+                    // Store user data securely
+                    sessionStorage.setItem('user_id', data.user.id);
+                    sessionStorage.setItem('profile_image', data.user.profile_image);
+                    
+                    UI.showNotification('Login successful! Redirecting...', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'landing.html';
+                    }, CONFIG.TIMEOUTS.REDIRECT_DELAY);
+                } else {
+                    LoginHandler.handleLoginError(data.Message);
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                if (error.message === 'Request timed out') {
+                    UI.showNotification('Login request timed out. Please try again.', 'error');
+                } else if (error.message.includes('Failed to fetch')) {
+                    UI.showNotification('Network error. Please check your connection and try again.', 'error');
+                } else {
+                    UI.showNotification('An unexpected error occurred. Please try again.', 'error');
+                }
+            } finally {
+                UI.setLoadingState(false);
+            }
+        },
+
+        handleLoginError: (message) => {
+            const passwordField = document.getElementById('password');
+            
+            switch (message) {
+                case CONFIG.MESSAGES.USER_NOT_FOUND:
+                    UI.showFieldError('email', 'No account found with this email address');
+                    break;
+                case CONFIG.MESSAGES.INCORRECT_PASSWORD:
+                    UI.showFieldError('password', 'Incorrect password');
+                    passwordField.value = '';
+                    passwordField.focus();
+                    break;
+                default:
+                    UI.showNotification('Login failed. Please try again.', 'error');
+            }
+        }
+    };
+
+    const form = document.getElementById('loginForm');
+    const emailField = document.getElementById('email');
+    const passwordField = document.getElementById('password');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const formData = {
+            email: Utils.sanitizeInput(emailField.value),
+            password: passwordField.value
+        };
+        if (FormValidator.validateForm(formData)) {
+            await LoginHandler.handleLogin(formData);
+        }
+    });
+
+    const debouncedValidation = Utils.debounce((fieldId, value) => {
+        if (value) {
+            FormValidator.validateField(fieldId, value);
+        }
+    }, 500);
+
+    emailField.addEventListener('input', (e) => {
+        UI.clearFieldError('email');
+        debouncedValidation('email', Utils.sanitizeInput(e.target.value));
+    });
+
+    passwordField.addEventListener('input', (e) => {
+        UI.clearFieldError('password');
+        debouncedValidation('password', e.target.value);
+    });
+
+    window.addEventListener('online', UI.updateConnectionStatus);
+    window.addEventListener('offline', UI.updateConnectionStatus);
+    UI.updateConnectionStatus();
+
+    emailField.focus();
 })
