@@ -314,6 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    //CONFIG VARIABE DECLARATION
     const CONFIG = {
         API_BASE_URL: 'https://oasis-mjmw.onrender.com/api/v1',
         ENDPOINTS: {
@@ -331,6 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    //UTILS TO CHECK THE PASSWORD LENGTH AND VALIDITY OF EMAIL AND IF USER IS ONLINE
     const Utils = {
         validateEmail: (email) => {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -362,6 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    //VARIABLE TO SHOW AND HANDLE THE NOTIFICATION IN THE LOGIN DIV, ie, ERROR LOGGING, INVALID PASS etc
     const UI = {
         showNotification: (message, type = 'info') => {
             const existingNotifications = document.querySelectorAll('.notification');
@@ -430,6 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    //API CALL TO THE /usr/login ENDPOINT
     const API = {
         makeRequest: async (endpoint, options = {}) => {
             const url = CONFIG.API_BASE_URL + endpoint;
@@ -520,10 +524,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    //HANDLES THE LOGIN, STORES THE DATA I WANT IN THE SESSION STORAGE, AND HANDLES ERROR MESSAGE
     const LoginHandler = {
         handleLogin: async (formData) => {
             try {
-                // Check internet connection
                 if (!Utils.isOnline()) {
                     UI.showNotification('No internet connection. Please check your connection and try again.', 'error');
                     return;
