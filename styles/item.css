@@ -936,6 +936,12 @@ body {
     color: #86D5EE;
     font-size: 1.2rem;
 }
+.no-amenities{
+    color: var(--secondary-color);
+    width: auto;
+    display: none;
+}
+
 /* Sidebar */
 .sidebar {
     display: flex;
