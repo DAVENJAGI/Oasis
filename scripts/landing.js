@@ -152,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createListingCard(listing) {
         const listingCard = document.createElement('div');
         listingCard.className = 'listing-card fade-in';
+        listingCard.setAttribute("data-id", listing.id);
         const formattedPrice = listing.price_by_night.toLocaleString();
         const badgeText = listing.listing_tag || 'Verified';
 
@@ -228,12 +229,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
                 <div class="listing-actions">
-                    <button class="action-button" onclick="viewDetails('${listing.id}')">View Details</button>
-                    <button class="action-button primary" onclick="bookNow('${listing.id}')">Book Now</button>
+                    <button id="view-listing-details" class="action-button" data-id="${listing.id}">View Details</button>
+                    <button id="go-to-booking-button" class="action-button primary" onclick="bookNow('${listing.id}')">Book Now</button>
                 </div>
             </div>
         `;
-        
+
+        const viewDetailsButton = listingCard.querySelector('#view-listing-details');
+        viewDetailsButton.addEventListener('click', function() {
+            const listingId = this.getAttribute('data-id');
+            sessionStorage.setItem('listingId', listingId);
+            
+            viewDetails(listingId);
+        });
+
+
         return listingCard;
     }
 
@@ -250,6 +260,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const listingCard = createListingCard(listing);
             container.appendChild(listingCard);
         });
+    }
+
+    document.querySelectorAll('.view-details-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = e.target.getAttribute('data-id');
+          viewDetails(id);
+        });
+    });
+
+    function viewDetails(id) {
+        window.location.href = "item.html";
+    }
+
+      
+    function bookNow(listingId) {
+        console.log('Book now for listing:', listingId);
     }
 
 })
