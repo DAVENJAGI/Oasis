@@ -131,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: getAuthHeaders()
             });
             nearbyLatestListings = nearbyListings;
+            console.log(nearbyLatestListings);
             appendListingCards(nearbyLatestListings);
         } catch (error) {
             console.error('Error fetching neabry and latest listings:', error);
@@ -159,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         listingCard.innerHTML = `
             <div class="listing-image">
-                <img src="${listing.cover_image}" alt="${listing.property_name}" class="listing-img">
+                <img src="${listing.cover_image}" class="listing-img">
                 <div class="listing-badge">${badgeText}</div>
                 <div class="listing-favorite">
                     <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
