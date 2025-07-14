@@ -131,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: getAuthHeaders()
             });
             nearbyLatestListings = nearbyListings;
-            console.log(nearbyLatestListings);
             appendListingCards(nearbyLatestListings);
         } catch (error) {
             console.error('Error fetching neabry and latest listings:', error);
@@ -141,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
         function(position) {
             const usr_latitude = position.coords.latitude;
             const usr_longitude = position.coords.longitude;
-            console.log("User location:", usr_latitude, usr_longitude);
             fetchLatestOrNearbyListing(usr_latitude, usr_longitude);
         },
         function(error) {
@@ -154,13 +152,35 @@ document.addEventListener('DOMContentLoaded', () => {
     function createListingCard(listing) {
         const listingCard = document.createElement('div');
         listingCard.className = 'listing-card fade-in';
-        
         const formattedPrice = listing.price_by_night.toLocaleString();
         const badgeText = listing.listing_tag || 'Verified';
+
+        
+        function createListingImage(listing) {
+            if (!listing.cover_image || listing.cover_image === "NULL" || listing.cover_image === null || listing.cover_image === "") {
+                return `
+                    <div class="image-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             stroke-width="1.5" stroke="currentColor" class="placeholder-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5
+                                      1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18
+                                      3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0
+                                      0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5
+                                      0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375
+                                      0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                        </svg>
+                        <div class="placeholder-txt">No images added for this listing</div>
+                    </div>
+                `;
+            } else {
+                return `<img src="${listing.cover_image}" class="listing-img">`;
+            }
+        }
         
         listingCard.innerHTML = `
             <div class="listing-image">
-                <img src="${listing.cover_image}" class="listing-img">
+                ${createListingImage(listing)}
                 <div class="listing-badge">${badgeText}</div>
                 <div class="listing-favorite">
                     <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -217,7 +237,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return listingCard;
     }
 
-    console.log(nearbyLatestListings);
     //APPEND LISTINGS TO CARD
     function appendListingCards(nearbyLatestListings) {
         const container = document.querySelector('.listings-grid');
