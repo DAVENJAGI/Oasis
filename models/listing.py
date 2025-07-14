@@ -4,7 +4,7 @@ import models
 from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
-from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import Enum
 
@@ -23,7 +23,6 @@ if models.storage_type == 'db':
                         Column('listing_id', String(60), ForeignKey('listings.id'), primary_key=True),
                         Column('tag_id', String(60), ForeignKey('tags.id'), primary_key=True)
                         )
-
 
 rental_status_enum = Enum("Available", "Occupied", "Pending", name="rental_status_enum")
 property_type_enum = Enum("Apartment", "Bungalow", "Maisonette", "Bedsitter", "Single Room",
@@ -50,8 +49,10 @@ class Listing(BaseModel, Base):
         cover_image = Column(String(256), nullable=True)
         total_area = Column(String(256), nullable=True)
         listing_tag = Column(String(64), nullable=True)
+        is_verified = Column(Boolean, default=False, nullable=False)
         favorited_by = relationship("favoriteListing", backref="listing")
         reviews = relationship("Review", backref="listing")
+        ratings = relationship("listingRating", backref="listings")
         amenities = relationship("Amenity", secondary="listing_amenity",
                                  backref="listing_amenities",
                                  viewonly=False)
