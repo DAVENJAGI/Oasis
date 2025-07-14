@@ -1173,6 +1173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ENDPOINTS: {
             LISTING_DETAILS: (listingId) => `/listings/${listingId}`,
             LISTING_AMENITIES: (listingId) => `/listings/${listingId}/amenities`,
+            LISTING_RATING: (listingId) => `/listings/${listingId}/ratings`,
             AGENT_DATA: (agentId) => `/agent/${agentId}`
         },
         MESSAGES: {
@@ -1279,6 +1280,32 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Error fetching favorite listings:", error);
         }
     }
+
+    //FETCH LISTING AGENT
+    async function fetchAgent() {
+        try {
+            const agentData = await makeRequest(CONFIG.ENDPOINTS.AGENT_DATA(agentId), {
+            headers: getAuthHeaders()
+        });
+        return agentData;
+        } catch (error) {
+            console.error("Error fetching favorite listings:", error);
+        }
+    }
+
+    //FETCH LISTING RATINGS
+    async function fetchListingRating() {
+        let listingRating = [];
+        try {
+            const listingRatingData = await makeRequest(CONFIG.ENDPOINTS.LISTING_RATING(listingId), {
+            headers: getAuthHeaders()
+        });
+        listingRating = listingRatingData.map(rating => rating.score);
+        console.log(listingRating);
+        } catch (error) {
+            console.error("Error fetching favorite listings:", error);
+        }
+    }fetchListingRating();
 
     const amenityIcons = {
         // STORAGE
@@ -1395,6 +1422,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log(agentData);
             document.getElementById('agent-names').textContent = `${agentData.first_name} ${agentData.last_name}`;
+
+            if(agentData.is_verified !== false){
+                document.querySelector('.agent-verified').style.display = "flex";
+            }
         }
     }
 
