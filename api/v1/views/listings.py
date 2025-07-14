@@ -89,9 +89,14 @@ def create_obj_listing(town_id):
         file = request.files['cover_image']
         if file.filename == '':
             return jsonify({"error": "No selected file"}), 400
-        filepath = save_cover_image(file, str(obj.id))
-        obj.cover_image = filepath
-        obj.save()
+
+    try:
+        file_url = save_cover_image(file, str(obj.id))
+    except Exception as e:
+        return jsonify({"error": "Failed to upload image", "details": str(e)}), 500
+    
+    obj.cover_image = file_url
+    obj.save()
 
     return (jsonify(obj.to_dict()), 201)
 
@@ -198,17 +203,20 @@ def upload_listing_image(listing_id):
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
 
-    filepath = save_image(file, listing_id)
+    try:
+        file_url = save_image(file, listing_id)
 
-    listing_image = listingImage(listing_id=listing_id, file_path=filepath)
-    storage.new(listing_image)
-    storage.save()
+        listing_image = listingImage(listing_id=listing_id, file_path=filepath)
+        storage.new(listing_image)
+        storage.save()
 
-    return jsonify({
-        "message": "Image uploaded successfully",
-        "file_path": filepath,
-        "listing_id": listing_id
-    }), 201
+        return jsonify({
+            "message": "Image uploaded successfully",
+            "file_path": filepath,
+            "listing_id": listing_id
+        }), 201
+    except Exception as e:
+        return jsonify({"error": "Failed to upload image",  "details": str(e)}), 500
 
 @listing_views.route('/listing/<string:listing_id>/images',
                  methods=['GET'], strict_slashes=False)
