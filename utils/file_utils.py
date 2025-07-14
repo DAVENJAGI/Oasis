@@ -19,7 +19,7 @@ s3 = boto3.client(
     region_name='us-east-1'
 )
 
-# Folder structure (retained for S3 object keys)
+#FOLDER STRUCTURE
 UPLOAD_FOLDER = 'static/images/listings'
 COVER_UPLOAD_FOLDER = 'static/images/listings/cover_photos'
 USER_PROFILE_IMAGE_UPLOAD_FOLDER = 'static/images/users/profile_images'
@@ -32,13 +32,17 @@ def upload_file_to_s3(file, s3_key):
             file,
             SUPABASE_BUCKET_NAME,
             s3_key,
-            ExtraArgs={'ACL': 'public-read', 'ContentType': file.content_type}
+            ExtraArgs={'ContentType': file.content_type}
         )
-        public_url = f"{SUPABASE_S3_ENDPOINT}/{SUPABASE_BUCKET_NAME}/{s3_key}"
+
+        project_ref = 'rddlldguussuxiuunyhg'
+        public_url = f"https://{project_ref}.supabase.co/storage/v1/object/public/{SUPABASE_BUCKET_NAME}/{s3_key}"
         return public_url
+
     except ClientError as e:
         current_app.logger.error(f"S3 upload failed: {e}")
         raise
+
 
 def save_image(file, listing_id):
     """Uploads listing image to Supabase and returns public URL"""
