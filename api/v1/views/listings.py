@@ -461,3 +461,42 @@ def delete_listing_tag(listing_id, tag_id):
     message = f"Tag {tag.name} removed from {listing.property_name} successfully."
     return make_response(jsonify({"Message": message}), 202)
 
+@listing_views.route('/listing/<string:listing_id>/ratings/', methods=['POST'],
+                 strict_slashes=False)
+@swag_from('documentation/ratings/post.yml', methods=['POST'])
+@require_user_or_admin_auth
+def create_obj_ratings(listing_id):
+    """ create new listing rating instance """
+    if not request.get_json():
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+
+    data = request.get_json()
+    listing = storage.get(Listing, listing_id)
+    if not listing:
+        return make_response(jsonify({"error": "Listing not found"}), 404)
+
+    if 'user_id' not in request.get_json():
+        return make_response(jsonify({"error": "Missing user."}), 400)
+
+    user = storage.get(User, data['user_id'])
+    if not user:
+        return make_response(jsonify({"error": "User not found"}), 404)
+
+    if 'score' not in request.get_json():
+        return make_response(jsonify({"error": "Missing rating score."}), 400)
+
+    obj = listingRating(**data, listing_id=listing_id)
+    obj.save()
+    return (jsonify(obj.to_dict()), 201)
+
+@listing_views.route('/listing/<string:listing_id>/ratings',
+                 methods=['GET'], strict_slashes=False)
+@swag_from('documentation/listings/get.yml', methods=['GET'])
+@require_agent_or_admin_or_user_auth
+def get_all_listing_ratings(listing_id):
+    """ listing ratings """
+    listing = storage.get(Listing, listing_id)
+    if listing is None:
+        return make_response(jsonify({"error": "Listing not found"}), 404)
+    ratings = [obj.to_dict() for obj in listing.ratings]
+    return jsonify(ratings)
