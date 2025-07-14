@@ -852,7 +852,7 @@
                     </div>
                 </div>
                 <div class="property-header property-header">
-                    <h1 class="property-title">Luxury Oceanview Villa</h1>
+                    <h1 id="property-title-txt" class="property-title">Luxury Oceanview Villa</h1>
                     <div id="show-location" class="property-location">
                         <i class="fas fa-map-marker-alt location-icon"></i>
                         <span class="location-name-div">Mombasa, Diani Beach</span>
@@ -863,19 +863,19 @@
                     <div class="property-stats">
                         <div class="stat-item">
                             <i class="fas fa-home stat-icon"></i>
-                            <span>Villa</span>
+                            <span id="property-type">Villa</span>
                         </div>
                         <div class="stat-item">
                             <i class="fas fa-bed stat-icon"></i>
-                            <span>4 Beds</span>
+                            <span id="property-bed-no">4 Beds</span>
                         </div>
                         <div class="stat-item">
                             <i class="fas fa-bath stat-icon"></i>
-                            <span>3 Baths</span>
+                            <span id="property-bath-no">3 Baths</span>
                         </div>
                         <div class="stat-item">
                             <i class="fas fa-users stat-icon"></i>
-                            <span>8 Guests</span>
+                            <span id="property-max-guest">8 Guests</span>
                         </div>
                         
                     </div>
@@ -883,45 +883,19 @@
 
                 <div class="description">
                     <h3>About this place</h3>
-                    <p>Experience luxury living in this stunning oceanview villa located on the pristine beaches of Diani. This exceptional property offers breathtaking panoramic views of the Indian Ocean, making it the perfect retreat for those seeking tranquility and elegance.</p>
-                    <p>The villa features spacious bedrooms, modern amenities, and direct beach access. Whether you're looking for a romantic getaway or a family vacation, this property provides the perfect blend of comfort and luxury.</p>
+                    <p id="property-description">Experience luxury living in this stunning oceanview villa located on the pristine beaches of Diani. This exceptional property offers breathtaking panoramic views of the Indian Ocean, making it the perfect retreat for those seeking tranquility and elegance.</p>
                 </div>
 
                 <div class="amenities">
                     <h3>Amenities</h3>
+                    <div class="no-amenities">Currently no amenities added to this listing</div>
                     <div class="amenities-grid">
+                        <!--
                         <div class="amenity-item">
                             <i class="fas fa-wifi amenity-icon"></i>
-                            <span>High-speed WiFi</span>
+                            <span class="amenity-item-name">High-speed WiFi</span>
                         </div>
-                        <div class="amenity-item">
-                            <i class="fas fa-swimming-pool amenity-icon"></i>
-                            <span>Private Pool</span>
-                        </div>
-                        <div class="amenity-item">
-                            <i class="fas fa-car amenity-icon"></i>
-                            <span>Free Parking</span>
-                        </div>
-                        <div class="amenity-item">
-                            <i class="fas fa-snowflake amenity-icon"></i>
-                            <span>Air Conditioning</span>
-                        </div>
-                        <div class="amenity-item">
-                            <i class="fas fa-utensils amenity-icon"></i>
-                            <span>Full Kitchen</span>
-                        </div>
-                        <div class="amenity-item">
-                            <i class="fas fa-tv amenity-icon"></i>
-                            <span>Smart TV</span>
-                        </div>
-                        <div class="amenity-item">
-                            <i class="fas fa-dumbbell amenity-icon"></i>
-                            <span>Gym Access</span>
-                        </div>
-                        <div class="amenity-item">
-                            <i class="fas fa-umbrella-beach amenity-icon"></i>
-                            <span>Beach Access</span>
-                        </div>
+                    -->
                     </div>
                 </div>
             </div>
@@ -929,7 +903,7 @@
             <div class="sidebar">
                 <div class="sidebar-card pricing-card">
                     <h3>Pricing</h3>
-                    <div class="price">Ksh 4,500</div>
+                    <div id="listing-price-per-night" class="price">Ksh 4,500</div>
                     <div class="price-period">per night</div>
                     <div class="booking-actions">
                         <button id="book-listing-btn-2" class="btn btn-primary">
@@ -948,7 +922,7 @@
                     <div class="agent-avatar">
                         <i class="fas fa-user"></i>
                     </div>
-                    <div class="agent-name">John Doe</div>
+                    <div id="agent-names" class="agent-name">John Doe</div>
                     <div class="agent-verified">
                         <i class="fas fa-check-circle"></i>
                         <span>Verified Agent</span>
