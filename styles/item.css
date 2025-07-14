@@ -1022,7 +1022,7 @@ body {
     margin-bottom: 0.5rem;
 }
 .agent-verified {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
