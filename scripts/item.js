@@ -1153,3 +1153,286 @@ document.addEventListener('DOMContentLoaded', () => {
 
         generateCalendar();    
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const userId = sessionStorage.getItem('user_id');
+    const listingId = sessionStorage.getItem('listingId');
+    const customToken = sessionStorage.getItem('X-Custom-Token');
+    console.log('custom', customToken);
+    let agentId;
+    
+
+    function getAuthHeaders() {
+        return {
+            'X-Custom-Token': customToken
+        };
+    }
+
+    const CONFIG = {
+        API_BASE_URL: 'https://oasis-mjmw.onrender.com/api/v1',
+        ENDPOINTS: {
+            LISTING_DETAILS: (listingId) => `/listings/${listingId}`,
+            LISTING_AMENITIES: (listingId) => `/listings/${listingId}/amenities`,
+            AGENT_DATA: (agentId) => `/agent/${agentId}`
+        },
+        MESSAGES: {
+            LOGIN_SUCCESS: 'Login sucessful',
+            USER_NOT_FOUND: 'Login failed: User not found',
+            INCORRECT_PASSWORD: 'Login failed: Incorrect password'
+        },
+        TIMEOUTS: {
+            REDIRECT_DELAY: 1000,
+            NOTIFICATION_DURATION: 5000,
+            API_TIMEOUT: 30000
+        }
+    };
+
+    //DEFAULT MAKE RESPONSE FUNC THAT CAN BE USED BY ALL FUNCTIONS
+    /**
+     * Takes a default API_BASE_URL and apends an endpoint to it
+     * Adds a default option dict, with method GET as default, content type, and getAuthHeaders
+     * finalOption is anything else that overwrites the default option
+     * handles errors such as timeout, and non 2xx status headers
+     */
+    const makeRequest = async (endpoint, options = {}) => {
+        const url = CONFIG.API_BASE_URL + endpoint;
+    
+        const defaultOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                ...getAuthHeaders(), 
+            },
+            timeout: CONFIG.TIMEOUTS.API_TIMEOUT
+        };
+    
+        const finalOptions = { ...defaultOptions, ...options };
+    
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), finalOptions.timeout);
+    
+            const response = await fetch(url, {
+                ...finalOptions,
+                signal: controller.signal
+            });
+    
+            clearTimeout(timeoutId);
+    
+            if (!response.ok) {
+                const errorBody = await response.text();
+                throw new Error(`HTTP ${response.status}: ${errorBody}`);
+            }
+    
+            return await response.json();
+    
+        } catch (error) {
+            if (error.name === 'AbortError') {
+                console.error(`Request to ${url} timed out`);
+                throw new Error('Request timed out');
+            }
+            console.error(`Request to ${url} failed:`, error.message);
+            throw error;
+        }
+    };
+
+    //FETCH LISTING DETAILS
+    async function fetchListing() {
+        try {
+            const listingData = await makeRequest(CONFIG.ENDPOINTS.LISTING_DETAILS(listingId), {
+            headers: getAuthHeaders()
+        });
+        agentId = listingData.agent_id;
+        console.log(agentId);
+        const agentData = await fetchAgent(agentId); 
+        console.log("this here; ", listingData);
+        appendListingDetails(listingData, agentData);
+        fetchListingAmenities();
+        fetchAgent(agentId);;
+        } catch (error) {
+            console.error("Error fetching favorite listings:", error);
+        }
+    } fetchListing();
+
+    //FETCH LISTING AMENITIES
+    async function fetchListingAmenities() {
+        let amenityName = [];
+        try {
+            const listingAmenityData = await makeRequest(CONFIG.ENDPOINTS.LISTING_AMENITIES(listingId), {
+            headers: getAuthHeaders()
+        });
+        amenityName = listingAmenityData.map(amenity => amenity.name);
+        appendListingAmenities(amenityName);
+        } catch (error) {
+            console.error("Error fetching favorite listings:", error);
+        }
+    }
+
+    //FETCH LISTING AGENT
+    async function fetchAgent() {
+        try {
+            const agentData = await makeRequest(CONFIG.ENDPOINTS.AGENT_DATA(agentId), {
+            headers: getAuthHeaders()
+        });
+        return agentData;
+        } catch (error) {
+            console.error("Error fetching favorite listings:", error);
+        }
+    }
+
+    const amenityIcons = {
+        // STORAGE
+        'closet': { icon: 'fas fa-tshirt', description: 'Spacious storage for all your belongings' },
+        'wardrobe': { icon: 'fas fa-tshirt', description: 'Organized clothing storage space' },
+        'storage': { icon: 'fas fa-box', description: 'Convenient storage solutions' },
+        
+        // KITCHEN
+        'kitchen': { icon: 'fas fa-utensils', description: 'Fully equipped for all your culinary needs' },
+        'dining': { icon: 'fas fa-utensils', description: 'Comfortable dining experience' },
+        'restaurant': { icon: 'fas fa-utensils', description: 'On-site dining facilities' },
+        'bar': { icon: 'fas fa-cocktail', description: 'Refreshing drinks and cocktails' },
+        'coffee': { icon: 'fas fa-coffee', description: 'Fresh coffee and beverages' },
+        'minibar': { icon: 'fas fa-wine-bottle', description: 'In-room refreshment options' },
+        'microwave': { icon: 'fas fa-microchip', description: 'Quick and convenient food heating' },
+        
+        // RECREATION
+        'pool': { icon: 'fas fa-swimming-pool', description: 'Refreshing swimming and relaxation area' },
+        'swimming': { icon: 'fas fa-swimming-pool', description: 'Swimming facilities available' },
+        'spa': { icon: 'fas fa-spa', description: 'Professional treatments and relaxation services' },
+        'sauna': { icon: 'fas fa-hot-tub', description: 'Relaxing heat therapy for ultimate wellness' },
+        'hot tub': { icon: 'fas fa-hot-tub', description: 'Luxurious hot tub experience' },
+        'jacuzzi': { icon: 'fas fa-hot-tub', description: 'Relaxing jacuzzi facilities' },
+        'gym': { icon: 'fas fa-dumbbell', description: 'Full fitness and exercise facilities' },
+        'fitness': { icon: 'fas fa-dumbbell', description: 'Complete fitness center' },
+        'yoga': { icon: 'fas fa-praying-hands', description: 'Peaceful yoga and meditation space' },
+        'massage': { icon: 'fas fa-hand-holding-heart', description: 'Professional massage services' },
+        
+        // ENTERTAINMENT
+        'cinema': { icon: 'fas fa-film', description: 'Private movie theater experience' },
+        'theater': { icon: 'fas fa-film', description: 'Entertainment and movie facilities' },
+        'tv': { icon: 'fas fa-tv', description: 'Smart TV entertainment system' },
+        'smart tv': { icon: 'fas fa-tv', description: 'Advanced smart TV technology' },
+        'music': { icon: 'fas fa-music', description: 'High-quality audio system' },
+        'games': { icon: 'fas fa-gamepad', description: 'Gaming and entertainment options' },
+        'library': { icon: 'fas fa-book', description: 'Quiet reading and study space' },
+        
+        // TRANSPORT
+        'parking': { icon: 'fas fa-parking', description: 'Convenient vehicle parking spaces' },
+        'parking lot': { icon: 'fas fa-parking', description: 'Dedicated parking area' },
+        'garage': { icon: 'fas fa-warehouse', description: 'Covered parking garage' },
+        'valet': { icon: 'fas fa-concierge-bell', description: 'Professional valet parking service' },
+        
+        // INTERNET
+        'wifi': { icon: 'fas fa-wifi', description: 'High-speed internet connectivity' },
+        'internet': { icon: 'fas fa-wifi', description: 'Reliable internet access' },
+        'charging': { icon: 'fas fa-charging-station', description: 'Device charging stations' },
+        'computer': { icon: 'fas fa-laptop', description: 'Computer and workstation access' },
+        
+        // SECURITY
+        'security': { icon: 'fas fa-shield-alt', description: '24/7 security monitoring' },
+        'cameras': { icon: 'fas fa-video', description: '24/7 security monitoring and protection' },
+        'safe': { icon: 'fas fa-lock', description: 'Secure storage for valuables' },
+        'alarm': { icon: 'fas fa-bell', description: 'Advanced security alarm system' },
+        
+        // ACCESSIBILITY
+        'wheelchair': { icon: 'fas fa-wheelchair', description: 'Full accessibility features' },
+        'wheelchair accessible': { icon: 'fas fa-wheelchair', description: 'Full accessibility features and accommodations' },
+        'elevator': { icon: 'fas fa-elevator', description: 'Elevator access to all floors' },
+        'wide hallways': { icon: 'fas fa-arrows-alt-h', description: 'Comfortable navigation throughout the space' },
+        'ramp': { icon: 'fas fa-angle-up', description: 'Wheelchair accessible ramps' },
+        
+        // CLIMATE
+        'air conditioning': { icon: 'fas fa-snowflake', description: 'Climate controlled environment' },
+        'heating': { icon: 'fas fa-fire', description: 'Comfortable heating system' },
+        'fan': { icon: 'fas fa-fan', description: 'Air circulation and cooling' },
+        'balcony': { icon: 'fas fa-building', description: 'Private outdoor balcony space' },
+        'outdoor grill': { icon: 'fas fa-hotdog', description: 'BBQ grill for outdoor cooking and fun' },
+        'terrace': { icon: 'fas fa-mountain', description: 'Outdoor terrace area' },
+        'garden': { icon: 'fas fa-seedling', description: 'Beautiful garden space' },
+        
+        // SERVICES
+        'laundry': { icon: 'fas fa-tshirt', description: 'Laundry and cleaning services' },
+        'washer': { icon: 'fas fa-soap', description: 'In-unit laundry washing machine' },
+        'housekeeping': { icon: 'fas fa-broom', description: 'Professional housekeeping services' },
+        'concierge': { icon: 'fas fa-concierge-bell', description: 'Personal concierge assistance' },
+        'room service': { icon: 'fas fa-room-service', description: '24/7 room service available' },
+        'water purifier': { icon: 'fas fa-tint', description: 'Clean, purified drinking water' },
+        
+        // OUTDOOR
+        'beach': { icon: 'fas fa-umbrella-beach', description: 'Beach access and activities' },
+        'golf': { icon: 'fas fa-golf-ball', description: 'Golf course and facilities' },
+        'tennis': { icon: 'fas fa-table-tennis', description: 'Tennis court facilities' },
+        'sports': { icon: 'fas fa-running', description: 'Various sports facilities' },
+        'playground': { icon: 'fas fa-child', description: 'Children\'s playground area' },
+        'rooftop': { icon: 'fas fa-building', description: 'Access to rooftop relaxation or views' },
+        
+        // BUSINESS
+        'conference': { icon: 'fas fa-users', description: 'Professional conference facilities' },
+        'meeting': { icon: 'fas fa-handshake', description: 'Meeting room facilities' },
+        'office': { icon: 'fas fa-briefcase', description: 'Office space and business facilities' },
+        'printing': { icon: 'fas fa-print', description: 'Printing and document services' },
+        
+        // DEFAULT
+        'default': { icon: 'fas fa-star', description: 'Premium amenity available' }
+    };
+
+    //APPEND THE DETAILS TO THE LISTING DETAILS DIV
+    function appendListingDetails(listingData, agentData) {
+        const container = document.querySelector('.main-content');
+        if (!container) {
+            console.error('Container not found:', container);
+            return;
+        } else {
+            const formattedPrice = listingData.price_by_night.toLocaleString();
+
+            document.getElementById('property-title-txt').textContent = listingData.property_name;
+            document.getElementById('property-type').textContent = listingData.property_type;
+            document.getElementById('property-bed-no').textContent = listingData.number_rooms;
+            document.getElementById('property-bath-no').textContent = listingData.number_bathrooms;
+            document.getElementById('property-max-guest').textContent = listingData.max_guest;
+            document.getElementById('property-description').textContent = listingData.description;
+            document.getElementById('listing-price-per-night').textContent = formattedPrice;
+
+            console.log(agentData);
+            document.getElementById('agent-names').textContent = `${agentData.first_name} ${agentData.last_name}`;
+        }
+    }
+
+    //APPEND THE AMENITIES TO THE LISTING AMENITIES DIV
+    function appendListingAmenities(amenityName) {
+        const amenityContainer = document.querySelector('.amenities-grid');
+        const noAmenityContainer = document.querySelector('.no-amenities');
+        
+
+        if (!amenityContainer) {
+            console.error('Container not found:', amenityContainer);
+            return;
+        } else {
+            amenityContainer.innerHTML = '';
+            if (Array.isArray(amenityName) && amenityName.length > 0) {
+                amenityName.forEach(name => {
+                    const amenityInfo = amenityIcons[name.toLowerCase()] || amenityIcons['default'];
+            
+                    const amenityItem = document.createElement('div');
+                    amenityItem.classList.add('amenity-item');
+            
+                    amenityItem.innerHTML = `
+                        <i class="${amenityInfo.icon} amenity-icon" title="${amenityInfo.description}"></i>
+                        <span class="amenity-item-name">${name}</span>
+                    `;
+            
+                    amenityContainer.appendChild(amenityItem);
+                });
+            
+                if (noAmenityContainer) {
+                    noAmenityContainer.style.display = "none";
+                }
+            } else {
+                if (noAmenityContainer) {
+                    noAmenityContainer.style.display = "block";
+                }
+            }
+        
+        }
+    }
+})
