@@ -2926,7 +2926,6 @@ body {
         padding: 0.5em;
     }
     .booking-popup .popup-content{
-        border: 1px solid red;
         justify-content: center;
         overflow-x: hidden;
         /*padding: 0.5em;*/
