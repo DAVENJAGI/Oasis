@@ -175,6 +175,7 @@ body {
     color: white;
     cursor: pointer;
     box-shadow: var(--current-shadow-light);
+    margin-left: 1em;
 }
 
 .logo-text {
@@ -1593,7 +1594,7 @@ body {
 }
 
 .report-listing-popup .popup-content {
-    background: var(--current-glass-bg-1);
+    background: var(--current-glass-bg);
     backdrop-filter: blur(80px);
     max-width: 600px;
     width: 90%;
@@ -1643,7 +1644,7 @@ body {
 }
 
 .booking-popup .popup-content {
-    background: var(--current-glass-bg-1);
+    background: var(--current-glass-bg);
     backdrop-filter: blur(80px);
     max-width: 800px;
     width: 100%;
@@ -2874,6 +2875,9 @@ body {
     
     .logo-text {
         font-size: 1.5rem;
+    }
+    .logo-icon{
+        margin-left: 1em;
     }
 
     .action-button {
