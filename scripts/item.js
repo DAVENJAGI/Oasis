@@ -1435,12 +1435,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     //APPEND THE DETAILS TO THE LISTING DETAILS DIV
-    function appendListingDetails(listingData, agentData) {
+    async function appendListingDetails(listingData, agentData) {
         const container = document.querySelector('.main-content');
         if (!container) {
             console.error('Container not found:', container);
             return;
         } else {
+            const townData = await fetchTown(listingData.town_id)
+            console.log('Townnn', townData);
             const formattedPrice = listingData.price_by_night.toLocaleString();
 
             document.getElementById('property-title-txt').textContent = listingData.property_name;
@@ -1450,6 +1452,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('property-max-guest').textContent = listingData.max_guest;
             document.getElementById('property-description').textContent = listingData.description;
             document.getElementById('listing-price-per-night').textContent = formattedPrice;
+            document.querySelector(".location-name-div").textContent = townData.town_name;
 
             console.log(agentData);
             document.getElementById('agent-names').textContent = `${agentData.first_name} ${agentData.last_name}`;
@@ -1561,15 +1564,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (userData) {
 
-            console.log(userData.first_name);
-            if (userData.town_id) {
+            if (userData.address) {
                 try {
-                    const townData = await fetchTown(userData.town_id);
-                    console.log("Fetched town data:", townData);
-                    userLocation = townData?.name || userData.location || 'Kenya';
+                    userLocation = 'Nairobi';
                 } catch (err) {
                     console.error("Failed to fetch town data", err);
-                   // userLocation = userData.location || userData.city || userData.country || 'Kenya';
+                    userLocation = userData.location || userData.city || userData.country || 'Kenya';
                 }
             } else {
                 userLocation = userData.location || userData.city || userData.country || 'Kenya';
@@ -1612,7 +1612,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="user-name">${userName}</div>
                     <div class="user-location">
                         <i class="fas fa-map-marker-alt"></i>
-                        Nairobi, Kenya
+                        ${userLocation}, Kenya
                     </div>
                 </div>
                 <div class="review-meta">
