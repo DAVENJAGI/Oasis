@@ -3236,6 +3236,15 @@ body {
         max-height: 85vh;
         margin: 10px;
     }
+
+    .popup-content{
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .popup-content::-webkit-scrollbar {
+        display: none;
+    }
     
     .season-group {
         padding: 12px;
