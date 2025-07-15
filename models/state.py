@@ -15,7 +15,6 @@ class State(BaseModel, Base):
     if models.storage_type == "db":
         __tablename__ = 'states'
         name = Column(String(128), unique=True, nullable=False)
-        wards = relationship("Town", backref="states")
         constituencies = relationship("City", backref="county")
         country_id = Column(String(64), ForeignKey('countries.id'), nullable=False)
  
