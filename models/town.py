@@ -11,8 +11,7 @@ from sqlalchemy.orm import relationship
 class Town(BaseModel, Base):
     """Representation of town""" 
     if models.storage_type == "db":
-        __tablename__ = 'towns'
-        state_id = Column(String(60), ForeignKey('states.id', ondelete="CASCADE"), nullable=False)
+        __tablename__ = 'towns'      
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False) 
         town_name = Column(String(128), nullable=False)
         listings = relationship("Listing", backref="town")
