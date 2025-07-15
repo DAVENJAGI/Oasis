@@ -216,6 +216,10 @@
             </div>
             
             <div id="review-item-div" class="popup-content">
+                <div class="no-reviews">
+                    <i class="fas fa-smile smile-emoji"></i>
+                    <div>Be the first to leave a review</div>
+                </div>
                 <div class="reviews-container" id="reviews-container">
                     <div class="review-item">
                         <div class="review-header">
@@ -258,92 +262,20 @@
                             </button>
                         </div>
                     </div>
-    
-                    <div class="review-item">
-                        <div class="review-header">
-                            <div class="user-avatar">SM</div>
-                            <div class="user-info">
-                                <div class="user-name">Sarah Mwangi</div>
-                                <div class="user-location">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    Mombasa, Kenya
-                                </div>
-                            </div>
-                            <div class="review-meta">
-                                <div class="verified-badge">
-                                    <i class="fas fa-check-circle"></i>
-                                    Verified
-                                </div>
-                                <div class="review-date">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    1 week ago
-                                </div>
-                            </div>
-                        </div>
-                        <div class="review-text">
-                            "Great property with excellent facilities. The kitchen was well-equipped and the bedrooms were spacious and comfortable. The only minor issue was the Wi-Fi connection, but overall a fantastic stay. The property manager was very helpful and addressed all our concerns promptly."
-                        </div>
-                        <div class="review-actions">
-                            <button class="action-btn">
-                                <i class="fas fa-thumbs-up"></i>
-                                Helpful (8)
-                            </button>
-                            <button class="action-btn">
-                                <i class="fas fa-reply"></i>
-                                Reply
-                            </button>
-                            <button class="action-btn">
-                                <i class="fas fa-flag"></i>
-                                Report
-                            </button>
-                        </div>
-                    </div>
-    
-                    <div class="review-item">
-                        <div class="review-header">
-                            <div class="user-avatar">
-                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face" alt="User Avatar">
-                            </div>
-                            <div class="user-info">
-                                <div class="user-name">Michael Chen</div>
-                                <div class="user-location">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    Kisumu, Kenya
-                                </div>
-                            </div>
-                            <div class="review-meta">
-                                <div class="review-date">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    2 weeks ago
-                                </div>
-                            </div>
-                        </div>
-                        <div class="review-text">
-                            "Nice place, clean and well-maintained. The location is convenient with easy access to restaurants and shopping. The photos accurately represent the property. Good value for money."
-                        </div>
-                        <div class="review-actions">
-                            <button class="action-btn">
-                                <i class="fas fa-thumbs-up"></i>
-                                Helpful (5)
-                            </button>
-                            <button class="action-btn">
-                                <i class="fas fa-reply"></i>
-                                Reply
-                            </button>
-                            <button class="action-btn">
-                                <i class="fas fa-flag"></i>
-                                Report
-                            </button>
-                        </div>
-                    </div>
                     
                 </div>
             </div>
             
             <div class="popup-actions">
                 <div class="reviews-stats">
-                    <span><i class="fas fa-star"></i> 4.8 average rating</span>
-                    <span><i class="fas fa-users"></i> 24 total reviews</span>
+                    <span class="ratings">
+                        <i class="fas fa-star rating-div-star"></i>
+                        <div class="rating-in-reviews"> 4.8 average rating</div>
+                    </span>
+                    <span class="ratings">
+                        <i class="fas fa-users"></i>
+                        <div class="no-of-reviewers">24 total reviews</div>
+                    </span>
                 </div>
                 <div style="display: flex; gap: 1rem;">
                     <button class="popup-btn secondary" id="sort-reviews">
@@ -984,9 +916,9 @@
 
                 <div class="sidebar-card">
                     <h3>Property Status</h3>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
-                        <i class="fas fa-check-circle" style="color: #38a169;"></i>
-                        <span style="color: #38a169; font-weight: 600;">Available</span>
+                    <div class="property-status" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <i class="fas fa-check-circle" style=""></i>
+                        <span class="property-status-txt" style="font-weight: 600;"></span>
                     </div>
                     <button id="report-listing-btn" class="btn btn-secondary" style="width: 100%;">
                         <i class="fas fa-flag"></i> Report Property
