@@ -2931,6 +2931,7 @@ body {
         /*padding: 0.5em;*/
     }
     .middle-booking{
+        border: 1px solid red;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -3188,13 +3189,6 @@ body {
     .popup-btn {
         width: 100%;
         justify-content: center;
-    }
-
-    /*DISPLAY BOOKING DIV*/
-    .booking-popup .popup-content {
-        width: 95%;
-        margin: 10px;
-        padding: 0.5rem;
     }
 
     .date-inputs {
