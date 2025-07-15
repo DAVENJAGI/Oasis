@@ -2927,6 +2927,7 @@ body {
     }
     .middle-booking{
         padding: 0.5rem;
+        border: 1px solid red;
         height: auto;
         -ms-overflow-style: none;
         scrollbar-width: none;
