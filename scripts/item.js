@@ -1,26 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const tags = [
-        'Furnished',
-        'Pet Friendly',
-        'Wi-Fi Included',
-        'Near School',
-        'Parking Available',
-        'Balcony',
-        '24/7 Security'
-    ];
-    
-
-    const tagsDiv = document.querySelector('.tags_div');
-    
-    tags.forEach(tagText => {
-        const tag = document.createElement('span');
-        tag.className = 'tag';
-        tag.textContent = tagText;
-        tagsDiv.appendChild(tag);
-    });
-
-
     //SHOW PRICES OF LISING 
     const pricingData = [
         { month: 'Jan', price: 120, season: 'Low Season' },
@@ -1071,7 +1050,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const userId = sessionStorage.getItem('user_id');
     const listingId = sessionStorage.getItem('listingId');
     const customToken = sessionStorage.getItem('X-Custom-Token');
-    console.log('custom', customToken);
     let agentId;
     
 
@@ -1088,6 +1066,7 @@ document.addEventListener('DOMContentLoaded', () => {
             LISTING_AMENITIES: (listingId) => `/listings/${listingId}/amenities`,
             LISTING_RATING: (listingId) => `/listing/${listingId}/ratings`,
             LISTING_REVIEWS: (listingId) => `/listing/${listingId}/reviews`,
+            LISTING_TAGS: (listingId) => `/listing/${listingId}/tags`,
             AGENT_DATA: (agentId) => `/agent/${agentId}`,
             TOWN_DATA: (townId) => `/towns/${townId}`,
             USER_DATA: (userId) => `/user/${userId}`
@@ -1160,15 +1139,14 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: getAuthHeaders()
         });
         agentId = listingData.agent_id;
-        console.log(agentId);
         const agentData = await fetchAgent(agentId); 
         const townData = await fetchTown(listingData.town_id); 
-        console.log("this here; ", townData);
         appendListingDetails(listingData, agentData);
         fetchListingAmenities();
         fetchAgent(agentId);;
         fetchListingRating();
         fetchListingReviews();
+        fetchListingTags();
         initializeMap(listingData, townData);
         } catch (error) {
             console.error("Error fetching favorite listings:", error);
@@ -1186,6 +1164,46 @@ document.addEventListener('DOMContentLoaded', () => {
         appendListingAmenities(amenityName);
         } catch (error) {
             console.error("Error fetching favorite listings:", error);
+        }
+    }
+
+    //FETCH LISTING AMENITIES
+    async function fetchListingTags() {
+        try {
+            const listingTagsData = await makeRequest(CONFIG.ENDPOINTS.LISTING_TAGS(listingId), {
+            headers: getAuthHeaders()
+        });
+        appendListingTags(listingTagsData);
+        } catch (error) {
+            console.error("Error fetching favorite listings:", error);
+        }
+    }
+    //APPEND THE TAGS TO THE LISTING TAGS DIV
+    function appendListingTags(listingTagsData) {
+        const tagContainer = document.querySelector('.tags_div');
+        
+        if (!tagContainer) {
+            console.error('Container not found:', tagContainer);
+            return;
+        } else {
+            tagContainer.innerHTML = '';
+            if (listingTagsData > 0) {
+                
+                listingTagsData.forEach(tagText => {
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.textContent = tagText;
+                    tagContainer.appendChild(tag);
+                });
+            } else {
+                if (tagContainer) {
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.textContent = "No tags";
+                    tagContainer.appendChild(tag);
+                }
+            }
+        
         }
     }
 
@@ -1246,7 +1264,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const listingReviewsData = await makeRequest(CONFIG.ENDPOINTS.LISTING_REVIEWS(listingId), {
             headers: getAuthHeaders()
         });
-        console.log(listingReviewsData);
         } catch (error) {
             console.error("Error fetching favorite listings:", error);
         }
@@ -1357,7 +1374,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         } else {
             const townData = await fetchTown(listingData.town_id)
-            console.log('Townnn', townData);
             const formattedPrice = listingData.price_by_night.toLocaleString();
 
             document.getElementById('property-title-txt').textContent = listingData.property_name;
@@ -1371,7 +1387,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector(".location-popup-location-div").textContent = `${townData.state}, ${townData.town_name}`;
             document.querySelector(".location-coordinates").textContent = `Coordinates:  ${listingData.latitude}, ${listingData.longitude}`;
             
-            console.log(agentData);
             document.getElementById('agent-names').textContent = `${agentData.first_name} ${agentData.last_name}`;
 
             if(agentData.is_verified !== false){
@@ -1571,10 +1586,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         } else {
             container.innerHTML = "";
-            console.log("Thisss", listingRatingData);
-
+            
             if(listingRatingData.length !== 0) {
-                console.log(listingRatingData);
                 for (const review of listingRatingData) {
                     const reviewDiv = await createReviewElement(review);
                     container.appendChild(reviewDiv);
@@ -1605,7 +1618,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!map) {
             setTimeout(() => {
                 initializeMap();
-            }, 100);
+                map.invalidateSize();
+            }, 200);
         }
     }
 
@@ -1652,7 +1666,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Share location button
     shareLocationBtn.addEventListener('click', () => {
         const shareData = {
             title: `${locationListingData.property_name} Location`,
@@ -1663,13 +1676,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (navigator.share) {
             navigator.share(shareData);
         } else {
-            // Fallback: copy to clipboard
             navigator.clipboard.writeText(`${shareData.title} - ${shareData.text} - ${shareData.url}`);
             alert('Location details copied to clipboard!');
         }
     });
 
-    // Close popup with Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && locationPopup.style.display === 'block') {
             hideLocationPopup();
