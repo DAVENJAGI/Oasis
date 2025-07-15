@@ -3189,7 +3189,14 @@ body {
         justify-content: center;
     }
     .properties-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .logo-text{
+        display: none;
+    }
+    #helpBtn{
+        display: none;
     }
 }
 @media (max-width: 480px) {
@@ -3266,6 +3273,13 @@ body {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    
+    .logo{
+        margin-right: 0.5em;
+    }
+    .hero-content{
+        padding-top: 1.5em;
     }
 }
 /* Animations */
