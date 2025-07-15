@@ -2012,7 +2012,7 @@ body {
 }
 .middle-booking{
     padding: 24px;
-    height: 72vh;
+    height: auto;
     min-width: 100%;
     overflow-y: scroll;
     border-radius: 0px !important;
@@ -2942,7 +2942,7 @@ body {
         display: none;
     }
     .booking-content {
-        border: 1px solid red;
+        /*border: 1px solid red;*/
         grid-template-columns: 1fr;
         display: grid;
         gap: 20px;
@@ -3315,14 +3315,6 @@ body {
     }
     .hero-content{
         padding-top: 1.5em;
-    }
-    .middle-booking{
-        border: 1px solid pink;
-        width: auto;
-        overflow-x: hidden;
-        height: auto;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
     }
 }
 /* Animations */
