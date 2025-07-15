@@ -2934,6 +2934,8 @@ body {
     .middle-booking{
         padding: 0.5rem;
         border: 1px solid red;
+        max-width: 98%;
+        margin-left: 0;
         overflow-x: hidden;
         height: auto;
         -ms-overflow-style: none;
