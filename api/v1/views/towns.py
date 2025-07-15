@@ -38,31 +38,13 @@ def return_by_town_id(state_id):
         towns_data = [town.to_dict() for town in state.towns]
         return jsonify(towns_data)
 
-
-@town_views.route("/towns/<town_id>", methods=["GET"])
-def return_town(town_id):
-    """Returns town data with appended country_name"""
+@town_views.route("/town/<town_id>/", methods=["GET"], strict_slashes=False)
+def return_town_based_id(town_id):
+    """Returns town based on town_id"""
     town = storage.get(Town, town_id)
     if not town:
-        abort(404)
-
-    town_dict = town.to_dict()
-
-    city = storage.get(City, town.city_id)
-    if not city:
-        abort(404)
-
-    state = storage.get(State, city.state_id)
-    if not state:
-        abort(404)
-
-    country = storage.get(Country, state.country_id)
-    if not country:
-        abort(404)
-
-    town_dict["country_name"] = country.name
-    return jsonify(town_dict), 200
-
+        abort(404, description="Town not found")
+    return jsonify(town.to_dict()), 200
 
 
 @town_views.route("/states/<state_id>/towns/", strict_slashes=False,
