@@ -7,6 +7,9 @@ from models import storage
 from models.base_model import BaseModel
 from models.amenity import Amenity
 from models.town import Town
+from models.city import City
+from models.state import State
+from models.country import Country
 from models.listing import Listing 
 from models.review import Review
 # from models.state import State
@@ -45,6 +48,20 @@ def return_town(town_id):
         all_towns = storage.get(Town, town_id)
         if not all_towns:
             abort(404)
+        city = storage.get(City, all_towns.city_id)
+        if not city:
+            abort (404)
+        state = storage.get(State, city.state_id)
+        if not state:
+            abort (404)
+        country = storage.get(Country, state.country_id)
+        if not country:
+            abort (404)
+
+        all_towns["city"] = city.constituency_name
+        all_towns["state"] = state.name
+        all_towns["country"] = country.name
+
         return jsonify(all_towns.to_dict())
 
     elif request.method == "DELETE":
