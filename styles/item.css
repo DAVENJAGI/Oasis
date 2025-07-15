@@ -3043,13 +3043,21 @@ body {
 
     .reviews-popup {
         max-width: 95%;
-        border: 1px solid red;
         height: 95vh;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        overflow-y: scroll;
+    }
+    .reviews-popup::-webkit-scrollbar {
+        display: none;
     }
     .reviews-popup .popup-title{
         font-size: 0.9em;
     }
-    
+    .reviews-popup .popup-header{
+        top: 0;
+        position: sticky;
+    }
     .popup-header {
         padding: 1rem 1.5rem;        
     }
@@ -3247,6 +3255,15 @@ body {
     }
     #helpBtn{
         display: none;
+    }
+    #review-item-div{
+        height: auto;
+        justify-content: space-between;
+        align-items: center;
+        overflow-y: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        overflow-y: scroll;
     }
 }
 @media (max-width: 480px) {
