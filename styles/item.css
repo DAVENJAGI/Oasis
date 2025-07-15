@@ -3212,7 +3212,6 @@ body {
     .property-details,
     .sidebar-card {
         padding: 0.5rem;
-        border: 1px solid RED;
     }
     .properties-grid {
         grid-template-columns: 1fr;
