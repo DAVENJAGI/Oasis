@@ -2946,6 +2946,7 @@ body {
         display: none;
     }
     .booking-content {
+        border: 1px solid red;
         grid-template-columns: 1fr;
         display: grid;
         gap: 20px;
