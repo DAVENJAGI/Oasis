@@ -2931,7 +2931,6 @@ body {
         /*padding: 0.5em;*/
     }
     .middle-booking{
-        border: 1px solid red;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -2947,7 +2946,6 @@ body {
         grid-template-columns: 1fr;
         display: grid;
         gap: 20px;
-        display: none;
         margin: 0px;
     }
     .booking-form-section{
@@ -2956,7 +2954,11 @@ body {
         flex-direction: column;
         margin-left: 0;
     }
-
+    .booking-popup .popup-header{
+        border-radius: 0px;
+        position: sticky;
+        top: 0;
+    }
     
     .pricing-popup .popup-header {
         padding: 15px 20px;
