@@ -2929,7 +2929,7 @@ body {
         border: 1px solid red;
         justify-content: center;
         overflow-x: hidden;
-        padding: 0.5em;
+        /*padding: 0.5em;*/
     }
     .middle-booking{
         /*padding: 0.5rem;*/
