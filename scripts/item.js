@@ -386,9 +386,9 @@ document.addEventListener('DOMContentLoaded', () => {
             display: none;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 0.5em;
             box-sizing: border-box;
-            overflow-y: auto;
+            overflow-y: hidden;
         `;
         document.body.appendChild(overlay);
         return overlay;
