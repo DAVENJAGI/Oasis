@@ -173,9 +173,7 @@ body {
     font-weight: 700;
     font-size: 1.25rem;
     color: white;
-    cursor: pointer;
     box-shadow: var(--current-shadow-light);
-    margin-left: 1em;
 }
 
 .logo-text {
@@ -2876,10 +2874,7 @@ body {
     .logo-text {
         font-size: 1.5rem;
     }
-    .logo-icon{
-        margin-left: 1em;
-    }
-
+    
     .action-button {
         padding: 0.6rem;
     }
@@ -3277,7 +3272,7 @@ body {
     }
     
     .logo{
-        /*margin-right: 0.5em;*/
+        margin-right: 0.5em;
     }
     .hero-content{
         padding-top: 1.5em;
