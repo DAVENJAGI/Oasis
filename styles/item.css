@@ -3257,6 +3257,7 @@ body {
         display: none;
     }
     #review-item-div{
+        min-height: 71vh;
         height: auto;
         justify-content: space-between;
         align-items: center;
