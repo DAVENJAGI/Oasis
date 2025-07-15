@@ -2954,7 +2954,7 @@ body {
         overflow-y: scroll;
     }
     .booking-popup .popup-actions {
-        
+        gap: 1em;
     }
 
     .booking-popup .middle-booking::-webkit-scrollbar {
