@@ -2931,11 +2931,9 @@ body {
         /*padding: 0.5em;*/
     }
     .middle-booking{
-        /*padding: 0.5rem;*/
-        border: 1px solid green;
-        width: auto;
-        overflow-x: hidden;
-        height: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
@@ -3317,6 +3315,14 @@ body {
     }
     .hero-content{
         padding-top: 1.5em;
+    }
+    .middle-booking{
+        border: 1px solid pink;
+        width: auto;
+        overflow-x: hidden;
+        height: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 }
 /* Animations */
