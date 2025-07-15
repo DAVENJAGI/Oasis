@@ -57,12 +57,12 @@ def return_town(town_id):
         country = storage.get(Country, state.country_id)
         if not country:
             abort (404)
+        town_dict = all_towns.to_dict()
+        town_dict["city"] = city.constituency_name
+        town_dict["state"] = state.name
+        town_dict["country"] = country.name
 
-        all_towns["city"] = city.constituency_name
-        all_towns["state"] = state.name
-        all_towns["country"] = country.name
-
-        return jsonify(all_towns.to_dict())
+        return jsonify(town_dict)
 
     elif request.method == "DELETE":
         town = storage.get(Town, town_id)
