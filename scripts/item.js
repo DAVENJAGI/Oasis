@@ -21,93 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    const showLocationBtn = document.getElementById('show-location');
-    const locationOverlay = document.getElementById('location-overlay');
-    const locationPopup = document.getElementById('location-popup');
-    const closeLocationPopup = document.getElementById('close-location-popup');
-    const getDirectionsBtn = document.getElementById('get-directions');
-    const shareLocationBtn = document.getElementById('share-location');
-
-    let map;
-    let marker;
-
-    // Show location popup
-    function showLocationPopup() {
-        locationOverlay.style.display = 'block';
-        locationPopup.style.display = 'block';
-        
-        // Initialize map if not already done
-        if (!map) {
-            setTimeout(() => {
-                initializeMap();
-            }, 100);
-        }
-    }
-
-    // Hide location popup
-    function hideLocationPopup() {
-        locationOverlay.style.display = 'none';
-        locationPopup.style.display = 'none';
-    }
-
-    // Initialize Leaflet map
-    function initializeMap() {
-        const latitude = -1.071981;
-        const longitude = 37.094347;
-        
-        map = L.map('location-map').setView([latitude, longitude], 13);
-        
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-        
-        marker = L.marker([latitude, longitude])
-            .addTo(map)
-            .bindPopup('Luxury Oceanview Villa<br>Mombasa, Diani Beach')
-            .openPopup();
-    }
-
-    // Event listeners
-    showLocationBtn.addEventListener('click', showLocationPopup);
-    closeLocationPopup.addEventListener('click', hideLocationPopup);
-    locationOverlay.addEventListener('click', hideLocationPopup);
-
-    // Prevent popup from closing when clicking inside it
-    locationPopup.addEventListener('click', (e) => {
-        e.stopPropagation();
-    });
-
-    // Get directions button
-    getDirectionsBtn.addEventListener('click', () => {
-        const url = `https://www.google.com/maps/dir/?api=1&destination=-1.071981,37.094347`;
-        window.open(url, '_blank');
-    });
-
-    // Share location button
-    shareLocationBtn.addEventListener('click', () => {
-        const shareData = {
-            title: 'Luxury Oceanview Villa Location',
-            text: 'Check out this amazing property location in Diani Beach, Mombasa',
-            url: window.location.href
-        };
-
-        if (navigator.share) {
-            navigator.share(shareData);
-        } else {
-            // Fallback: copy to clipboard
-            navigator.clipboard.writeText(`${shareData.title} - ${shareData.text} - ${shareData.url}`);
-            alert('Location details copied to clipboard!');
-        }
-    });
-
-    // Close popup with Escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && locationPopup.style.display === 'block') {
-            hideLocationPopup();
-        }
-    });
-
-
     //SHOW PRICES OF LISING 
     const pricingData = [
         { month: 'Jan', price: 120, season: 'Low Season' },
@@ -1249,12 +1162,14 @@ document.addEventListener('DOMContentLoaded', () => {
         agentId = listingData.agent_id;
         console.log(agentId);
         const agentData = await fetchAgent(agentId); 
-        console.log("this here; ", listingData);
+        const townData = await fetchTown(listingData.town_id); 
+        console.log("this here; ", townData);
         appendListingDetails(listingData, agentData);
         fetchListingAmenities();
         fetchAgent(agentId);;
         fetchListingRating();
         fetchListingReviews();
+        initializeMap(listingData, townData);
         } catch (error) {
             console.error("Error fetching favorite listings:", error);
         }
@@ -1452,8 +1367,10 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('property-max-guest').textContent = listingData.max_guest;
             document.getElementById('property-description').textContent = listingData.description;
             document.getElementById('listing-price-per-night').textContent = formattedPrice;
-            document.querySelector(".location-name-div").textContent = townData.town_name;
-
+            document.querySelector(".location-name-div").textContent = `${townData.state}, ${townData.town_name}`;
+            document.querySelector(".location-popup-location-div").textContent = `${townData.state}, ${townData.town_name}`;
+            document.querySelector(".location-coordinates").textContent = `Coordinates:  ${listingData.latitude}, ${listingData.longitude}`;
+            
             console.log(agentData);
             document.getElementById('agent-names').textContent = `${agentData.first_name} ${agentData.last_name}`;
 
@@ -1667,5 +1584,97 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+
+    //LOCATION MAP
+    const locationOverlay = document.getElementById('location-overlay');
+    const locationPopup = document.getElementById('location-popup');
+    const closeLocationPopup = document.getElementById('close-location-popup');
+    const getDirectionsBtn = document.getElementById('get-directions');
+    const shareLocationBtn = document.getElementById('share-location');
+    const showLocationBtn = document.getElementById('show-location');
+            
+
+    let map;
+    let marker;
+
+    function showLocationPopup() {
+        locationOverlay.style.display = 'block';
+        locationPopup.style.display = 'block';
+        
+        if (!map) {
+            setTimeout(() => {
+                initializeMap();
+            }, 100);
+        }
+    }
+
+    function hideLocationPopup() {
+        locationOverlay.style.display = 'none';
+        locationPopup.style.display = 'none';
+    }
+
+    let lat;
+    let lng;
+    let locationListingData;
+    function initializeMap(listingData, townData) {
+        lat = `${listingData.latitude}`;
+        lng = `${listingData.longitude}`;
+        locationListingData = listingData;
+        
+        map = L.map('location-map').setView([lat, lng], 13);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        
+        marker = L.marker([lat, lng])
+            .addTo(map)
+            .bindPopup(`${listingData.property_name}<br>${townData.state}, ${townData.town_name}`)
+            .openPopup();
+    }
+
+    showLocationBtn.addEventListener('click', showLocationPopup);
+    closeLocationPopup.addEventListener('click', hideLocationPopup);
+    locationOverlay.addEventListener('click', hideLocationPopup);
+
+    locationPopup.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+
+    
+    getDirectionsBtn.addEventListener('click', () => {
+        if (lat && lng) {
+            const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+            window.open(url, '_blank');
+        } else {
+            alert("Location coordinates not available.");
+        }
+    });
+
+    // Share location button
+    shareLocationBtn.addEventListener('click', () => {
+        const shareData = {
+            title: `${locationListingData.property_name} Location`,
+            text: 'Check out this amazing property',
+            url: window.location.href
+        };
+
+        if (navigator.share) {
+            navigator.share(shareData);
+        } else {
+            // Fallback: copy to clipboard
+            navigator.clipboard.writeText(`${shareData.title} - ${shareData.text} - ${shareData.url}`);
+            alert('Location details copied to clipboard!');
+        }
+    });
+
+    // Close popup with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && locationPopup.style.display === 'block') {
+            hideLocationPopup();
+        }
+    });
+
 
 })
