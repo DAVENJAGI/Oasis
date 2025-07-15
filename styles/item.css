@@ -2940,9 +2940,11 @@ body {
         justify-content: center;
         -ms-overflow-style: none;
         scrollbar-width: none;
+        height: 96vh;
+        overflow-y: scroll;
     }
     .middle-booking{
-        height: 66vh;
+        height: auto;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -2951,8 +2953,11 @@ body {
         scrollbar-width: none;
         overflow-y: scroll;
     }
+    .booking-popup .popup-actions {
+        
+    }
 
-    .booking-popup, .middle-booking::-webkit-scrollbar {
+    .booking-popup .middle-booking::-webkit-scrollbar {
         display: none;
     }
     .booking-content {
