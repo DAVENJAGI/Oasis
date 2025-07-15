@@ -1631,7 +1631,7 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 1000;
-    overflow-y: auto;
+    overflow:hidden;
 }
 
 .booking-popup.active {
@@ -1647,9 +1647,13 @@ body {
     max-width: 800px;
     width: 100%;
     max-height: 90vh;
-    overflow-y: auto;
+    overflow: hidden;
     box-shadow: var(--current-shadow-medium);
     animation: slideIn 0.3s ease;
+}
+.booking-popup .popup-header{
+    position: sticky;
+    top: 0;
 }
 
 @keyframes slideIn {
@@ -2012,7 +2016,7 @@ body {
 }
 .middle-booking{
     padding: 24px;
-    height: auto;
+    height: 72vh;
     min-width: 100%;
     overflow-y: scroll;
     border-radius: 0px !important;
@@ -2859,6 +2863,13 @@ body {
     }
 }
 @media (max-width: 768px) {
+    body{-ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .body::-webkit-scrollbar {
+        display: none;
+    }
     .header-container {
         padding: 0 1rem;
     }
@@ -2927,16 +2938,18 @@ body {
     }
     .booking-popup .popup-content{
         justify-content: center;
-        overflow-x: hidden;
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
     .middle-booking{
+        height: 66vh;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        overflow-y: scroll;
         -ms-overflow-style: none;
         scrollbar-width: none;
+        overflow-y: scroll;
     }
 
     .booking-popup, .middle-booking::-webkit-scrollbar {
