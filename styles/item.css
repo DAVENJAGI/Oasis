@@ -2928,7 +2928,8 @@ body {
     .booking-popup .popup-content{
         justify-content: center;
         overflow-x: hidden;
-        /*padding: 0.5em;*/
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
     .middle-booking{
         display: flex;
@@ -2938,7 +2939,7 @@ body {
         scrollbar-width: none;
     }
 
-    .middle-booking::-webkit-scrollbar {
+    .booking-popup, .middle-booking::-webkit-scrollbar {
         display: none;
     }
     .booking-content {
