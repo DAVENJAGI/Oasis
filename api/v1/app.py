@@ -9,7 +9,6 @@ from api.v1.views import amenity_views, user_views, location_views
 from api.v1.views import ticket_views, admin_views, lease_views
 from api.v1.views import review_views, report_views, recommendation_views
 from api.v1.views import tag_views, support_agent_views, login_views
-from api.v1.views import town_views
 from models import storage
 import os
 from flask import jsonify
@@ -35,7 +34,6 @@ app.register_blueprint(recommendation_views)
 app.register_blueprint(tag_views)
 app.register_blueprint(support_agent_views)
 app.register_blueprint(login_views)
-app.register_blueprint(town_views)
 
 cors = CORS(app, resources={r"/*": {"origins": [
     "http://127.0.0.1:5500",

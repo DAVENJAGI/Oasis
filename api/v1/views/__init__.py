@@ -6,7 +6,7 @@ from flask import Blueprint
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 city_views = Blueprint('city_views', __name__, url_prefix='/api/v1')
 state_views = Blueprint('state_views', __name__, url_prefix='/api/v1')
-town_views = Blueprint('town_views', __name__, url_prefix='/api/v1')
+ward_views = Blueprint('ward_views', __name__, url_prefix='/api/v1')
 listing_views = Blueprint('listing_views', __name__, url_prefix='/api/v1')
 user_views = Blueprint('user_views', __name__, url_prefix='/api/v1')
 agent_views = Blueprint('agent_views', __name__, url_prefix='/api/v1')
@@ -22,6 +22,7 @@ recommendation_views = Blueprint('recommendation_views', __name__, url_prefix='/
 tag_views = Blueprint('tag_views', __name__, url_prefix='/api/v1')
 support_agent_views = Blueprint('support_agent_views', __name__, url_prefix='/api/v1/')
 login_views = Blueprint('login_views', __name__, url_prefix='/api/v1/')
+api_key_views = Blueprint('api_key_views', __name__, url_prefix='/api/v1/')
 
 from api.v1.views.index import *
 from api.v1.views.states import *
@@ -42,4 +43,5 @@ from api.v1.views.recommendation import *
 from api.v1.views.tags import *
 from api.v1.views.support_agents import *
 from api.v1.views.login import *
+from api.v1.views.api_keys import *
 from api.v1.views.towns import *

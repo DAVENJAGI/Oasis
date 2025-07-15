@@ -1,23 +1,21 @@
 #!/usr/bin/python3
-"""import town_views and creates a route"""
+"""import location_views and creates a route"""
 
 from flask import jsonify, Blueprint, abort, request
-from api.v1.views import town_views
+from api.v1.views import location_views
 from models import storage
 from models.base_model import BaseModel
 from models.amenity import Amenity
 from models.town import Town
-from models.city import City
-from models.state import State
-from models.country import Country
 from models.listing import Listing 
 from models.review import Review
+# from models.state import State
 from models.user import User
 import json
 from auth.authorization import require_admin_auth
 
 
-@town_views.route("/towns", strict_slashes=False, methods=["GET"])
+@location_views.route("/towns", strict_slashes=False, methods=["GET"])
 def return_towns():
     """returns all state objects"""
     all_towns = storage.all(Town).values()
@@ -27,7 +25,7 @@ def return_towns():
     return jsonify(towns_list)
 
 
-@town_views.route("/states/<state_id>/towns", methods=['GET'], strict_slashes=False)
+@location_views.route("/states/<state_id>/towns", methods=['GET'], strict_slashes=False)
 def return_by_town_id(state_id):
     """returns town based on state_id"""
     if request.method == "GET":
@@ -38,16 +36,28 @@ def return_by_town_id(state_id):
         towns_data = [town.to_dict() for town in state.towns]
         return jsonify(towns_data)
 
-@town_views.route("/town/<town_id>/", methods=["GET"], strict_slashes=False)
-def return_town_based_id(town_id):
-    """Returns town based on town_id"""
-    town = storage.get(Town, town_id)
-    if not town:
-        abort(404, description="Town not found")
-    return jsonify(town.to_dict()), 200
+
+@location_views.route("/towns/<town_id>", strict_slashes=False,
+                  methods=["GET", "DELETE"])
+def return_town(town_id):
+    """Returns state based on town_id"""
+    if request.method == "GET":
+        all_towns = storage.get(Town, town_id)
+        if not all_towns:
+            abort(404)
+        return jsonify(all_towns.to_dict())
+
+    elif request.method == "DELETE":
+        town = storage.get(Town, town_id)
+        if town is None:
+            abort(404)
+
+        storage.delete(town)
+        storage.save()
+        return jsonify({}), 200
 
 
-@town_views.route("/states/<state_id>/towns/", strict_slashes=False,
+@location_views.route("/states/<state_id>/towns/", strict_slashes=False,
                   methods=["POST"])
 @require_admin_auth
 def post_town(state_id):
@@ -68,7 +78,7 @@ def post_town(state_id):
         return jsonify(new_town.to_dict()), 201
 
 
-@town_views.route("/towns/<town_id>", methods=["PUT"])
+@location_views.route("/towns/<town_id>", methods=["PUT"])
 @require_admin_auth
 def update_town(town_id):
     """updates data on a town"""
@@ -84,3 +94,5 @@ def update_town(town_id):
                 setattr(all_towns, key, value)
         storage.save()
         return jsonify(all_towns.to_dict()), 200
+
+
