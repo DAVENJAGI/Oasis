@@ -1176,7 +1176,7 @@ document.addEventListener('DOMContentLoaded', () => {
             LISTING_RATING: (listingId) => `/listing/${listingId}/ratings`,
             LISTING_REVIEWS: (listingId) => `/listing/${listingId}/reviews`,
             AGENT_DATA: (agentId) => `/agent/${agentId}`,
-            TOWN_DATA: (townId) => `/town/${townId}`,
+            TOWN_DATA: (townId) => `/towns/${townId}`,
             USER_DATA: (userId) => `/user/${userId}`
         },
         MESSAGES: {
@@ -1276,7 +1276,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
     //FETCH USER
-    async function fetchUser() {
+    async function fetchUser(userId) {
         try {
             const userData = await makeRequest(CONFIG.ENDPOINTS.USER_DATA(userId), {
             headers: getAuthHeaders()
@@ -1556,18 +1556,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const reviewDiv = document.createElement('div');
         reviewDiv.className = 'review-item';
         const reviewDate = formatDate(review.created_at);
-
-        const userData = await fetchUser();
-        const townId = userData.town_id;
-        const townData = await fetchTown(townId);
-        console.log("Townwnnnnn", townData);
+        const userData = await fetchUser(review.user_id);
+        
 
         if (userData) {
+
+            console.log(userData.first_name);
+            if (userData.town_id) {
+                try {
+                    const townData = await fetchTown(userData.town_id);
+                    console.log("Fetched town data:", townData);
+                    userLocation = townData?.name || userData.location || 'Kenya';
+                } catch (err) {
+                    console.error("Failed to fetch town data", err);
+                   // userLocation = userData.location || userData.city || userData.country || 'Kenya';
+                }
+            } else {
+                userLocation = userData.location || userData.city || userData.country || 'Kenya';
+            }
+            
             userName = userData.first_name && userData.last_name 
                 ? `${userData.first_name} ${userData.last_name}`
                 : userData.username || userData.email?.split('@')[0] || 'User';
-            
-            userLocation = userData.location || userData.city || userData.country || 'Kenya';
             
             if (userData.profile_picture || userData.avatar) {
                 userAvatar = `<img src="${userData.profile_picture || userData.avatar}" alt="User Avatar">`;
