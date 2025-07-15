@@ -1173,8 +1173,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ENDPOINTS: {
             LISTING_DETAILS: (listingId) => `/listings/${listingId}`,
             LISTING_AMENITIES: (listingId) => `/listings/${listingId}/amenities`,
-            LISTING_RATING: (listingId) => `/listings/${listingId}/ratings`,
-            AGENT_DATA: (agentId) => `/agent/${agentId}`
+            LISTING_RATING: (listingId) => `/listing/${listingId}/ratings`,
+            LISTING_REVIEWS: (listingId) => `/listing/${listingId}/reviews`,
+            AGENT_DATA: (agentId) => `/agent/${agentId}`,
+            TOWN_DATA: (townId) => `/town/${townId}`,
+            USER_DATA: (userId) => `/user/${userId}`
         },
         MESSAGES: {
             LOGIN_SUCCESS: 'Login sucessful',
@@ -1250,6 +1253,8 @@ document.addEventListener('DOMContentLoaded', () => {
         appendListingDetails(listingData, agentData);
         fetchListingAmenities();
         fetchAgent(agentId);;
+        fetchListingRating();
+        fetchListingReviews();
         } catch (error) {
             console.error("Error fetching favorite listings:", error);
         }
@@ -1269,13 +1274,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    //FETCH LISTING AGENT
-    async function fetchAgent() {
+    
+    //FETCH USER
+    async function fetchUser() {
         try {
-            const agentData = await makeRequest(CONFIG.ENDPOINTS.AGENT_DATA(agentId), {
+            const userData = await makeRequest(CONFIG.ENDPOINTS.USER_DATA(userId), {
             headers: getAuthHeaders()
         });
-        return agentData;
+        return userData;
+        } catch (error) {
+            console.error("Error fetching favorite listings:", error);
+        }
+    }
+
+    async function fetchTown (townId) {
+        try {
+            const townData = await makeRequest(CONFIG.ENDPOINTS.TOWN_DATA(townId), {
+            headers: getAuthHeaders()
+        });
+        return townData;
         } catch (error) {
             console.error("Error fetching favorite listings:", error);
         }
@@ -1295,17 +1312,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //FETCH LISTING RATINGS
     async function fetchListingRating() {
-        let listingRating = [];
         try {
             const listingRatingData = await makeRequest(CONFIG.ENDPOINTS.LISTING_RATING(listingId), {
             headers: getAuthHeaders()
         });
-        listingRating = listingRatingData.map(rating => rating.score);
-        console.log(listingRating);
+        const scores = listingRatingData.map(rating => rating.score);
+        const average = scores.reduce((a, b) => a + b, 0) / scores.length;
+        colorStars(average, scores);
+        appendReview(listingRatingData);
         } catch (error) {
             console.error("Error fetching favorite listings:", error);
         }
-    }fetchListingRating();
+    }
+
+    //FETCH LISTING REVIEWS
+    async function fetchListingReviews() {
+        try {
+            const listingReviewsData = await makeRequest(CONFIG.ENDPOINTS.LISTING_REVIEWS(listingId), {
+            headers: getAuthHeaders()
+        });
+        console.log(listingReviewsData);
+        } catch (error) {
+            console.error("Error fetching favorite listings:", error);
+        }
+    }
+
 
     const amenityIcons = {
         // STORAGE
@@ -1324,7 +1355,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // RECREATION
         'pool': { icon: 'fas fa-swimming-pool', description: 'Refreshing swimming and relaxation area' },
-        'swimming': { icon: 'fas fa-swimming-pool', description: 'Swimming facilities available' },
+        'swimming pool': { icon: 'fas fa-swimming-pool', description: 'Swimming facilities available' },
         'spa': { icon: 'fas fa-spa', description: 'Professional treatments and relaxation services' },
         'sauna': { icon: 'fas fa-hot-tub', description: 'Relaxing heat therapy for ultimate wellness' },
         'hot tub': { icon: 'fas fa-hot-tub', description: 'Luxurious hot tub experience' },
@@ -1426,6 +1457,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if(agentData.is_verified !== false){
                 document.querySelector('.agent-verified').style.display = "flex";
             }
+
+            const propertyAvailabilityStatus = document.querySelector(".property-status");
+            document.querySelector(".property-status-txt").textContent = listingData.rental_status;
+            if (listingData.rental_status === "Available") {
+                propertyAvailabilityStatus.style.color = "#38a169";
+            } else if (listingData.rental_status === "Pending") {
+                propertyAvailabilityStatus.style.color = "#FFC107"
+            } else {
+                propertyAvailabilityStatus.style.color = "red";
+            }
         }
     }
 
@@ -1466,4 +1507,155 @@ document.addEventListener('DOMContentLoaded', () => {
         
         }
     }
+
+    //COLORING THE RATING STARS BASED ON RATING
+    function colorStars(average, scores) {
+        const stars = document.querySelectorAll(".rated_star");
+        document.querySelector('.rating-in-reviews').textContent = `${average} ${"average rating"}`;
+        document.querySelector(".rating-score").textContent = average;
+        document.querySelector(".rating-div-star").style.color = "gold";
+        document.querySelector(".fa-users").style.color = "#86D5EE";
+        document.querySelector(".based-on-reviews").textContent = `Based on ${scores.length} reviews`;
+        document.querySelector(".no-of-reviewers").textContent = `${scores.length} total reviews`;
+        document.querySelector(".reviews-count").textContent = `${scores.length} reviews`;
+    
+        stars.forEach((star, index) => {
+            const starNumber = index + 1;
+    
+            if (average >= starNumber) {
+                star.style.color = "#FFD700";
+            } else if (average >= starNumber - 0.5) {
+                star.style.color = "#FFD70080";
+            } else {
+                star.style.color = "#ccc";
+            }
+        });
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays === 1) {
+            return 'Yesterday';
+        } else if (diffDays <= 7) {
+            return `${diffDays} days ago`;
+        } else if (diffDays <= 30) {
+            const weeks = Math.floor(diffDays / 7);
+            return weeks === 1 ? '1 week ago' : `${weeks} weeks ago`;
+        } else {
+            const months = Math.floor(diffDays / 30);
+            return months === 1 ? '1 month ago' : `${months} months ago`;
+        }
+    }
+
+    //REVIEW ELEMENT
+    async function createReviewElement(review) {
+        const reviewDiv = document.createElement('div');
+        reviewDiv.className = 'review-item';
+        const reviewDate = formatDate(review.created_at);
+
+        const userData = await fetchUser();
+        const townId = userData.town_id;
+        const townData = await fetchTown(townId);
+        console.log("Townwnnnnn", townData);
+
+        if (userData) {
+            userName = userData.first_name && userData.last_name 
+                ? `${userData.first_name} ${userData.last_name}`
+                : userData.username || userData.email?.split('@')[0] || 'User';
+            
+            userLocation = userData.location || userData.city || userData.country || 'Kenya';
+            
+            if (userData.profile_picture || userData.avatar) {
+                userAvatar = `<img src="${userData.profile_picture || userData.avatar}" alt="User Avatar">`;
+            } else {
+                const initials = userData.first_name && userData.last_name 
+                    ? `${userData.first_name[0]}${userData.last_name[0]}`.toUpperCase()
+                    : generateInitials(review.user_id);
+                userAvatar = initials;
+            }
+            
+            if (userData.is_verified || userData.verified) {
+                verifiedStatus = `
+                    <div class="verified-badge">
+                        <i class="fas fa-check-circle"></i>
+                        Verified
+                    </div>
+                `;
+            } else{
+                verifiedStatus = "";
+            }
+        } else {
+            userAvatar = generateInitials(review.user_id);
+            userName = `User ${review.user_id.slice(-8)}`;
+            userLocation = 'Kenya';
+        }
+        
+        
+        reviewDiv.innerHTML = `
+            <div class="review-header">
+                <div class="user-avatar">${userAvatar}</div>
+                <div class="user-info">
+                    <div class="user-name">${userName}</div>
+                    <div class="user-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Nairobi, Kenya
+                    </div>
+                </div>
+                <div class="review-meta">
+                    ${verifiedStatus}
+                    <div class="review-date">
+                        <i class="fas fa-calendar-alt"></i>
+                            ${reviewDate}
+                    </div>
+                </div>
+            </div>
+            <div class="review-text">
+                ${review.description}
+            </div>
+            <div class="review-actions">
+                <button class="action-btn">
+                    <i class="fas fa-thumbs-up"></i>
+                    Helpful (0)
+                </button>
+                <button class="action-btn">
+                    <i class="fas fa-reply"></i>
+                    Reply
+                </button>
+                <button class="action-btn">
+                    <i class="fas fa-flag"></i>
+                    Report
+                </button>
+            </div>
+        `;
+        
+        return reviewDiv;
+    }
+    
+
+    //APPEND TO REVIEWS
+    async function appendReview(listingRatingData) {
+        const container = document.querySelector('.reviews-container');
+        if (!container) {
+            console.error('Container not found:', container);
+            return;
+        } else {
+            container.innerHTML = "";
+            console.log("Thisss", listingRatingData);
+
+            if(listingRatingData.length !== 0) {
+                console.log(listingRatingData);
+                for (const review of listingRatingData) {
+                    const reviewDiv = await createReviewElement(review);
+                    container.appendChild(reviewDiv);
+                }
+            } else {
+                document.querySelector('.no-reviews').style.display = 'block';
+            }
+        }
+    }
+
 })
