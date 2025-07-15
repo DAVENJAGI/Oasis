@@ -2947,6 +2947,8 @@ body {
         scrollbar-width: none;
         height: 96vh;
         overflow-y: scroll;
+        width: 95%;
+        margin: 20px auto;
     }
     .middle-booking{
         height: auto;
@@ -3184,6 +3186,7 @@ body {
     .write-review-popup {
         max-width: 95%;
         margin: 10px;
+        height: 90vh;
     }
     
     .popup-actions {
@@ -3206,6 +3209,7 @@ body {
         align-items: flex-start;
         gap: 8px;
     }
+
     /*REPORT A LISTING*/
     .report-listing-popup .popup-content {
         width: 95%;
