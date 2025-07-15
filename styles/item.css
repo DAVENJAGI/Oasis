@@ -3202,7 +3202,8 @@ body {
 @media (max-width: 480px) {
     .property-details,
     .sidebar-card {
-        padding: 1rem;
+        padding: 0.5rem;
+        border: 1px solid RED;
     }
     .properties-grid {
         grid-template-columns: 1fr;
@@ -3276,7 +3277,7 @@ body {
     }
     
     .logo{
-        margin-right: 0.5em;
+        /*margin-right: 0.5em;*/
     }
     .hero-content{
         padding-top: 1.5em;
