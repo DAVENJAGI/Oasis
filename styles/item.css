@@ -2922,6 +2922,19 @@ body {
     .pricing-popup .popup-content {
         padding: 20px;
     }
+    .booking-popup{
+        padding: 0.5em;
+    }
+    .middle-booking{
+        padding: 0.5rem;
+        height: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .middle-booking::-webkit-scrollbar {
+        display: none;
+    }
     
     .pricing-popup .popup-header {
         padding: 15px 20px;
@@ -2986,7 +2999,7 @@ body {
     }
     
     .popup-header {
-        padding: 1rem 1.5rem;
+        padding: 1rem 1.5rem;        
     }
     
     .popup-title {
@@ -3160,6 +3173,7 @@ body {
     .booking-popup .popup-content {
         width: 95%;
         margin: 10px;
+        padding: 0.5rem;
     }
 
     .booking-content {
