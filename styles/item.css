@@ -557,6 +557,8 @@ body {
 
 #review-item-div{
     height: 71vh;
+    border-radius: 0px;
+    overflow-y: scroll;
 }
 
 @keyframes slideUp {
@@ -1530,7 +1532,10 @@ body {
     overflow: hidden;
     position: relative;
     animation: slideIn 0.3s ease-out;
-    margin-top: 4em;
+}
+.reviews-popup  .popup-header{
+    top: 0;
+    position: sticky;
 }
 .no-reviews {
     text-align: center;
@@ -3038,7 +3043,11 @@ body {
 
     .reviews-popup {
         max-width: 95%;
-        max-height: 95vh;
+        border: 1px solid red;
+        height: 95vh;
+    }
+    .reviews-popup .popup-title{
+        font-size: 0.9em;
     }
     
     .popup-header {
