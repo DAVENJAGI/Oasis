@@ -24,6 +24,13 @@ class Agent(BaseModel, Base):
         ratings = relationship("agentRating", backref="agent")
         leases =  relationship("Lease", backref="agent")
         tickets = relationship("Ticket", backref="agent")
+        facebook_link = db.Column(String(256), nullable=True)
+        twitter_link = db.Column(String(256), nullable=True)
+        linkedin_link = db.Column(String(256), nullable=True)
+        tiktok_link = db.Column(String(256), nullable=True)
+        whatsapp_number = db.Column(String(64), nullable=True)
+        public_email = db.Column(String(128), nullable=True)
+
     else:
         email = ""
         password = ""
