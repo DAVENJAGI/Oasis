@@ -489,6 +489,15 @@ body {
     justify-content: center;
     gap: 0.5rem;
 }
+.profile-name-div {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
 
 .verified-badge {
     background: #27ae60;
@@ -496,7 +505,7 @@ body {
     padding: 0.25rem 0.5rem;
     border-radius: 12px;
     font-size: 0.7rem;
-    display: flex;
+    display: none;
     align-items: center;
     gap: 0.25rem;
 }
