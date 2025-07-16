@@ -104,7 +104,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const CONFIG = {
     API_BASE_URL: 'https://oasis-mjmw.onrender.com/api/v1',
     ENDPOINTS: {
-      USER_DATA: (userId) => `/user/${userId}`
+      USER_DATA: (userId) => `/user/${userId}`,
+      USER_RATING: (userId) => `/user/${userId}/ratings`,
+      USER_BOOKINGS: (userId) => `/user/${userId}/booking`
     },
     MESSAGES: {
       LOGIN_SUCCESS: 'Login sucessful',
@@ -171,7 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: getAuthHeaders()
       });
       appendDataToUserDiv (userData);
-      console.log("Me: ", userData);
+      fetchUserRating(userId);
+      fetchUserBooking(userId);
+      console.log("Me ", userData);
       return userData;
       } catch (error) {
           console.error("Error fetching favorite listings:", error);
@@ -193,4 +197,50 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector(".verified-badge").style.display = "flex";
       }
     }
+
+    //FETCH USER RATINGS
+    async function fetchUserRating() {
+      try {
+          const userRatingData = await makeRequest(CONFIG.ENDPOINTS.USER_RATING(userId), {
+          headers: getAuthHeaders()
+      });
+      console.log('Based of ', userRatingData);
+      const scores = userRatingData.map(rating => rating.score);
+      const average = parseFloat((scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1));
+      colorStars(average, scores);
+      } catch (error) {
+          console.error("Error fetching favorite listings:", error);
+      }
+    }
+
+    //COLORING THE RATING STARS BASED ON RATING
+    function colorStars(average, scores) {
+      const stars = document.querySelectorAll(".fa-star");
+      document.querySelector('.rating-score').textContent = average.toFixed(1);
+      document.querySelector('.rating-text').textContent = `Based of ${scores.length} reviews`
+      
+      stars.forEach((star, index) => {
+          const starNumber = index + 1;
+  
+          if (average >= starNumber) {
+              star.style.color = "#FFD700";
+          } else if (average >= starNumber - 0.5) {
+              star.style.color = "#FFD70080";
+          } else {
+              star.style.color = "#ccc";
+          }
+      });
+  }
+
+  //FETCH USER RATINGS
+  async function fetchUserBooking() {
+    try {
+        const userRatingData = await makeRequest(CONFIG.ENDPOINTS.USER_BOOKINGS(userId), {
+        headers: getAuthHeaders()
+    });
+    document.getElementById("bookings-made").textContent = userRatingData.length;
+    } catch (error) {
+        console.error("Error fetching favorite listings:", error);
+    }
+  }
 })
