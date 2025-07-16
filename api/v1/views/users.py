@@ -216,3 +216,15 @@ def get_all_user_tickets(user_id):
     return jsonify(tickets)
 
 
+@user_views.route('/user/<string:user_id>/bookings',
+                 methods=['GET'], strict_slashes=False)
+@swag_from('documentation/bookings/get.yml', methods=['GET'])
+@require_support_agent_or_admin_or_user_auth
+def get_all_user_bookings(user_id):
+    """ user bookings """
+    user = storage.get(User, user_id)
+    if user is None:
+        return make_response(jsonify({"error": "User not found"}), 404)
+    bookings = [obj.to_dict() for obj in user.bookings]
+    return jsonify(bookings)
+
