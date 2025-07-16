@@ -30,6 +30,13 @@ class User(BaseModel, Base):
         favorite_listing = relationship("favoriteListing", backref="user")
         leases = relationship("Lease", backref="user")
         bookings = relationship('Booking', back_populates='user', cascade="all, delete-orphan")
+        facebook_link = db.Column(String(256), nullable=True)
+        twitter_link = db.Column(String(256), nullable=True)
+        linkedin_link = db.Column(String(256), nullable=True)
+        tiktok_link = db.Column(String(256), nullable=True)
+        whatsapp_number = db.Column(String(64), nullable=True)
+        public_email = db.Column(String(128), nullable=True)
+
     else:
         email = ""
         password = ""
