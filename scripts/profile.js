@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('user-pri-tel-no').textContent = userData.telephone_no;
       document.getElementById('user-sec-tel-no').textContent = userData.secondary_telephone_no;
       document.getElementById('user-gender').textContent = userData.sex;
-      document.getElementById('user-address').textContent = userData.addres;
+      document.getElementById('user-address').textContent = userData.address;
       document.querySelector(".side-pri-tel-no").textContent = userData.telephone_no;
 
       document.querySelector(".profile-name-div h2").textContent = `${userData.first_name} ${userData.last_name}`
