@@ -960,3 +960,6 @@ body {
 .view-mode.editing {
     display: none;
 }
+.stat-card #bottom-star{
+    color: #86D5EE;
+}
