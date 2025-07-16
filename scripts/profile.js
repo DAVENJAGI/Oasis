@@ -87,3 +87,110 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleEdit();
   }
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+  const userId = sessionStorage.getItem('user_id');
+  const customToken = sessionStorage.getItem('X-Custom-Token');
+
+  // console.log(userId);
+  
+
+  function getAuthHeaders() {
+    return {
+      'X-Custom-Token': customToken
+    };
+  }
+
+  const CONFIG = {
+    API_BASE_URL: 'https://oasis-mjmw.onrender.com/api/v1',
+    ENDPOINTS: {
+      USER_DATA: (userId) => `/user/${userId}`
+    },
+    MESSAGES: {
+      LOGIN_SUCCESS: 'Login sucessful',
+      USER_NOT_FOUND: 'Login failed: User not found',
+      INCORRECT_PASSWORD: 'Login failed: Incorrect password'
+    },
+    TIMEOUTS: {
+      REDIRECT_DELAY: 1000,
+      NOTIFICATION_DURATION: 5000,
+      API_TIMEOUT: 30000
+    }
+  };
+
+  //DEFAULT MAKE RESPONSE FUNC THAT CAN BE USED BY ALL FUNCTIONS
+  /**
+  * Takes a default API_BASE_URL and apends an endpoint to it
+  * Adds a default option dict, with method GET as default, content type, and getAuthHeaders
+  * finalOption is anything else that overwrites the default option
+  * handles errors such as timeout, and non 2xx status headers
+  */
+  const makeRequest = async (endpoint, options = {}) => {
+    const url = CONFIG.API_BASE_URL + endpoint;
+    const defaultOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders(), 
+      },
+      timeout: CONFIG.TIMEOUTS.API_TIMEOUT
+    };
+    
+    const finalOptions = { ...defaultOptions, ...options };
+    
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), finalOptions.timeout);
+
+      const response = await fetch(url, {
+        ...finalOptions,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+    
+      if (!response.ok) {
+        const errorBody = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorBody}`);
+      }
+      return await response.json();
+    
+      } catch (error) {
+        if (error.name === 'AbortError') {
+          console.error(`Request to ${url} timed out`);
+          throw new Error('Request timed out');
+        }
+        console.error(`Request to ${url} failed:`, error.message);
+        throw error;
+      }
+    };
+
+    //FETCH USER
+    async function fetchUser() {
+      try {
+          const userData = await makeRequest(CONFIG.ENDPOINTS.USER_DATA(userId), {
+          headers: getAuthHeaders()
+      });
+      appendDataToUserDiv (userData);
+      console.log("Me: ", userData);
+      return userData;
+      } catch (error) {
+          console.error("Error fetching favorite listings:", error);
+      }
+    } fetchUser(userId);
+
+    function appendDataToUserDiv (userData) {
+      document.getElementById('user-first-name').textContent = userData.first_name;
+      document.getElementById('user-last-name').textContent = userData.last_name;
+      document.getElementById('user-email').textContent = userData.email;
+      document.getElementById('user-pri-tel-no').textContent = userData.telephone_no;
+      document.getElementById('user-sec-tel-no').textContent = userData.secondary_telephone_no;
+      document.getElementById('user-gender').textContent = userData.sex;
+      document.getElementById('user-address').textContent = userData.addres;
+      document.querySelector(".side-pri-tel-no").textContent = userData.telephone_no;
+
+      document.querySelector(".profile-name-div h2").textContent = `${userData.first_name} ${userData.last_name}`
+      if(userData.is_verified === true) {
+        document.querySelector(".verified-badge").style.display = "flex";
+      }
+    }
+})
