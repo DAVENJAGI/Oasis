@@ -1068,7 +1068,7 @@ document.addEventListener('DOMContentLoaded', () => {
         API_BASE_URL: 'https://oasis-mjmw.onrender.com/api/v1',
         ENDPOINTS: {
             LISTING_DETAILS: (listingId) => `/listings/${listingId}`,
-            LISTING_AMENITIES: (listingId) => `/listings/${listingId}/amenities`,
+            LISTING_AMENITIES: (listingId) => `/listing/${listingId}/amenities`,
             LISTING_RATING: (listingId) => `/listing/${listingId}/ratings`,
             LISTING_REVIEWS: (listingId) => `/listing/${listingId}/reviews`,
             LISTING_TAGS: (listingId) => `/listing/${listingId}/tags`,
