@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Error fetching favorite listings:", error);
         }
-    } fetchUserFavorites();
+    }
 
     // GET NEARBY OR LATEST LISTINGS
     async function fetchLatestOrNearbyListing(lat = null, lng = null) {
