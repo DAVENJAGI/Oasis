@@ -639,6 +639,7 @@ body.scrolled {
     overflow: hidden;
     padding: 2rem 1rem;
     margin-top: 2%;
+    background-color: var(--current-glass-bg);
 }
 
 .hero-content {
@@ -946,12 +947,13 @@ body.scrolled {
 }
 .search-container {
     background: var(--current-glass-bg);
-    backdrop-filter: blur(1.25rem);
-    border: 1px solid var(--current-glass-border);
+    /*backdrop-filter: blur(1.25rem);
+    border: 1px solid var(--current-glass-border);*/
     border-radius: 1.25rem;
+    backdrop-filter: none;
     padding: 1rem;
     margin-bottom: 3rem;
-    box-shadow: var(--current-shadow-medium);
+    box-shadow: none;
     transition: all 0.3s ease;
     width: 60%;
     margin: auto;

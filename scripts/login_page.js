@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleLargeScreens() {
-        const subText1 = "Look no more. Discover properties around the globe's most desirable locations with our platform.";
+        const subText1 = "Discover properties around the globe's most desirable locations with our platform.";
        
         const titleElement = document.getElementById("typewriter-title");
         const subElement = document.getElementById("typewriter-subtext");
@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } type();
         }
         
-        const titleText1 = greetingsFunction() + "...<br>Finding Your Dream Getaway Home?";
+        const titleText1 = greetingsFunction() + "...<br>Finding Your Dream Getaway Home? Look no more";
         typeWriter(titleText1, titleElement, 60, () => {
             const t = setTimeout(() => {
                 typeWriter(subText1, subElement, 30);
