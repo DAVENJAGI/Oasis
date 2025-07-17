@@ -93,3 +93,32 @@ def get_listings_near_user(user_id):
     return jsonify(recommended)
 
 
+
+@recommendation_views.route('/nearby_listings', methods=['GET'], strict_slashes=False)
+def get_listings_near_coords():
+    """Return listings near the provided lat/lng for non signed in users"""
+    try:
+        lat = float(request.args.get('lat'))
+        lng = float(request.args.get('lng'))
+    except (TypeError, ValueError):
+        return jsonify({"error": "Latitude and longitude must be provided and valid."}), 400
+
+    distance_from_me = request.args.get('distance_from_me', 60, type=float)
+
+    all_listings = storage.all(Listing).values()
+    recommended = []
+
+    for listing in all_listings:
+        if not listing.latitude or not listing.longitude:
+            continue
+
+        distance = haversine(lat, lng, listing.latitude, listing.longitude)
+        if distance <= distance_from_me:
+            data = listing.to_dict()
+            data['distance_km'] = round(distance, 2)
+            recommended.append(data)
+
+    recommended.sort(key=lambda x: x['distance_km'])
+
+    return jsonify(recommended)
+
