@@ -25,7 +25,6 @@ def get_all_users():
 @user_views.route('/user/<string:user_id>', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/user/get_id.yml', methods=['GET'])
-@require_user_or_admin_auth
 def get_user(user_id):
     """ get user by id"""
     user = storage.get(User, user_id)

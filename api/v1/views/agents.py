@@ -23,7 +23,6 @@ def get_all_agents():
 @agent_views.route('/agent/<string:agent_id>', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/agent/get_id.yml', methods=['GET'])
-@require_agent_or_admin_or_user_auth
 def get_agent(agent_id):
     """ get agent by id"""
     agent = storage.get(Agent, agent_id)
