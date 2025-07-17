@@ -37,7 +37,6 @@ def get_all_listings(town_id):
 @listing_views.route('/listings/<string:listing_id>', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/listings/get_id.yml', methods=['GET'])
-@require_agent_or_admin_or_user_auth
 def get_listing(listing_id):
     """ get listing by id """
     listing = storage.get(Listing, listing_id)
@@ -131,7 +130,6 @@ def post_listing(listing_id):
 @listing_views.route('/listings_search', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/listings/search.yml', methods=['POST'])
-@require_agent_or_admin_or_user_auth
 def search_listings_by_id():
     """ search listings by id """
     if request.get_json() is None:
@@ -221,7 +219,6 @@ def upload_listing_image(listing_id):
 @listing_views.route('/listing/<string:listing_id>/images',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/listings/get.yml', methods=['GET'])
-@require_agent_or_admin_or_user_auth
 def get_all_listing_images(listing_id):
     """ listing images """
     listing = storage.get(Listing, listing_id)
@@ -264,7 +261,6 @@ def create_listing_revire(listing_id):
 @listing_views.route('/listing/<string:listing_id>/reviews',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/listings/get.yml', methods=['GET'])
-@require_agent_or_admin_or_user_auth
 def get_all_listing_reviews(listing_id):
     """ listing reviews """
     listing = storage.get(Listing, listing_id)
@@ -336,7 +332,6 @@ def create_obj_amenities(listing_id):
 @listing_views.route('/listing/<string:listing_id>/amenities',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/listings/get.yml', methods=['GET'])
-@require_agent_or_admin_or_user_auth
 def get_all_listing_amenities(listing_id):
     """ listing amenities """
     listing = storage.get(Listing, listing_id)
@@ -430,7 +425,6 @@ def create_obj_tags(listing_id):
 @listing_views.route('/listing/<string:listing_id>/tags',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/listings/get.yml', methods=['GET'])
-@require_agent_or_admin_or_user_auth
 def get_all_listing_tags(listing_id):
     """ listing tags """
     listing = storage.get(Listing, listing_id)
@@ -492,7 +486,6 @@ def create_obj_ratings(listing_id):
 @listing_views.route('/listing/<string:listing_id>/ratings',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/listings/get.yml', methods=['GET'])
-@require_agent_or_admin_or_user_auth
 def get_all_listing_ratings(listing_id):
     """ listing ratings """
     listing = storage.get(Listing, listing_id)
