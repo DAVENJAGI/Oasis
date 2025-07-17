@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    const userProfileAvatar = document.getElementById('route-to-user-profile');
+    userProfileAvatar.addEventListener('click', () => {
+        window.location.href = 'profile.html';
+    })
+
     //SHOW PRICES OF LISING 
     const pricingData = [
         { month: 'Jan', price: 120, season: 'Low Season' },
