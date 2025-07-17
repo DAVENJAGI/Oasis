@@ -5,6 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'profile.html';
     })
 
+    function isLoggedIn() {
+        return !!sessionStorage.getItem('X-Custom-Token');
+    }
+      
+
     //SHOW PRICES OF LISING 
     const pricingData = [
         { month: 'Jan', price: 120, season: 'Low Season' },
@@ -220,14 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
         
-    const bookNowBtn = document.getElementById('book-now');
-    if (bookNowBtn) {
-        bookNowBtn.addEventListener('click', function() {
-            alert('Redirecting to booking page...');
-        });
-    }
     
-
     
     function addChartStyles() {
         const style = document.createElement('style');
@@ -520,16 +518,18 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     }
     
-    if (writeReviewBtn1) {
-        writeReviewBtn1.addEventListener('click', function(e) {
-            e.preventDefault();
-            showWriteReviewPopup();
-        });
-    }
-    if (writeReviewBtn2) {
-        writeReviewBtn2.addEventListener('click', function(e) {
-            e.preventDefault();
-            showWriteReviewPopup();
+    if (writeReviewBtn1 && writeReviewBtn2) {
+        writeReviewBtn1.addEventListener('click', function (e) {
+          if (!isLoggedIn()) {
+            notification.style.display = 'block';
+            document.querySelector('.overlay').style.display = "block";
+            document.querySelector(".notification-message").textContent = "You must be signed in to review this property.";
+            document.querySelector(".notification-title").textContent = "Error";
+            return;
+            } else {
+                e.preventDefault();
+                showWriteReviewPopup();
+            }
         });
     }
     
@@ -691,11 +691,53 @@ document.addEventListener('DOMContentLoaded', () => {
         const reportForm = document.getElementById('report-form');
         const reportDescription = document.getElementById('report-description');
         const charCount = document.getElementById('char-count');
+        const dismissBtn = document.getElementById('dismiss-btn');
+        const closeNotif = document.querySelector('.close-btn');
+        const notification = document.getElementById('notification');
+
+        function closeNotification() {
+            // notification.style.animation = 'slideOut 0.4s ease-in forwards';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 400);
+        }
+
+        function handlePrimary() {
+            alert('Primary action clicked!');
+            closeNotification();
+        }
+        if (closeNotif) {
+            closeNotif.addEventListener('click', function () {
+                notification.style.display = 'none';
+                document.querySelector('.overlay').style.display = "none";
+            });
+        } 
+        if (dismissBtn) {
+            dismissBtn.addEventListener('click', function () {
+                notification.style.display = 'none';
+                document.querySelector('.overlay').style.display = "none";
+            });
+        }
+        
+        setTimeout(() => {
+            const notification = document.getElementById('notification');
+            if (notification.style.display !== 'none') {
+                closeNotification();
+            }
+        }, 8000);
 
         if (showReportBtn && reportPopup) {
             showReportBtn.addEventListener('click', function () {
+              if (!isLoggedIn()) {
+                notification.style.display = 'block';
+                document.querySelector('.overlay').style.display = "block";
+                document.querySelector(".notification-message").textContent = "You must be signed in to rate or report this property.";
+                document.querySelector(".notification-title").textContent = "Error";
+                return;
+            }
+              
                 reportPopup.classList.add('active');
-                document.body.style.overflow = 'hidden';
+              document.body.style.overflow = 'hidden';
             });
         }
 
@@ -837,17 +879,22 @@ document.addEventListener('DOMContentLoaded', () => {
             '2025-08-05', '2025-08-06', '2025-08-12', '2025-08-13'
         ];
 
-        showBookingBtn1.addEventListener('click', function() {
-            bookingPopup.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            generateCalendar();
-        });
-
-        showBookingBtn2.addEventListener('click', function() {
-            bookingPopup.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            generateCalendar();
-        });
+        
+        if (showBookingBtn2 && showBookingBtn1) {
+            (showBookingBtn2 || showBookingBtn1).addEventListener('click', function (e) {
+              if (!isLoggedIn()) {
+                notification.style.display = 'block';
+                document.querySelector('.overlay').style.display = "block";
+                document.querySelector(".notification-message").textContent = "You must be signed in to book this property.";
+                document.querySelector(".notification-title").textContent = "Error";
+                return;
+                } else {
+                    bookingPopup.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    generateCalendar()
+                }
+            });
+        }
 
         function hidePopup() {
             bookingPopup.classList.remove('active');
@@ -1452,7 +1499,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function colorStars(average, scores) {
         const stars = document.querySelectorAll(".rated_star");
         document.querySelector('.rating-in-reviews').textContent = `${average} ${"average rating"}`;
-        document.querySelector(".rating-score").textContent = average;
+        document.querySelector(".rating-score").textContent = average || "0.0";
         document.querySelector(".rating-div-star").style.color = "gold";
         document.querySelector(".fa-users").style.color = "#86D5EE";
         document.querySelector(".based-on-reviews").textContent = `Based on ${scores.length} reviews`;
