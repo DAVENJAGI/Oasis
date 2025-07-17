@@ -314,19 +314,63 @@ body {
     stroke: var(--current-text-secondary);
     transition: all 0.3s ease;
 }
-
-.profile-section:hover .chevron {
-    stroke: var(--primary-color);
+.profile-section.active .chevron {
     transform: rotate(180deg);
 }
 
-
-
-
-.profile-section:hover .chevron {
-    stroke: var(--primary-color);
-    transform: rotate(180deg);
+/* DROPDOWN MENU */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--current-glass-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--current-shadow-medium);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    margin-top: 8px;
+    min-width: 200px;
+    border: 1px solid var(--current-glass-border);
 }
+
+.dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--current-glass-border);
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    color: #86D5EE;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item.logout {
+    color: #dc3545;
+    border-top: 1px solid #f0f0f0;
+}
+
+.dropdown-item.logout:hover {
+    background-color: #fff5f5;
+}
+
+
 
 /* Tooltip Styles */
 .tooltip {
