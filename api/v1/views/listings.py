@@ -329,7 +329,7 @@ def create_obj_amenities(listing_id):
     storage.save()
     return (jsonify(amenity.to_dict()), 201)
 
-@listing_views.route('/listing/<string:listing_id>/amenities',
+@listing_views.route('/listings/<string:listing_id>/amenities',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/listings/get.yml', methods=['GET'])
 def get_all_listing_amenities(listing_id):
