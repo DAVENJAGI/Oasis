@@ -825,4 +825,15 @@ document.addEventListener('DOMContentLoaded', () => {
             container.appendChild(listingCard);
         });
     }
+
+    document.querySelectorAll('.view-details-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = e.target.getAttribute('data-id');
+          viewDetails(id);
+        });
+    });
+
+    function viewDetails(id) {
+        window.location.href = "item.html";
+    }
 })
