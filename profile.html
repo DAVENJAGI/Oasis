@@ -130,7 +130,7 @@
                     <span>Tickets</span>
                 </div>
                 <div class="menu-item">
-                    <i class="fas fa-star bottom"></i>
+                    <i class="fas fa-star"></i>
                     <span>Reviews</span>
                 </div>
                 <div class="menu-item logout">
@@ -217,15 +217,17 @@
                     <div class="form-group">
                         <label>Gender</label>
                         <select id="gender">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
+                            <option id="male-select" value="Male">Male</option>
+                            <option id="female-select" value="Female">Female</option>
                             <option value="Other">Other</option>
                         </select>
                     </div>
+                    
                     <div class="form-group full-width">
                         <label>Address</label>
-                        <input type="text" value="01000, 451-Thika, Nairobi, Kenya" id="address">
+                        <input type="text" id="address">
                     </div>
+                    
                 </div>
                 <div>
                     <button id="save-usr-profile-info-btn" class="save-btn">
@@ -244,18 +246,18 @@
                 <div class="stats-grid">
                     <div class="stat-card">
                         <i class="fas fa-calendar-check"></i>
-                        <div id="bookings-made" class="stat-number">48</div>
+                        <div id="bookings-made" class="stat-number">0</div>
                         <div class="stat-label">Bookings</div>
                     </div>
                     <div class="stat-card">
                         <i id=" bottom-star" class="fas fa-star"></i>
-                        <div id="reviews-made" class="stat-number">24</div>
+                        <div id="reviews-made" class="stat-number">0</div>
                         <div class="stat-label">Reviews</div>
                     </div>
                     <div class="stat-card">
-                        <i class="fas fa-chart-line"></i>
-                        <div class="stat-number">--</div>
-                        <div class="stat-label">Success Rate</div>
+                        <i class="fas fa-heart"></i>
+                        <div id="user-favs"  class="stat-number">0</div>
+                        <div class="stat-label">Favorites</div>
                     </div>
                 </div>
             </div>
