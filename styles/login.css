@@ -638,6 +638,7 @@ body.scrolled {
     z-index: 20;
     overflow: hidden;
     padding: 2rem 1rem;
+    margin-top: 2%;
 }
 
 .hero-content {
