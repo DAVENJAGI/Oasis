@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
         API_BASE_URL: 'https://oasis-mjmw.onrender.com/api/v1',
         ENDPOINTS: {
             LOGIN: '/user/login/',
-            NEARBY_LISTINGS: `/nearby/`,
+            NEARBY_LISTINGS: `/nearby_listings/`,
             LATEST_LISTINGS: `/listings/latest/`
         },
         MESSAGES: {
@@ -670,33 +670,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     
-    //FETCH RECOMMENDATION LISTINGS
     async function fetchLatestListing(lat = null, lng = null) {
         try {
-            let latestEndpoint = CONFIG.ENDPOINTS.LATEST_LISTINGS;
-            let nearbyEndpoint = CONFIG.ENDPOINTS.NEARBY_LISTINGS;
-
-            if (lat !== null && lng !== null) {
-                nearbyEndpoint += `?lat=${lat}&lng=${lng}`;
+            const latestEndpoint = CONFIG.ENDPOINTS.LATEST_LISTINGS;
+            const nearbyEndpoint = (lat && lng)
+                ? `${CONFIG.ENDPOINTS.NEARBY_LISTINGS}?lat=${lat}&lng=${lng}`
+                : null;
+    
+            let nearbyListings = [];
+            if (nearbyEndpoint) {
+                nearbyListings = await makeRequest(nearbyEndpoint);
             }
+
+            const nearbyIds = new Set(nearbyListings.map(listing => listing.id));
     
-            const [latestListings, nearbyListings] = await Promise.all([
-                makeRequest(latestEndpoint),
-                (lat && lng) ? makeRequest(nearbyEndpoint) : []
-            ]);
+            const latestListings = await makeRequest(latestEndpoint);
+            const nonNearbyListings = latestListings.filter(listing => !nearbyIds.has(listing.id));
+            const combinedListings = [...nearbyListings, ...nonNearbyListings];
     
-            const combinedListings = [...(nearbyListings || []), ...latestListings];
-            console.log(combinedListings);
+            console.log("Combined Listings:", combinedListings);
             appendListingCards(combinedListings);
         } catch (error) {
             console.error('Error fetching nearby and latest listings:', error);
         }
     }
+    
+    
     navigator.geolocation.getCurrentPosition(
         function(position) {
-            const usr_latitude = position.coords.latitude;
-            const usr_longitude = position.coords.longitude;
-            fetchLatestListing(usr_latitude, usr_longitude);
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            fetchLatestListing(lat, lng);
         },
         function(error) {
             console.warn("Geolocation error:", error.message);
@@ -711,8 +715,6 @@ document.addEventListener('DOMContentLoaded', () => {
         listingCard.className = 'listing-card fade-in';
         listingCard.setAttribute("data-id", listing.id);
         const formattedPrice = listing.price_by_night.toLocaleString();
-        const badgeText = listing.listing_tag || 'Verified';
-
         
         function createListingImage(listing) {
             if (!listing.cover_image || listing.cover_image === "NULL" || listing.cover_image === null || listing.cover_image === "") {
@@ -735,16 +737,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 return `<img src="${listing.cover_image}" class="listing-img">`;
             }
         }
-        
+
+        function badgeText(listing) {
+            if (listing.distance_km !== null && listing.distance_km !== undefined) {
+                return `<span class="listing-badge">${listing.distance_km.toFixed(1)} km away</span>`;
+            } else if (listing.listing_tag) {
+                return `<span class="listing-badge">${listing.listing_tag}</span>`;
+            } else {
+                return '';
+            }
+        }
         listingCard.innerHTML = `
             <div class="listing-image">
                 ${createListingImage(listing)}
-                <div class="listing-badge">${badgeText}</div>
-                <div class="listing-favorite">
-                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                    </svg>
-                </div>
+                 ${badgeText(listing)}
             </div>
             <div class="listing-content">
                 <div class="listing-header">
@@ -805,15 +811,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //APPEND LISTINGS TO CARD
-    function appendListingCards(nearbyLatestListings) {
+    function appendListingCards(combinedListings) {
         const container = document.querySelector('.listings-grid');
         if (!container) {
             console.error('Container not found:', container);
             return;
         }
         
-        console.log(nearbyLatestListings);
-        nearbyLatestListings.forEach(listing => {
+        console.log(combinedListings);
+        combinedListings.forEach(listing => {
+            console.log(listing.distance_km);
             const listingCard = createListingCard(listing);
             container.appendChild(listingCard);
         });
