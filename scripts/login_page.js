@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    document.getElementById('logoClick').addEventListener('click', () => {
+        location.reload();
+    })
+
     window.addEventListener('scroll', function () {
         const heroBlur = document.querySelector('.hero');
         
