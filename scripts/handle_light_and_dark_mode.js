@@ -97,11 +97,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileSection = document.getElementById('profileSection');
     const dropdownMenu = document.getElementById('dropdownMenu');
     const logoutItem = document.getElementById('logoutItem');
-    profileSection.addEventListener('click', function(e) {
-        e.stopPropagation();
-        profileSection.classList.toggle('active');
-        dropdownMenu.classList.toggle('show');
-    });
+
+    if (profileSection && dropdownMenu) {
+        profileSection.addEventListener('click', function (e) {
+            e.stopPropagation();
+            profileSection.classList.toggle('active');
+            dropdownMenu.classList.toggle('show');
+        });
+    }
+
 
     document.addEventListener('click', function(e) {
         if (!profileSection.contains(e.target)) {
@@ -109,16 +113,18 @@ document.addEventListener('DOMContentLoaded', () => {
         dropdownMenu.classList.remove('show');
         }
     });
-                
-    logoutItem.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (confirm('Are you sure you want to logout?')) {
-        alert('Logging out...');
-        window.location.href = 'index.html';
-        }
-        profileSection.classList.remove('active');
-        dropdownMenu.classList.remove('show');
-    });
+    
+    if(logoutItem) {
+        logoutItem.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (confirm('Are you sure you want to logout?')) {
+            alert('Logging out...');
+            window.location.href = 'index.html';
+            }
+            profileSection.classList.remove('active');
+            dropdownMenu.classList.remove('show');
+        });
+    }
                 
     
     document.addEventListener('keydown', function(e) {
