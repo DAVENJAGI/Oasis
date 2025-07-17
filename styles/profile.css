@@ -144,12 +144,12 @@ body {
 }
 
 .header-container {
-    max-width: 1400px;
+    max-width: 1310px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2rem 0rem 0rem;
+    padding: 0 2rem 0rem 2rem;
 }
 
 .logo {
@@ -539,7 +539,6 @@ body {
 }
 
 .rating-stars i {
-    color: #ffd700;
     font-size: 1.2rem;
 }
 
