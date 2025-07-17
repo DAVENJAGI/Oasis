@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const userProfileAvatar = document.getElementById('usr-profile-avatar');
+    const userProfileAvatar = document.getElementById('route-to-user-profile');
     userProfileAvatar.addEventListener('click', () => {
         window.location.href = 'profile.html';
     })
