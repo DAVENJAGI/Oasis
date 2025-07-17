@@ -20,73 +20,6 @@ window.addEventListener('load', function() {
   });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-
-  //HIDE AND SHOW EDIT USER PROFILE
-  const editUserProfileBtn = document.getElementById('edit-usr-profile-btn');
-  editUserProfileBtn.addEventListener('click', () => {
-    toggleEdit();
-  })
-
-  const closeEditUserProfileBtn = document.getElementById('close-edit-usr-profile-btn');
-  closeEditUserProfileBtn.addEventListener('click', () => {
-    toggleEdit();
-  })
-
-  function toggleEdit() {
-    const viewMode = document.getElementById('viewMode');
-    const editMode = document.getElementById('editMode');
-    const editBtn = document.querySelector('.edit-btn');
-    
-    if (editMode.classList.contains('active')) {
-        editMode.classList.remove('active');
-        viewMode.classList.remove('editing');
-        editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
-    } else {
-        editMode.classList.add('active');
-        viewMode.classList.add('editing');
-        editBtn.innerHTML = '<i class="fas fa-times"></i> Cancel';
-    }
-  }
-
-  //SAVE USER INFO UPDATE TO DATABASE
-  const saveUserProfileInfoBtn = document.getElementById('save-usr-profile-info-btn');
-  saveUserProfileInfoBtn.addEventListener('click', () => {
-      saveProfile();
-  })
-
-  function saveProfile() {
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const email = document.getElementById('email').value;
-    const primaryPhone = document.getElementById('primaryPhone').value;
-    const secondaryPhone = document.getElementById('secondaryPhone').value;
-    const gender = document.getElementById('gender').value;
-    const address = document.getElementById('address').value;
-
-    
-    const profileDataElements = document.querySelectorAll('.profile-data');
-    profileDataElements[0].textContent = firstName;
-    profileDataElements[1].textContent = lastName;
-    profileDataElements[2].textContent = email;
-    profileDataElements[3].textContent = primaryPhone;
-    profileDataElements[4].textContent = secondaryPhone;
-    profileDataElements[5].textContent = gender;
-    profileDataElements[6].textContent = address;
-
-    document.querySelector('.profile-name h2').innerHTML = `
-        ${firstName} ${lastName}
-        <span class="verified-badge">
-            <i class="fas fa-check"></i>
-            Verified
-        </span>
-    `;
-
-    alert('Profile updated successfully!');
-    
-    toggleEdit();
-  }
-})
 
 document.addEventListener('DOMContentLoaded', () => {
   const userId = sessionStorage.getItem('user_id');
@@ -106,7 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ENDPOINTS: {
       USER_DATA: (userId) => `/user/${userId}`,
       USER_RATING: (userId) => `/user/${userId}/ratings`,
-      USER_BOOKINGS: (userId) => `/user/${userId}/booking`
+      USER_BOOKINGS: (userId) => `/user/${userId}/bookings`,
+      USER_REVIEWS: (userId) => `/user/${userId}/reviews`,
+      USER_FAVORITES: (userId) => `/user/${userId}/favorites`
     },
     MESSAGES: {
       LOGIN_SUCCESS: 'Login sucessful',
@@ -175,6 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
       appendDataToUserDiv (userData);
       fetchUserRating(userId);
       fetchUserBooking(userId);
+      fetchUserReviews(userId);
+      fetchUserFavorites(userId);
       console.log("Me ", userData);
       return userData;
       } catch (error) {
@@ -188,13 +125,30 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('user-email').textContent = userData.email;
       document.getElementById('user-pri-tel-no').textContent = userData.telephone_no;
       document.getElementById('user-sec-tel-no').textContent = userData.secondary_telephone_no;
-      document.getElementById('user-gender').textContent = userData.sex;
+      document.getElementById('user-gender').textContent = userData.sex || 'NULL';
       document.getElementById('user-address').textContent = userData.address;
       document.querySelector(".side-pri-tel-no").textContent = userData.telephone_no;
 
       document.querySelector(".profile-name-div h2").textContent = `${userData.first_name} ${userData.last_name}`
       if(userData.is_verified === true) {
         document.querySelector(".verified-badge").style.display = "flex";
+      }
+
+      document.getElementById("firstName").value = userData.first_name;
+      document.getElementById("lastName").value = userData.last_name;
+      document.getElementById("email").value = userData.email;
+      document.getElementById("primaryPhone").value = userData.telephone_no;
+      document.getElementById("secondaryPhone").value = userData.secondary_telephone_no;
+      document.getElementById("address").value = userData.address;
+      document.getElementById("gender").value = userData.sex;
+      if (userData.sex === "Female") {
+        document.getElementById("female-select").style.display = "none";
+      } else if (userData.sex === "Male") {
+        document.getElementById('male-select').style.display = "none";
+      } else {
+        document.getElementById("gender").value = "Select Gender";
+        document.getElementById('male-select').style.display = "";
+        document.getElementById("female-select").style.display = "";
       }
     }
 
@@ -232,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  //FETCH USER RATINGS
+  //FETCH USER BOOKINGS
   async function fetchUserBooking() {
     try {
         const userRatingData = await makeRequest(CONFIG.ENDPOINTS.USER_BOOKINGS(userId), {
@@ -243,4 +197,91 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Error fetching favorite listings:", error);
     }
   }
+
+  //FETCH USER REVIEWS
+  async function fetchUserReviews() {
+    try {
+        const userReviewData = await makeRequest(CONFIG.ENDPOINTS.USER_REVIEWS(userId), {
+        headers: getAuthHeaders()
+    });
+    document.getElementById("reviews-made").textContent = userReviewData.length;
+    } catch (error) {
+        console.error("Error fetching favorite listings:", error);
+    }
+  }
+
+  //FETCH USER REVIEWS
+  async function fetchUserFavorites() {
+    try {
+        const userFavoritesData = await makeRequest(CONFIG.ENDPOINTS.USER_FAVORITES(userId), {
+        headers: getAuthHeaders()
+    });
+    document.getElementById("user-favs").textContent = userFavoritesData.length;
+    } catch (error) {
+        console.error("Error fetching favorite listings:", error);
+    }
+  }
+
+  //HIDE AND SHOW EDIT USER PROFILE && UPDATE USER DATA
+  const editUserProfileBtn = document.getElementById('edit-usr-profile-btn');
+  editUserProfileBtn.addEventListener('click', () => {
+    toggleEdit();
+  })
+
+  const closeEditUserProfileBtn = document.getElementById('close-edit-usr-profile-btn');
+  closeEditUserProfileBtn.addEventListener('click', () => {
+    toggleEdit();
+  })
+
+  function toggleEdit() {
+    const viewMode = document.getElementById('viewMode');
+    const editMode = document.getElementById('editMode');
+    const editBtn = document.querySelector('.edit-btn');
+    
+    if (editMode.classList.contains('active')) {
+        editMode.classList.remove('active');
+        viewMode.classList.remove('editing');
+        editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
+    } else {
+        editMode.classList.add('active');
+        viewMode.classList.add('editing');
+        editBtn.innerHTML = '<i class="fas fa-times"></i> Cancel';
+    }
+  }
+
+  async function saveProfile() {
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    const primaryPhone = document.getElementById('primaryPhone').value;
+    const secondaryPhone = document.getElementById('secondaryPhone').value;
+    const gender = document.getElementById('gender').value;
+
+
+    const formData = new FormData();
+    formData.append('first_name', firstName);
+    formData.append('last_name', lastName);
+    formData.append('email', email);
+    formData.append('telephone_no', primaryPhone);
+    formData.append('secondary_telephone_no', secondaryPhone || '');
+    formData.append('sex', gender);
+  
+    try {
+      makeRequest(CONFIG.ENDPOINTS.USER_DATA(userId), {
+        method: 'PUT',
+        headers: getAuthHeaders(),
+        body: formData
+      });
+      alert('Profile updated successfully!');
+      toggleEdit();
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      alert('Error updating profile. Please try again.');
+    }
+  }
+
+  document.getElementById('save-usr-profile-info-btn').addEventListener('click', () => {
+    saveProfile();
+  });
+  
 })
