@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const loader = document.getElementById('pageLoader');
-    const progress = document.getElementById('progressFill');
+    // const progress = document.getElementById('progressFill');
     loader.style.display = 'flex';
-    progress.style.width = '0%';
+    // progress.style.width = '0%';
 
 
     function isLoggedIn() {
@@ -1241,21 +1241,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function initPage() {
         const loader = document.getElementById('pageLoader');
-        const progress = document.getElementById('progressFill');
+        // const progress = document.getElementById('progressFill');
     
         loader.style.display = 'flex';
-        progress.style.width = '0%';
+       //  progress.style.width = '0%';
     
         let prog = 0;
         const interval = setInterval(() => {
           prog = Math.min(prog + 10, 90);
-          progress.style.width = `${prog}%`;
+          //progress.style.width = `${prog}%`;
         }, 50);
     
         try {
           await fetchListing(); 
           clearInterval(interval);
-          progress.style.width = '100%';
+          // progress.style.width = '100%';
     
           setTimeout(() => {
             loader.style.display = 'none';
