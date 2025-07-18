@@ -338,12 +338,14 @@ body {
     margin-top: 8px;
     min-width: 200px;
     border: 1px solid var(--current-glass-border);
+    backdrop-filter: blur(80px);
 }
 
 .dropdown-menu.show {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+    backdrop-filter: blur(80px);
 }
 
 .dropdown-item {

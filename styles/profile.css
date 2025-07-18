@@ -592,6 +592,7 @@ body {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+    backdrop-filter: blur(80px);
 }
 
 .dropdown-item {
@@ -1120,6 +1121,7 @@ body {
         right: 0;
         min-width: 180px;
     }
+    
 }
 
 @media (max-width: 480px) {
@@ -1189,6 +1191,8 @@ body {
     }
     .hero-content{
         padding-top: 1.5em;
+    }
+    .dropdown-menu{
     }
 }
 

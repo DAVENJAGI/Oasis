@@ -234,6 +234,7 @@ body.scrolled {
     background-clip: text;
 }
 
+
 .header-actions {
     display: flex;
     gap: 1rem;
@@ -1255,6 +1256,257 @@ body.scrolled {
     color: #666;
     font-size: 14px;
 }
+/* Login Instruction Popup */
+.overlay-2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    /*backdrop-filter: blur(0.25rem);*/
+    z-index: 1051;
+    /*display: none;*/
+}
+
+.login-instruction {
+    background: var(--current-glass-bg);
+    backdrop-filter: blur(80px);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(-30px) scale(0.9);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1052;
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.popup-header {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 25px 30px;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.popup-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--secondary-gradient);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.popup-header:hover::before {
+    transform: translateX(100%);
+}
+
+.popup-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.popup-title::before {
+    content: '\f007';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #fbbf24;
+}
+
+.popup-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.popup-content {
+    padding: 30px;
+}
+
+.login-info {
+    margin-bottom: 25px;
+}
+
+.info-text {
+    font-size: 1.1rem;
+    color: var(--secondary-gradient);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.credentials-container {
+    background: var(--current-bg);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+    border: 1px solid var(--current-border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.credentials-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary-gradient);
+}
+
+.credentials-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--secondary-primary-color);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.credentials-title::before {
+    content: '\f084';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #86D5EE;
+}
+
+.credential-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding: 12px;
+    background: var(--current-glass-bg);
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease;
+}
+
+.credential-item:hover {
+    border-color: #86D5EE;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
+}
+
+.credential-icon {
+    color: #86D5EE;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.credential-label {
+    font-weight: 500;
+    color: var(--primary-color);
+    min-width: 80px;
+}
+
+.credential-value {
+    font-family: 'Courier New', monospace;
+    background: #f8fafc;
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: #1f2937;
+    border: 1px solid #e2e8f0;
+    flex: 1;
+    user-select: all;
+    width: 80px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.copy-btn {
+    background: #86D5EE;
+    color: white;
+    border: none;
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+    background: rgb(134, 213, 238, 0.4);
+    transform: translateY(-1px);
+}
+
+.popup-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.popup-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+}
+
+.popup-btn.primary {
+    background: var(--primary-gradient);
+    color: white;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+}
+
+.popup-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--current-shadow-medium);
+}
+
+.popup-btn.secondary {
+    background: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.popup-btn.secondary:hover {
+    background: #e5e7eb;
+    transform: translateY(-1px);
+}
 
 @media (max-width: 768px) {
     body{
@@ -1522,6 +1774,16 @@ body.scrolled {
     .loader-container {
         margin-top: 6%;
     }
+
+    .login-instruction {
+        top: 50%;
+        width: 95%;
+        max-height: 90vh;
+    }
+    .info-text{
+        font-size: 1em;
+    }
+    
 }
 @media (max-width: 480px) {
     .profile-section{
