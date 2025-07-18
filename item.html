@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="animated-bg"></div>
-    <header class="header">
+    <header id="header-1" class="header">
         <div class="header-container">
             <div class="logo">
                 <div class="logo-icon">O</div>
@@ -105,9 +105,48 @@
         </div>
     </header>
 
+    <header id="header-2" class="header">
+        <div class="header-container">
+            <a href="#" class="logo" id="logoClick">
+                <div class="logo">
+                    <div class="logo-icon">O</div>
+                    <div class="logo-text">Oasis</div>
+                </div>
+            </a>
+            
+            <div class="header-actions">
+                <button id="change-color-theme-button" class="action-button theme-toggle">
+                    <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                
+                <div id="usr-login-button" class="profile-section">
+                    <div class="profile-avatar-header">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-info-header">
+                        <div class="profile-name-header">Login</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
     <div class="container">
         <!--OVERLAY-->
         <div class="overlay" id="location-overlay"></div>
+
+        <div class="page-loader" id="pageLoader">
+            <div class="loader-content">
+                <div class="loader-spinner"></div>
+                <div class="loader-text" id="loaderText">Loading...</div>
+                <div class="loader-subtext" id="loaderSubtext">Please wait</div>
+                <div class="loader-progress">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+        </div>
 
         <!--LOCATION DISPLAY-->
         <div class="location-popup" id="location-popup">

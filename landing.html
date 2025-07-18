@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oasis - Discover Your Perfect Home</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./styles/landing.css">
     <script type="text/javascript" src="./scripts/landing.js"></script>
     <script type="text/javascript" src="./scripts/handle_light_and_dark_mode.js"></script>
@@ -18,7 +19,7 @@
         <div class="floating-element" style="top: 80%; left: 20%; animation-delay: 9s;"></div>
     </div>
 
-    <header class="header">
+    <header id="header-1" class="header">
         <div class="header-container">
             <a href="#" class="logo">
                 <div class="logo">
@@ -100,6 +101,45 @@
             </div>
         </div>
     </header>
+
+    <header id="header-2" class="header">
+        <div class="header-container">
+            <a href="#" class="logo" id="logoClick">
+                <div class="logo">
+                    <div class="logo-icon">O</div>
+                    <div class="logo-text">Oasis</div>
+                </div>
+            </a>
+            
+            <div class="header-actions">
+                <button id="change-color-theme-button" class="action-button theme-toggle">
+                    <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                
+                <div id="usr-login-button" class="profile-section">
+                    <div class="profile-avatar-header">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-info-header">
+                        <div class="profile-name-header">Login</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text" id="loaderText">Loading...</div>
+            <div class="loader-subtext" id="loaderSubtext">Please wait</div>
+            <div class="loader-progress">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </div>
 
     <section class="hero">
         <div class="hero-content">
