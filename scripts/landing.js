@@ -3,6 +3,18 @@ document.addEventListener('DOMContentLoaded', () => {
     userProfileAvatar.addEventListener('click', () => {
         window.location.href = 'profile.html';
     })
+
+    function isLoggedIn() {
+        return sessionStorage.getItem('X-Custom-Token');
+    }
+    const header1 = document.getElementById('header-1');
+    const header2 = document.getElementById('header-2')
+
+    if (!isLoggedIn()) {
+        header1.style.visibility = "hidden";
+        header2.style.visibility = "visible";
+    }
+      
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -270,8 +282,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function viewDetails(id) {
-        window.location.href = "item.html";
-    }
+        const loader = document.getElementById('pageLoader');
+        loader.style.display = 'flex';
+      
+        sessionStorage.setItem('listingId', id);
+        setTimeout(() => {
+          window.location.href = 'item.html';
+        }, 300);
+    }      
 
       
     function bookNow(listingId) {

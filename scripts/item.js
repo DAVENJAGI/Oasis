@@ -5,10 +5,27 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'profile.html';
     })
 
+    const loader = document.getElementById('pageLoader');
+    const progress = document.getElementById('progressFill');
+    loader.style.display = 'flex';
+    progress.style.width = '0%';
+
+
     function isLoggedIn() {
         return !!sessionStorage.getItem('X-Custom-Token');
     }
-      
+
+    const header1 = document.getElementById('header-1');
+    const header2 = document.getElementById('header-2')
+
+    if (isLoggedIn()) {
+        header1.style.visibility = "visible";
+        header2.style.visibility = "hidden";
+    } else {
+        header1.style.visibility = "hidden";
+        header2.style.visibility = "visible";
+    }
+    
 
     //SHOW PRICES OF LISING 
     const pricingData = [
@@ -1203,8 +1220,40 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Error fetching favorite listings:", error);
         }
-    } fetchListing();
+    }
 
+    async function initPage() {
+        const loader = document.getElementById('pageLoader');
+        const progress = document.getElementById('progressFill');
+    
+        loader.style.display = 'flex';
+        progress.style.width = '0%';
+    
+        let prog = 0;
+        const interval = setInterval(() => {
+          prog = Math.min(prog + 10, 90);
+          progress.style.width = `${prog}%`;
+        }, 50);
+    
+        try {
+          await fetchListing(); 
+          clearInterval(interval);
+          progress.style.width = '100%';
+    
+          setTimeout(() => {
+            loader.style.display = 'none';
+          }, 300);
+        } catch (err) {
+          clearInterval(interval);
+          loader.style.display = 'none';
+          console.error('Failed to load item data:', err);
+          alert('Failed to load item data.');
+        }
+      }
+      
+      initPage();
+    
+     
     //FETCH LISTING AMENITIES
     async function fetchListingAmenities() {
         let amenityName = [];
