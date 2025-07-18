@@ -1778,10 +1778,47 @@ body.scrolled {
     .login-instruction {
         top: 50%;
         width: 95%;
-        max-height: 90vh;
+        overflow-y: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .login-instruction ::-webkit-scrollbar {
+        display: none;
     }
     .info-text{
         font-size: 1em;
+    }
+    .credentials-container{
+        background: var(--current-bg);
+        border-radius: 15px;
+        padding: 0.5rem;
+        margin: 0.5em 0;
+        min-width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    .credential-item{
+        padding: 0.5em;
+        font-size: 0.75em;
+    }
+    .credential-label{
+        width: 20%;
+        min-width: 20px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    .credential-value{
+        font-size: 0.75rem;
+    }
+    .copy-btn{
+        background: #86D5EE;
+        color: white;
+        padding: 6px 6px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.75rem;
+        transition: all 0.2s ease;
     }
     
 }
