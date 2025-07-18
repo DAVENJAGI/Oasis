@@ -883,7 +883,13 @@ body {
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
+#email{
+    border: 1px solid var(--current-glass-border);
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    background: var(--current-bg);
 
+}
 .form-group {
     display: flex;
     flex-direction: column;
