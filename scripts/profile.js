@@ -302,7 +302,15 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: getAuthHeaders(),
         body: formData
       });
-      alert('Profile updated successfully!');
+
+      document.getElementById("basic-overlay").style.display = "block";
+      document.getElementById('notification').style.display = "block";
+      document.querySelector(".notification-icon").style.display = 'flex';
+      document.querySelector(".notification-title").textContent = "Success";
+      document.querySelector(".notification-message").textContent = "Profile updated successfully!!!";
+      document.getElementById("dismiss-btn").addEventListener('click', () =>{
+        location.reload();
+      });
       toggleEdit();
     } catch (error) {
       console.error('Error updating profile:', error);
