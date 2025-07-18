@@ -1,5 +1,81 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    const shouldShowPopup = sessionStorage.getItem('loginInstructionsDismissed');
+
+    if (shouldShowPopup) {
+        setTimeout(() => {
+            const overlay = document.getElementById('overlay-2');
+            const loginInstruction = document.getElementById('login-popup');
+            if (overlay && loginInstruction) {
+                overlay.style.display = "none";
+                loginInstruction.style.display = "none";
+            }
+        });
+    }
+
+    function closePopup() {
+        const overlay = document.getElementById('overlay-2');
+        const loginInstruction = document.getElementById('login-popup');
+        loginInstruction.style.display = "none";
+        overlay.style.display = "none";
+        sessionStorage.setItem('loginInstructionsDismissed', 'true');
+    }
+    
+    function showInstructions() {
+        const overlay = document.getElementById('overlay-2');
+        const loginInstruction = document.getElementById('login-popup');
+        loginInstruction.style.display = "block";
+        overlay.style.display = "block";
+    }
+
+    document.getElementById("show-demo-login").addEventListener('click', () => {
+        showInstructions();
+    })
+    
+    function copyToClipboard(elementId) {
+        const element = document.getElementById(elementId);
+        const text = element?.textContent || '';
+    
+        if (!navigator.clipboard) return;
+    
+        navigator.clipboard.writeText(text).then(() => {
+            const originalText = element.textContent;
+            element.textContent = 'Copied!';
+            element.style.background = '#dcfce7';
+            element.style.color = '#166534';
+    
+            setTimeout(() => {
+                element.textContent = originalText;
+                element.style.background = '#f8fafc';
+                element.style.color = '#1f2937';
+            }, 1000);
+        }).catch(() => {
+            alert("Copy failed. Please try again.");
+        });
+    }
+    
+
+    document.getElementById('copy-password').addEventListener('click', () => copyToClipboard('demo-password'));
+    document.getElementById('copy-email').addEventListener('click', () => copyToClipboard('demo-email'));
+    document.getElementById('close-popup').addEventListener('click', () => {
+        closePopup();
+    });
+    document.getElementById('got-it-btn').addEventListener('click', () => {
+        closePopup();
+    });
+
+    document.getElementById('popup-overlay').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closePopup();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && document.getElementById('popup-overlay').classList.contains('active')) {
+            closePopup();
+        }
+    });
+
     document.getElementById('logoClick').addEventListener('click', () => {
         location.reload();
     })

@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'index.html';
         })
     }
+    const logoutBtn = document.getElementById('logoutItem');
+    if(logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+        })
+    }
 });
 
 document.addEventListener('DOMContentLoaded', () => {

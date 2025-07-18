@@ -107,13 +107,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    document.addEventListener('click', function(e) {
+    if (!profileSection || !dropdownMenu) {
+        return;
+    }
+
+    document.addEventListener('click', function (e) {
         if (!profileSection.contains(e.target)) {
-        profileSection.classList.remove('active');
-        dropdownMenu.classList.remove('show');
+            profileSection.classList.remove('active');
+            dropdownMenu.classList.remove('show');
         }
     });
-    
+
     if(logoutItem) {
         logoutItem.addEventListener('click', function(e) {
             e.stopPropagation();

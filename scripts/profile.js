@@ -9,11 +9,20 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   const routeToLogin = document.getElementById('usr-login-button');
-    if(routeToLogin) {
-        routeToLogin.addEventListener('click', () => {
-            window.location.href = 'index.html';
-        })
-    }
+  if(routeToLogin) {
+    routeToLogin.addEventListener('click', () => {
+      sessionStorage.clear();
+      window.location.href = 'index.html';
+    })
+  }
+
+  const logoutBtn = document.getElementById('logoutItem');
+  if(logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.clear();
+      window.location.href = 'index.html';
+    })
+  }
 });
 
 // Add loading animation
