@@ -1334,6 +1334,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //FETCH USER
+    async function fetchUserInfo() {
+        try {
+            const userData = await makeRequest(CONFIG.ENDPOINTS.USER_DATA(userId), {
+            headers: getAuthHeaders()
+        });
+        document.getElementById("profile-name-header").textContent = `${userData.first_name} ${userData.last_name}`;
+        const nameChar = `${userData.first_name.charAt(0)}${userData.last_name.charAt(0)}`.toUpperCase()
+        document.getElementById('usr-profile-avatar').textContent = nameChar;
+        return userData;
+        } catch (error) {
+            console.error("Error fetching favorite listings:", error);
+        }
+    }fetchUserInfo(userId);
+
     
     //FETCH USER
     async function fetchUser(userId) {
