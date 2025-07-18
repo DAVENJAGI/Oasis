@@ -754,7 +754,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="listing-content">
                 <div class="listing-header">
-                    <div>
+                    <div class="type-and-price">
                         <h3 class="listing-title">${listing.property_name}</h3>
                         <div class="listing-type">${listing.property_type}</div>
                     </div>
