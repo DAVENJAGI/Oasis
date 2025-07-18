@@ -50,6 +50,57 @@
     <div class="container">
 
     <div class="overlay" id="logins-overlay"></div>
+    <div class="overlay-2" id="overlay-2"></div>
+
+    <!--LOGIN INSTRUCTION DISPLAY-->
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="login-instruction" id="login-popup">
+            <div class="popup-header">
+                <h3 class="popup-title">Login Instructions</h3>
+                <button class="popup-close" id="close-popup">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="popup-content">
+                <div class="login-info">
+                    <p class="info-text">
+                        <strong>Welcome!</strong> To explore all the features as a logged-in user, please use the demo credentials below. This will give you access to the full functionality of the application.
+                    </p>
+                    
+                    <div class="credentials-container">
+                        <div class="credentials-title">Demo Account Credentials</div>
+                        
+                        <div class="credential-item">
+                            <i class="fas fa-envelope credential-icon"></i>
+                            <span class="credential-label">Email:</span>
+                            <span class="credential-value" id="demo-email">janedoe22@gmail.com</span>
+                            <button id="copy-email" class="copy-btn">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="credential-item">
+                            <i class="fas fa-lock credential-icon"></i>
+                            <span class="credential-label">Password:</span>
+                            <span class="credential-value" id="demo-password">jane22</span>
+                            <button id="copy-password" class="copy-btn">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <p class="info-text">
+                        Simply copy these credentials and paste them into the login form to get started. This popup will not appear again during your current session.
+                    </p>
+                </div>
+                
+                <div class="popup-actions">
+                    <button class="popup-btn primary" id="got-it-btn">
+                        <i class="fas fa-check"></i> Got it!
+                    </button>
+                </div>
+            </div>
+        </div>
 
     <section class="hero">
         <div class="hero-content">
@@ -249,6 +300,9 @@
 
         <div class="signup-link">
             Don't have an account? <a href="#">Sign up for free</a>
+        </div>
+        <div id="show-demo-login" class="signup-link">
+            Demo acount?<a href="#"> Click me</a>
         </div>
     </div> 
     </div>
