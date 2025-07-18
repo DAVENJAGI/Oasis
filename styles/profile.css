@@ -173,6 +173,133 @@ body {
     transition: all 0.3s ease;
 }
 
+
+/*NOTIFICATION*/
+
+.notification {
+    background: var(--current-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /*transform-origin: center;*/
+    z-index: 9999;
+    display: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #86D5EE 0%, #A8D8EA 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(134, 213, 238, 0.4);
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(134, 213, 238, 0.6);
+}
+
+/* Overlay and Popup Styles */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: none;
+}
+.notification-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #86D5EE, #A8D8EA);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: white;
+    font-size: 24px;
+    animation: pulse 2s ease-in-out infinite;
+    display: none;
+}
+
+.notification-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--secondary-primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.notification-message {
+    font-size: 1rem;
+    color: var(--secondary-primary-color);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.notification-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+
+.btn-secondary:hover {
+    background: #86D5EE;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #4a5568;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
+}
+
 .page-loader.active {
     opacity: 1;
     visibility: visible;
