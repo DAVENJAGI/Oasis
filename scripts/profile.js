@@ -7,6 +7,13 @@ document.addEventListener('DOMContentLoaded', function() {
           this.classList.add('active');
       });
   });
+
+  const routeToLogin = document.getElementById('usr-login-button');
+    if(routeToLogin) {
+        routeToLogin.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        })
+    }
 });
 
 // Add loading animation
