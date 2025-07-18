@@ -101,7 +101,33 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    //FETCH USER
+    async function initPage() {
+      const loader = document.getElementById('pageLoader');
+      loader.style.display = 'flex';
+
+      let prog = 0;
+        const interval = setInterval(() => {
+          prog = Math.min(prog + 10, 90);
+      }, 100);
+      
+      try {
+        await fetchUser(userId); 
+        clearInterval(interval);
+  
+        setTimeout(() => {
+          loader.style.display = 'none';
+        }, 300);
+      } catch (err) {
+        clearInterval(interval);
+        loader.style.display = 'none';
+        console.error('Failed to load item data:', err);
+        alert('Failed to load item data.');
+      }
+  }
+    
+  initPage();
+  
+  //FETCH USER
     async function fetchUser() {
       try {
           const userData = await makeRequest(CONFIG.ENDPOINTS.USER_DATA(userId), {
@@ -117,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (error) {
           console.error("Error fetching favorite listings:", error);
       }
-    } fetchUser(userId);
+    } 
 
     function appendDataToUserDiv (userData) {
       document.getElementById('user-first-name').textContent = userData.first_name;
@@ -128,6 +154,10 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('user-gender').textContent = userData.sex || 'NULL';
       document.getElementById('user-address').textContent = userData.address;
       document.querySelector(".side-pri-tel-no").textContent = userData.telephone_no;
+
+      document.querySelector(".profile-name-header").textContent = `${userData.first_name} ${userData.last_name}`;
+      const nameChar = `${userData.first_name.charAt(0)}${userData.last_name.charAt(0)}`.toUpperCase()
+      document.querySelector('.profile-avatar-header').textContent = nameChar;
 
       document.querySelector(".profile-name-div h2").textContent = `${userData.first_name} ${userData.last_name}`
       if(userData.is_verified === true) {
