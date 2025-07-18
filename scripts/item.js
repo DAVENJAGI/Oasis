@@ -1,9 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    
+    window.addEventListener('load', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+
     const userProfileAvatar = document.getElementById('route-to-user-profile');
     userProfileAvatar.addEventListener('click', () => {
         window.location.href = 'profile.html';
     })
+
+    const routeToLogin = document.getElementById('usr-login-button');
+    if(routeToLogin) {
+        routeToLogin.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        })
+    }
 
     const loader = document.getElementById('pageLoader');
     const progress = document.getElementById('progressFill');
@@ -1138,7 +1154,8 @@ document.addEventListener('DOMContentLoaded', () => {
             LISTING_TAGS: (listingId) => `/listing/${listingId}/tags`,
             AGENT_DATA: (agentId) => `/agent/${agentId}`,
             TOWN_DATA: (townId) => `/towns/${townId}`,
-            USER_DATA: (userId) => `/user/${userId}`
+            USER_DATA: (userId) => `/user/${userId}`,
+            SIMILAR_LISTINGS: (listingId) => `/listing/${listingId}/similar`,
         },
         MESSAGES: {
             LOGIN_SUCCESS: 'Login sucessful',
@@ -1249,9 +1266,9 @@ document.addEventListener('DOMContentLoaded', () => {
           console.error('Failed to load item data:', err);
           alert('Failed to load item data.');
         }
-      }
+    }
       
-      initPage();
+    initPage();
     
      
     //FETCH LISTING AMENITIES
@@ -1699,7 +1716,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
     //LOCATION MAP
     const locationOverlay = document.getElementById('location-overlay');
     const locationPopup = document.getElementById('location-popup');
@@ -1788,5 +1804,176 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+
+    //FETCH SIMILAR LISTING
+    async function fetchSimilarListing() {
+        try {
+            const similarListingData = await makeRequest(CONFIG.ENDPOINTS.SIMILAR_LISTINGS(listingId), {
+            headers: getAuthHeaders()
+        });
+        return similarListingData;
+        } catch (error) {
+            console.error("Error fetching favorite listings:", error);
+        }
+    }
+
+
+    let hasFetchedSimilarListings = false; 
+    const target = document.querySelector('.similar-properties');
+
+    
+    const observer = new IntersectionObserver(async (entries, observer) => {
+        const entry = entries[0];
+    
+        if (entry.isIntersecting && !hasFetchedSimilarListings) {
+            hasFetchedSimilarListings = true;
+            const loader = document.querySelector(".loader-container");
+            loader.style.visibility = "visible";
+    
+            try {
+                const almostSimilarListingData = await fetchSimilarListing();
+                await new Promise(resolve => setTimeout(resolve, 500));
+                appendListingCards(almostSimilarListingData);
+            } catch (err) {
+                console.error("Error fetching similar listings:", err);
+            } finally {
+                loader.style.visibility = "hidden";
+            }
+    
+            observer.unobserve(entry.target);
+        }
+    }, {
+        threshold: 0.2
+    });
+    
+    observer.observe(target);
+
+
+    //FUNCTION TO CREATE LISTING CARD
+    function createListingCard(listing) {
+        const listingCard = document.createElement('div');
+        listingCard.className = 'listing-card fade-in';
+        listingCard.setAttribute("data-id", listing.id);
+        const formattedPrice = listing.price_by_night.toLocaleString();
+        
+        function createListingImage(listing) {
+            if (!listing.cover_image || listing.cover_image === "NULL" || listing.cover_image === null || listing.cover_image === "") {
+                return `
+                    <div class="image-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             stroke-width="1.5" stroke="currentColor" class="placeholder-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5
+                                      1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18
+                                      3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0
+                                      0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5
+                                      0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375
+                                      0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                        </svg>
+                        <div class="placeholder-txt">No images added for this listing</div>
+                    </div>
+                `;
+            } else {
+                return `<img src="${listing.cover_image}" class="listing-img">`;
+            }
+        }
+
+        function badgeText(listing) {
+            if (listing.distance_km !== null && listing.distance_km !== undefined) {
+                return `<span class="listing-badge">${listing.distance_km.toFixed(1)} km away</span>`;
+            } else if (listing.listing_tag) {
+                return `<span class="listing-badge">${listing.listing_tag}</span>`;
+            } else {
+                return '';
+            }
+        }
+        listingCard.innerHTML = `
+            <div class="listing-image">
+                ${createListingImage(listing)}
+                 ${badgeText(listing)}
+            </div>
+            <div class="listing-content">
+                <div class="listing-header">
+                    <div>
+                        <h3 class="listing-title">${listing.property_name}</h3>
+                        <div class="listing-type">${listing.property_type}</div>
+                    </div>
+                    <div class="listing-price">
+                        <div class="price-amount">Ksh ${formattedPrice}</div>
+                        <div class="price-period">per night</div>
+                    </div>
+                </div>
+                <div class="listing-location">
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    <span>${listing.address}</span>
+                </div>
+                <div class="listing-amenities">
+                    <div class="amenity">
+                        <svg class="amenity-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 21v-4a2 2 0 012-2h4a2 2 0 012 2v4"/>
+                        </svg>
+                        <span>${listing.number_rooms} Bed${listing.number_rooms > 1 ? 's' : ''}</span>
+                    </div>
+                    <div class="amenity">
+                        <svg class="amenity-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
+                        </svg>
+                        <span>${listing.number_bathrooms} Bath${listing.number_bathrooms > 1 ? 's' : ''}</span>
+                    </div>
+                    <div class="amenity">
+                        <svg class="amenity-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                        <span>${listing.max_guest} Guest${listing.max_guest > 1 ? 's' : ''}</span>
+                    </div>
+                </div>
+                <div class="listing-actions">
+                    <button id="view-listing-details" class="action-button" data-id="${listing.id}">View Details</button>
+                    <button id="go-to-booking-button" class="action-button primary" onclick="bookNow('${listing.id}')">Book Now</button>
+                </div>
+            </div>
+        `;
+
+        const viewDetailsButton = listingCard.querySelector('#view-listing-details');
+        viewDetailsButton.addEventListener('click', function() {
+            const listingId = this.getAttribute('data-id');
+            sessionStorage.setItem('listingId', listingId);
+            
+            viewDetails(listingId);
+        });
+
+
+        return listingCard;
+    }
+
+    //APPEND LISTINGS TO CARD
+    function appendListingCards(almostSimilarListingData) {
+        const container = document.querySelector('.properties-grid');
+        console.log(almostSimilarListingData);
+        if (!container) {
+            console.error('Container not found:', container);
+            return;
+        } else {
+            if(almostSimilarListingData.length !== 0) {
+                almostSimilarListingData.forEach(listing => {
+                    const listingCard = createListingCard(listing);
+                    container.appendChild(listingCard);
+                });
+            } else {
+                document.querySelector(".no-similar").style.display = "block";
+            }
+        }
+    }
+
+    document.querySelectorAll('.view-details-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = e.target.getAttribute('data-id');
+          viewDetails(id);
+        });
+    });
 
 })
