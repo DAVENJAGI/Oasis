@@ -671,6 +671,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
     async function fetchLatestListing(lat = null, lng = null) {
+        const loader = document.querySelector(".loader-container");
+        loader.style.visibility = "visible";
+
         try {
             const latestEndpoint = CONFIG.ENDPOINTS.LATEST_LISTINGS;
             const nearbyEndpoint = (lat && lng)
@@ -690,6 +693,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
             console.log("Combined Listings:", combinedListings);
             appendListingCards(combinedListings);
+            loader.style.visibility = "hidden";
         } catch (error) {
             console.error('Error fetching nearby and latest listings:', error);
         }
