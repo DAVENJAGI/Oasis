@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       document.getElementById("firstName").value = userData.first_name;
       document.getElementById("lastName").value = userData.last_name;
-      document.getElementById("email").value = userData.email;
+      document.getElementById("email").textContent = userData.email;
       document.getElementById("primaryPhone").value = userData.telephone_no;
       document.getElementById("secondaryPhone").value = userData.secondary_telephone_no;
       document.getElementById("address").value = userData.address;
