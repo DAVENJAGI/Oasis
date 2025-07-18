@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const CONFIG = {
         API_BASE_URL: 'https://oasis-mjmw.onrender.com/api/v1',
         ENDPOINTS: {
+            USER_DATA: `/user/${userId}`,
             USER_FAVORITED_LISTINGS: `/user/${userId}/favorites/`,
             LATEST_AND_NEARBY_LISTINGS: `/listings/latest`
         },
@@ -132,8 +133,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //FETCH USER
+    async function fetchUser() {
+        try {
+            const userData = await makeRequest(CONFIG.ENDPOINTS.USER_DATA, {
+            headers: getAuthHeaders()
+        });
+        document.querySelector(".profile-name-header").textContent = `${userData.first_name} ${userData.last_name}`;
+        const nameChar = `${userData.first_name.charAt(0)}${userData.last_name.charAt(0)}`.toUpperCase()
+        document.getElementById('usr-profile-avatar').textContent = nameChar;
+        return userData;
+        } catch (error) {
+            console.error("Error fetching favorite listings:", error);
+        }
+    }fetchUser();
+
     // GET NEARBY OR LATEST LISTINGS
     async function fetchLatestOrNearbyListing(lat = null, lng = null) {
+        const loader = document.querySelector(".loader-container");
+        loader.style.visibility = "visible";
+
         try {
             let endpoint = CONFIG.ENDPOINTS.LATEST_AND_NEARBY_LISTINGS
             if (lat !== null && lng !== null) {
@@ -144,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             nearbyLatestListings = nearbyListings;
             appendListingCards(nearbyLatestListings);
+            loader.style.visibility = "hidden";
         } catch (error) {
             console.error('Error fetching neabry and latest listings:', error);
         }
