@@ -735,13 +735,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeNotif = document.querySelector('.close-btn');
         const notification = document.getElementById('notification');
 
-        function closeNotification() {
-            // notification.style.animation = 'slideOut 0.4s ease-in forwards';
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 400);
-        }
-
         function handlePrimary() {
             alert('Primary action clicked!');
             closeNotification();
@@ -963,6 +956,7 @@ document.addEventListener('DOMContentLoaded', () => {
             AGENT_DATA: (agentId) => `/agent/${agentId}`,
             TOWN_DATA: (townId) => `/towns/${townId}`,
             USER_DATA: (userId) => `/user/${userId}`,
+            USER_FAVORITES: (userId) => `/user/${userId}/favorites`,
             SIMILAR_LISTINGS: (listingId) => `/listing/${listingId}/similar`,
             BOOK_LISTING: (listingId) => `/listing/${listingId}/book`,
         },
@@ -1054,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchListingTags();
         initializeMap(listingData, townData);
         } catch (error) {
-            console.error("Error fetching favorite listings:", error);
+            console.error("Error fetching listings:", error);
         }
     }
 
@@ -1095,7 +1089,7 @@ document.addEventListener('DOMContentLoaded', () => {
         amenityName = listingAmenityData.map(amenity => amenity.name);
         appendListingAmenities(amenityName);
         } catch (error) {
-            console.error("Error fetching favorite listings:", error);
+            console.error("Error fetching listing amenity:", error);
         }
     }
 
@@ -1107,7 +1101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         appendListingTags(listingTagsData);
         } catch (error) {
-            console.error("Error fetching favorite listings:", error);
+            console.error("Error fetching listing tags:", error);
         }
     }
 
@@ -1147,12 +1141,13 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: getAuthHeaders()
         });
         console.log(userData);
+        fetchFavoriteListings(userId);
         document.getElementById("profile-name-header").textContent = `${userData.first_name} ${userData.last_name}`;
         const nameChar = `${userData.first_name.charAt(0)}${userData.last_name.charAt(0)}`.toUpperCase()
         document.getElementById('usr-profile-avatar').textContent = nameChar;
         return userData;
         } catch (error) {
-            console.error("Error fetching favorite listings:", error);
+            console.error("Error fetching user info:", error);
         }
     }
     if(isLoggedIn()) {
@@ -1168,7 +1163,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         return userData;
         } catch (error) {
-            console.error("Error fetching favorite listings:", error);
+            console.error("Error fetching user details:", error);
+        }
+    }
+
+    //FETCH USER FAVORITES
+    async function fetchFavoriteListings() {
+        try {
+            const userFavoritesData = await makeRequest(CONFIG.ENDPOINTS.USER_FAVORITES(userId), {
+            headers: getAuthHeaders()
+        });
+        document.getElementById('liked-listing-notifs').style.display = "flex";
+        document.getElementById('liked-listing-notifs').textContent = userFavoritesData.length;
+        return userFavoritesData;
+        } catch (error) {
+            console.error("Error fetching user favorites details:", error);
         }
     }
 
@@ -1179,7 +1188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         return townData;
         } catch (error) {
-            console.error("Error fetching favorite listings:", error);
+            console.error("Error fetching town:", error);
         }
     }
 
@@ -1191,7 +1200,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         return agentData;
         } catch (error) {
-            console.error("Error fetching favorite listings:", error);
+            console.error("Error fetching agent data:", error);
         }
     }
 
@@ -1206,7 +1215,7 @@ document.addEventListener('DOMContentLoaded', () => {
         colorStars(average, scores);
         appendReview(listingRatingData);
         } catch (error) {
-            console.error("Error fetching favorite listings:", error);
+            console.error("Error fetching listing rating:", error);
         }
     }
 
@@ -1217,7 +1226,7 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: getAuthHeaders()
         });
         } catch (error) {
-            console.error("Error fetching favorite listings:", error);
+            console.error("Error fetching listing reviews:", error);
         }
     }
 
