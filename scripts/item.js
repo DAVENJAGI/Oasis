@@ -31,9 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const loader = document.getElementById('pageLoader');
-    // const progress = document.getElementById('progressFill');
     loader.style.display = 'flex';
-    // progress.style.width = '0%';
 
 
     function isLoggedIn() {
@@ -758,6 +756,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dismissBtn.addEventListener('click', function () {
                 notification.style.display = 'none';
                 document.querySelector('.overlay').style.display = "none";
+                location.reload();
             });
         }
         
@@ -885,259 +884,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 hidePopup();
             }
         });
-
-    //CREATING A LISTING BOOKING
-    
-        const bookingPopup = document.getElementById('booking-popup');
-        const showBookingBtn1 = document.getElementById('book-listing-btn-1');
-        const showBookingBtn2 = document.getElementById('book-listing-btn-2');
-        const closeBookingBtn = document.getElementById('close-booking-popup');
-        const cancelBookingBtn = document.getElementById('cancel-booking');
-        const confirmBookingBtn = document.getElementById('confirm-booking');
-        const bookingForm = document.getElementById('booking-form');
-
-        // Calendar elements
-        const calendarGrid = document.getElementById('calendar-grid');
-        const currentMonthSpan = document.getElementById('current-month');
-        const prevMonthBtn = document.getElementById('prev-month');
-        const nextMonthBtn = document.getElementById('next-month');
-
-        // Form elements
-        const startDateInput = document.getElementById('start-date');
-        const endDateInput = document.getElementById('end-date');
-        const checkinDisplay = document.getElementById('checkin-display');
-        const checkoutDisplay = document.getElementById('checkout-display');
-        const nightsDisplay = document.getElementById('nights-display');
-        const totalDisplay = document.getElementById('total-display');
-
-        let currentDate = new Date();
-        let selectedStartDate = null;
-        let selectedEndDate = null;
-        const pricePerNight = 120;
-
-        
-        const unavailableDates = [
-            '2025-07-15', '2025-07-16', '2025-07-25', '2025-07-26',
-            '2025-08-05', '2025-08-06', '2025-08-12', '2025-08-13'
-        ];
-
-        
-        if (showBookingBtn2 && showBookingBtn1) {
-            (showBookingBtn2 || showBookingBtn1).addEventListener('click', function (e) {
-              if (!isLoggedIn()) {
-                notification.style.display = 'block';
-                document.querySelector('.overlay').style.display = "block";
-                document.querySelector(".notification-message").textContent = "You must be signed in to book this property.";
-                document.querySelector(".notification-title").textContent = "Error";
-                return;
-                } else {
-                    bookingPopup.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    generateCalendar()
-                }
-            });
-        }
-
-        function hidePopup() {
-            bookingPopup.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        closeBookingBtn.addEventListener('click', hidePopup);
-        cancelBookingBtn.addEventListener('click', hidePopup);
-
-        bookingPopup.addEventListener('click', function(e) {
-            if (e.target === bookingPopup) {
-                hidePopup();
-            }
-        });
-
-        prevMonthBtn.addEventListener('click', function() {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            generateCalendar();
-        });
-
-        nextMonthBtn.addEventListener('click', function() {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            generateCalendar();
-        });
-
-        function generateCalendar() {
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            const today = new Date();
-            
-            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                'July', 'August', 'September', 'October', 'November', 'December'];
-            currentMonthSpan.textContent = `${monthNames[month]} ${year}`;
-
-            calendarGrid.innerHTML = '';
-            
-            const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            dayHeaders.forEach(day => {
-                const dayHeader = document.createElement('div');
-                dayHeader.className = 'calendar-day-header';
-                dayHeader.textContent = day;
-                calendarGrid.appendChild(dayHeader);
-            });
-
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            const startingDayOfWeek = firstDay.getDay();
-            const daysInMonth = lastDay.getDate();
-
-            
-            for (let i = 0; i < startingDayOfWeek; i++) {
-                const emptyDay = document.createElement('div');
-                emptyDay.className = 'calendar-day other-month';
-                calendarGrid.appendChild(emptyDay);
-            }
-
-            
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dayElement = document.createElement('div');
-                dayElement.className = 'calendar-day';
-                dayElement.textContent = day;
-                
-                const dayDate = new Date(year, month, day);
-                const dayString = dayDate.toISOString().split('T')[0];
-                
-                if (dayDate < today) {
-                    dayElement.classList.add('disabled');
-                } else if (unavailableDates.includes(dayString)) {
-                    dayElement.classList.add('unavailable');
-                } else {
-                    dayElement.addEventListener('click', () => selectDate(dayDate));
-                }
-                
-                if (dayDate.toDateString() === today.toDateString()) {
-                    dayElement.classList.add('today');
-                }
-                
-                if (selectedStartDate && dayDate.toDateString() === selectedStartDate.toDateString()) {
-                    dayElement.classList.add('range-start');
-                }
-                if (selectedEndDate && dayDate.toDateString() === selectedEndDate.toDateString()) {
-                    dayElement.classList.add('range-end');
-                }
-                
-                if (selectedStartDate && selectedEndDate) {
-                    if (dayDate > selectedStartDate && dayDate < selectedEndDate) {
-                        dayElement.classList.add('range-middle');
-                    }
-                }
-                
-                calendarGrid.appendChild(dayElement);
-            }
-        }
-
-        function selectDate(date) {
-            if (!selectedStartDate || (selectedStartDate && selectedEndDate)) {
-                selectedStartDate = date;
-                selectedEndDate = null;
-            } else if (date > selectedStartDate) {
-                selectedEndDate = date;
-            } else {
-                selectedStartDate = date;
-                selectedEndDate = null;
-            }
-            
-            updateDateInputs();
-            updateBookingSummary();
-            generateCalendar();
-        }
-
-        function updateDateInputs() {
-            if (selectedStartDate) {
-                startDateInput.value = selectedStartDate.toISOString().split('T')[0];
-                checkinDisplay.textContent = selectedStartDate.toLocaleDateString();
-            }
-            
-            if (selectedEndDate) {
-                endDateInput.value = selectedEndDate.toISOString().split('T')[0];
-                checkoutDisplay.textContent = selectedEndDate.toLocaleDateString();
-            }
-            
-            if (!selectedStartDate) {
-                startDateInput.value = '';
-                checkinDisplay.textContent = 'Select dates';
-            }
-            
-            if (!selectedEndDate) {
-                endDateInput.value = '';
-                checkoutDisplay.textContent = 'Select dates';
-            }
-        }
-        
-        function updateBookingSummary() {
-            if (selectedStartDate && selectedEndDate) {
-                const timeDiff = selectedEndDate.getTime() - selectedStartDate.getTime();
-                const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                const totalPrice = nights * pricePerNight;
-                
-                nightsDisplay.textContent = nights;
-                totalDisplay.textContent = `$${totalPrice.toFixed(2)}`;
-            } else {
-                nightsDisplay.textContent = '0';
-                totalDisplay.textContent = '$0.00';
-            }
-        }
-
-        
-        bookingForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (!selectedStartDate || !selectedEndDate) {
-                alert('Please select your check-in and check-out dates.');
-                return;
-            }
-            
-            const formData = new FormData(this);
-            const nights = Math.ceil((selectedEndDate.getTime() - selectedStartDate.getTime()) / (1000 * 3600 * 24));
-            const totalPrice = nights * pricePerNight;
-            
-            const bookingData = {
-                user_id: 'current_user_id',
-                listing_id: 'current_listing_id',
-                start_date: selectedStartDate.toISOString().split('T')[0],
-                end_date: selectedEndDate.toISOString().split('T')[0],
-                guest_name: document.getElementById('guest-name').value,
-                guest_email: document.getElementById('guest-email').value,
-                guest_phone: document.getElementById('guest-phone').value,
-                guest_count: document.getElementById('guest-count').value,
-                special_requests: document.getElementById('special-requests').value,
-                total_price: totalPrice,
-                status: 'Pending'
-            };
-            
-            confirmBookingBtn.disabled = true;
-            confirmBookingBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            
-            setTimeout(() => {
-                console.log('Booking submitted:', bookingData);
-                alert(`Booking confirmed! Total: $${totalPrice.toFixed(2)} for ${nights} nights.`);
-                
-                bookingForm.reset();
-                selectedStartDate = null;
-                selectedEndDate = null;
-                updateDateInputs();
-                updateBookingSummary();
-                generateCalendar();
-                
-                confirmBookingBtn.disabled = false;
-                confirmBookingBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Booking';
-                
-                hidePopup();
-            }, 2000);
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && bookingPopup.classList.contains('active')) {
-                hidePopup();
-            }
-        });
-
-        generateCalendar();    
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1153,6 +899,59 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    function showLoader () {
+        const loader = document.getElementById("pageLoader");
+        loader.style.display = "flex";
+    }
+
+    function hideLoader () {
+        const loader = document.getElementById("pageLoader");
+        loader.style.display = "none";
+    }
+
+
+    function showErrorNotification(message, title = 'Error') {
+        hideLoader();
+        document.getElementById('booking-popup').style.display = 'none';
+        const notification = document.querySelector('.notification');
+        const notificationIcon = document.getElementById('error-icon');
+        const overlay = document.querySelector('.overlay');
+        const messageDiv = document.querySelector('.notification-message');
+        const titleDiv = document.querySelector('.notification-title');
+    
+        if (notification && overlay && messageDiv && titleDiv) {
+            notification.style.display = 'block';
+            overlay.style.display = 'flex';
+            notificationIcon.style.display = "block";
+            messageDiv.style.color = "#e74c3c";
+            messageDiv.textContent = message;
+            titleDiv.textContent = title;
+        } else {
+            console.error('Notification elements not found in the DOM');
+        }
+    }
+
+    function showSuccessMessage(message, title = 'Success') {
+        hideLoader();
+        document.getElementById('booking-popup').style.display = 'none';
+        const notification = document.querySelector('.notification');
+        const overlay = document.querySelector('.overlay');
+        const notificationIcon = document.getElementById('success-icon');
+        const messageDiv = document.querySelector('.notification-message');
+        const titleDiv = document.querySelector('.notification-title');
+    
+        if (notification && overlay && messageDiv && titleDiv) {
+            notification.style.display = 'block';
+            overlay.style.display = 'block';
+            notificationIcon.style.display = "flex";
+            messageDiv.style.color = "#2ecc71";
+            messageDiv.textContent = message;
+            titleDiv.textContent = title;
+        } else {
+            console.error('Notification elements not found in the DOM');
+        }
+    }
+
     const CONFIG = {
         API_BASE_URL: 'https://oasis-mjmw.onrender.com/api/v1',
         ENDPOINTS: {
@@ -1165,6 +964,7 @@ document.addEventListener('DOMContentLoaded', () => {
             TOWN_DATA: (townId) => `/towns/${townId}`,
             USER_DATA: (userId) => `/user/${userId}`,
             SIMILAR_LISTINGS: (listingId) => `/listing/${listingId}/similar`,
+            BOOK_LISTING: (listingId) => `/listing/${listingId}/book`,
         },
         MESSAGES: {
             LOGIN_SUCCESS: 'Login sucessful',
@@ -1211,18 +1011,28 @@ document.addEventListener('DOMContentLoaded', () => {
             clearTimeout(timeoutId);
     
             if (!response.ok) {
-                const errorBody = await response.text();
-                throw new Error(`HTTP ${response.status}: ${errorBody}`);
+                let errorMessage = '';
+                try {
+                    const errorBody = await response.json();
+                    errorMessage = errorBody?.Message || JSON.stringify(errorBody);
+                } catch (e) {
+                    const fallbackText = await response.text();
+                    errorMessage = fallbackText || 'An unexpected error occurred';
+                }
+    
+                showErrorNotification(errorMessage, 'Error');
+                throw new Error(errorMessage);
             }
     
             return await response.json();
     
         } catch (error) {
             if (error.name === 'AbortError') {
-                console.error(`Request to ${url} timed out`);
+                showErrorNotification('Request timed out', 'Timeout');
                 throw new Error('Request timed out');
             }
-            console.error(`Request to ${url} failed:`, error.message);
+    
+            showErrorNotification(error.message, 'Error');
             throw error;
         }
     };
@@ -1250,21 +1060,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function initPage() {
         const loader = document.getElementById('pageLoader');
-        // const progress = document.getElementById('progressFill');
-    
+        
         loader.style.display = 'flex';
-       //  progress.style.width = '0%';
-    
         let prog = 0;
         const interval = setInterval(() => {
           prog = Math.min(prog + 10, 90);
-          //progress.style.width = `${prog}%`;
         }, 50);
     
         try {
           await fetchListing(); 
           clearInterval(interval);
-          // progress.style.width = '100%';
     
           setTimeout(() => {
             loader.style.display = 'none';
@@ -1305,6 +1110,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Error fetching favorite listings:", error);
         }
     }
+
     //APPEND THE TAGS TO THE LISTING TAGS DIV
     function appendListingTags(listingTagsData) {
         const tagContainer = document.querySelector('.tags_div');
@@ -1347,7 +1153,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Error fetching favorite listings:", error);
         }
-    }fetchUserInfo(userId);
+    }
+    if(!isLoggedIn) {
+        fetchUserInfo(userId);
+    }
 
     
     //FETCH USER
@@ -1521,6 +1330,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('property-title-txt').textContent = listingData.property_name;
             document.getElementById('property-type').textContent = listingData.property_type;
             document.getElementById('property-bed-no').textContent = listingData.number_rooms;
+            document.getElementById('price-per-night-book').textContent = "Ksh" + " " + listingData.price_by_night;
             document.getElementById('property-bath-no').textContent = listingData.number_bathrooms;
             document.getElementById('property-max-guest').textContent = listingData.max_guest;
             document.getElementById('property-description').textContent = listingData.description;
@@ -1999,5 +1809,324 @@ document.addEventListener('DOMContentLoaded', () => {
           viewDetails(id);
         });
     });
+
+
+    function isLoggedIn() {
+        return !!sessionStorage.getItem('X-Custom-Token');
+    }
+
+   // FETCH LISTING DETAILS
+
+    
+        const bookingPopup = document.getElementById('booking-popup');
+        const showBookingBtn1 = document.getElementById('book-listing-btn-1');
+        const showBookingBtn2 = document.getElementById('book-listing-btn-2');
+        const closeBookingBtn = document.getElementById('close-booking-popup');
+        const cancelBookingBtn = document.getElementById('cancel-booking');
+        const confirmBookingBtn = document.getElementById('confirm-booking');
+        const bookingForm = document.getElementById('booking-form');
+
+        // Calendar elements
+        const calendarGrid = document.getElementById('calendar-grid');
+        const currentMonthSpan = document.getElementById('current-month');
+        const prevMonthBtn = document.getElementById('prev-month');
+        const nextMonthBtn = document.getElementById('next-month');
+
+        // Form elements
+        const startDateInput = document.getElementById('start-date');
+        const endDateInput = document.getElementById('end-date');
+        const checkinDisplay = document.getElementById('checkin-display');
+        const checkoutDisplay = document.getElementById('checkout-display');
+        const nightsDisplay = document.getElementById('nights-display');
+        const totalDisplay = document.getElementById('total-display');
+
+        let currentDate = new Date();
+        let selectedStartDate = null;
+        let selectedEndDate = null;
+        const pricePerNight = [];
+
+        
+        const unavailableDates = [
+            '2025-07-15', '2025-07-16', '2025-07-25', '2025-07-26',
+            '2025-08-05', '2025-08-06', '2025-08-12', '2025-08-13'
+        ];
+
+        
+        if (showBookingBtn2 && showBookingBtn1) {
+            (showBookingBtn2 || showBookingBtn1).addEventListener('click', function (e) {
+              if (!isLoggedIn()) {
+                notification.style.display = 'block';
+                document.querySelector('.overlay').style.display = "block";
+                document.querySelector(".notification-message").textContent = "You must be signed in to book this property.";
+                document.querySelector(".notification-title").textContent = "Error";
+                return;
+                } else {
+                    bookingPopup.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    generateCalendar()
+                }
+            });
+        }
+
+        function hidePopup() {
+            bookingPopup.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeBookingBtn.addEventListener('click', hidePopup);
+        cancelBookingBtn.addEventListener('click', hidePopup);
+
+        bookingPopup.addEventListener('click', function(e) {
+            if (e.target === bookingPopup) {
+                hidePopup();
+            }
+        });
+
+        prevMonthBtn.addEventListener('click', function() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            generateCalendar();
+        });
+
+        nextMonthBtn.addEventListener('click', function() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            generateCalendar();
+        });
+
+        function generateCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const today = new Date();
+            
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            currentMonthSpan.textContent = `${monthNames[month]} ${year}`;
+
+            calendarGrid.innerHTML = '';
+            
+            const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayHeaders.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day-header';
+                dayHeader.textContent = day;
+                calendarGrid.appendChild(dayHeader);
+            });
+
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startingDayOfWeek = firstDay.getDay();
+            const daysInMonth = lastDay.getDate();
+
+            
+            for (let i = 0; i < startingDayOfWeek; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day other-month';
+                calendarGrid.appendChild(emptyDay);
+            }
+
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                
+                const dayDate = new Date(year, month, day);
+                const dayString = dayDate.toISOString().split('T')[0];
+                
+                if (dayDate < today) {
+                    dayElement.classList.add('disabled');
+                } else if (unavailableDates.includes(dayString)) {
+                    dayElement.classList.add('unavailable');
+                } else {
+                    dayElement.addEventListener('click', () => selectDate(dayDate));
+                }
+                
+                if (dayDate.toDateString() === today.toDateString()) {
+                    dayElement.classList.add('today');
+                }
+                
+                if (selectedStartDate && dayDate.toDateString() === selectedStartDate.toDateString()) {
+                    dayElement.classList.add('range-start');
+                }
+                if (selectedEndDate && dayDate.toDateString() === selectedEndDate.toDateString()) {
+                    dayElement.classList.add('range-end');
+                }
+                
+                if (selectedStartDate && selectedEndDate) {
+                    if (dayDate > selectedStartDate && dayDate < selectedEndDate) {
+                        dayElement.classList.add('range-middle');
+                    }
+                }
+                
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+
+        function selectDate(date) {
+            if (!selectedStartDate || (selectedStartDate && selectedEndDate)) {
+                selectedStartDate = date;
+                selectedEndDate = null;
+            } else if (date > selectedStartDate) {
+                selectedEndDate = date;
+            } else {
+                selectedStartDate = date;
+                selectedEndDate = null;
+            }
+            
+            updateDateInputs();
+            updateBookingSummary();
+            generateCalendar();
+        }
+
+        function updateDateInputs() {
+            if (selectedStartDate) {
+                startDateInput.value = selectedStartDate.toISOString().split('T')[0];
+                checkinDisplay.textContent = selectedStartDate.toLocaleDateString();
+            }
+            
+            if (selectedEndDate) {
+                endDateInput.value = selectedEndDate.toISOString().split('T')[0];
+                checkoutDisplay.textContent = selectedEndDate.toLocaleDateString();
+            }
+            
+            if (!selectedStartDate) {
+                startDateInput.value = '';
+                checkinDisplay.textContent = 'Select dates';
+            }
+            
+            if (!selectedEndDate) {
+                endDateInput.value = '';
+                checkoutDisplay.textContent = 'Select dates';
+            }
+        }
+        
+        function updateBookingSummary() {
+            if (selectedStartDate && selectedEndDate) {
+                const timeDiff = selectedEndDate.getTime() - selectedStartDate.getTime();
+                const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                const totalPrice = nights * pricePerNight;
+                
+                nightsDisplay.textContent = nights;
+                totalDisplay.textContent = `$${totalPrice.toFixed(2)}`;
+            } else {
+                nightsDisplay.textContent = '0';
+                totalDisplay.textContent = '$0.00';
+            }
+        }
+
+        
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!selectedStartDate || !selectedEndDate) {
+                alert('Please select your check-in and check-out dates.');
+                return;
+            }
+            
+            const formData = new FormData(this);
+            const nights = Math.ceil((selectedEndDate.getTime() - selectedStartDate.getTime()) / (1000 * 3600 * 24));
+            const totalPrice = nights * pricePerNight;
+            
+            const bookingData = {
+                user_id: 'current_user_id',
+                listing_id: 'current_listing_id',
+                start_date: selectedStartDate.toISOString().split('T')[0],
+                end_date: selectedEndDate.toISOString().split('T')[0],
+                guest_name: document.getElementById('guest-name').value,
+                guest_email: document.getElementById('guest-email').value,
+                guest_phone: document.getElementById('guest-phone').value,
+                guest_count: document.getElementById('guest-count').value,
+                special_requests: document.getElementById('special-requests').value,
+                total_price: totalPrice,
+                status: 'Pending'
+            };
+            
+            confirmBookingBtn.disabled = true;
+            confirmBookingBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            setTimeout(() => {
+                console.log('Booking submitted:', bookingData);
+                alert(`Booking confirmed! Total: $${totalPrice.toFixed(2)} for ${nights} nights.`);
+                
+                bookingForm.reset();
+                selectedStartDate = null;
+                selectedEndDate = null;
+                updateDateInputs();
+                updateBookingSummary();
+                generateCalendar();
+                
+                confirmBookingBtn.disabled = false;
+                confirmBookingBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Booking';
+                
+                hidePopup();
+            }, 2000);
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && bookingPopup.classList.contains('active')) {
+                hidePopup();
+            }
+        });
+
+        generateCalendar();
+
+
+        
+        async function createBooking() {
+            try {
+                const guestName = document.getElementById('guest-name').value.trim();
+                const guestEmail = document.getElementById('guest-email').value.trim();
+                const guestPhone = document.getElementById('guest-phone').value.trim();
+                const startDate = document.getElementById('start-date').value;
+                const endDate = document.getElementById('end-date').value;
+                const guestCount = parseInt(document.getElementById('guest-count').value);
+                const specialRequests = document.getElementById('special-requests').value.trim();
+                
+                const totalPriceText = document.getElementById('total-display').textContent;
+                const totalPrice = parseFloat(totalPriceText.replace('$', '').replace(',', ''));
+        
+                if (!startDate || !endDate || !guestCount) {
+                    throw new Error('Please fill in all required fields');
+                }
+        
+                console.log("THis", listingId);
+                const bookingData = {
+                    user_id: userId,
+                    start_date: startDate,
+                    end_date: endDate,
+                    expected_max_guests: guestCount,
+                    total_price: totalPrice,
+                    description: specialRequests || "No special request",
+                    status: 'Pending', 
+                };
+        
+                try {
+                    const newBooking = await makeRequest(CONFIG.ENDPOINTS.BOOK_LISTING(listingId), {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        ...getAuthHeaders()
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+                showSuccessMessage('Booking created successfully!');
+                return newBooking;
+                } catch (error) {
+                    console.error("Error fetching creating booking:", error);
+                }
+        
+            } catch (error) {
+                console.error('Error creating booking:', error);
+                showErrorMessage(error.Message);
+                throw error;
+            }
+        }
+    
+        document.getElementById('confirm-booking').addEventListener('click', () => {
+            showLoader();
+            setTimeout(() => {
+                createBooking(userId, listingId);
+            }, 2000);
+        });
+        
 
 })
