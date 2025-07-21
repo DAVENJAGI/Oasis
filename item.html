@@ -28,7 +28,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                     </svg>
-                    <span class="notification-badge">12</span>
+                    <span id="liked-listing-notifs" class="notification-badge">12</span>
                 </button>
                 
                 <button class="action-button tooltip" data-tooltip="Messages" id="messagesBtn">
@@ -681,11 +681,15 @@
 
         <!--NOTIFICATION DIV-->
         <div class="notification" id="notification">
-            <button class="close-btn">&times;</button>
             
-            <div class="notification-icon">
+            <div id="success-icon" class="notification-icon">
                 ✓
             </div>
+
+            <div id="error-icon" class="notification-icon">
+                ❌
+            </div>
+            
             
             <h3 class="notification-title"></h3>
             <p class="notification-message"></p>
@@ -753,7 +757,7 @@
                                         Number of Guests
                                     </label>
                                     <select class="form-input" id="guest-count" required>
-                                        <option value="">Select number of guests</option>
+                                        <option value="1">Select number of guests</option>
                                         <option value="1">1 Guest</option>
                                         <option value="2">2 Guests</option>
                                         <option value="3">3 Guests</option>
@@ -766,9 +770,9 @@
                                 <div class="form-group">
                                     <label class="form-label">
                                         <i class="fas fa-comment"></i>
-                                        Special Requests (Optional)
+                                        Special Requests/ Description (Optional)
                                     </label>
-                                    <textarea class="form-input form-textarea" id="special-requests" placeholder="Any special requirements or requests..."></textarea>
+                                    <textarea class="form-input form-textarea" id="special-requests" placeholder="Any special requirements or description..."></textarea>
                                 </div>
     
                                 <div class="booking-summary">
@@ -789,8 +793,8 @@
                                         <span class="summary-value" id="nights-display">0</span>
                                     </div>
                                     <div class="summary-item">
-                                        <span class="summary-label">Price per night:</span>
-                                        <span class="summary-value">$120.00</span>
+                                        <span class="summary-label">Price per night</span>
+                                        <span id="price-per-night-book" class="summary-value"></span>
                                     </div>
                                     <div class="summary-item">
                                         <span class="summary-label">Total Amount:</span>
