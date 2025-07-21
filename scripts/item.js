@@ -1146,6 +1146,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const userData = await makeRequest(CONFIG.ENDPOINTS.USER_DATA(userId), {
             headers: getAuthHeaders()
         });
+        console.log(userData);
         document.getElementById("profile-name-header").textContent = `${userData.first_name} ${userData.last_name}`;
         const nameChar = `${userData.first_name.charAt(0)}${userData.last_name.charAt(0)}`.toUpperCase()
         document.getElementById('usr-profile-avatar').textContent = nameChar;
@@ -1154,7 +1155,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Error fetching favorite listings:", error);
         }
     }
-    if(!isLoggedIn) {
+    if(isLoggedIn()) {
         fetchUserInfo(userId);
     }
 
@@ -1815,8 +1816,34 @@ document.addEventListener('DOMContentLoaded', () => {
         return !!sessionStorage.getItem('X-Custom-Token');
     }
 
-   // FETCH LISTING DETAILS
-
+    // FETCH LISTING DETAILS AND BOOK THE LISTING
+    async function fetchListingForBooking(listingId) {
+        const url = CONFIG.API_BASE_URL + "/listings/" + listingId;
+    
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...getAuthHeaders()
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+    
+            const listingData = await response.json();
+            return listingData;
+    
+        } catch (error) {
+            console.error('Error fetching listing:', error.message);
+        }
+    }
+    
+    async function runBookingFlow() {
+        const listingBookingData = await fetchListingForBooking(listingId);
+    
     
         const bookingPopup = document.getElementById('booking-popup');
         const showBookingBtn1 = document.getElementById('book-listing-btn-1');
@@ -1843,13 +1870,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentDate = new Date();
         let selectedStartDate = null;
         let selectedEndDate = null;
-        const pricePerNight = [];
-
+        const pricePerNight = listingBookingData.price_by_night;
         
-        const unavailableDates = [
-            '2025-07-15', '2025-07-16', '2025-07-25', '2025-07-26',
-            '2025-08-05', '2025-08-06', '2025-08-12', '2025-08-13'
-        ];
+        
+        const unavailableDates = [];
 
         
         if (showBookingBtn2 && showBookingBtn1) {
@@ -2006,10 +2030,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const totalPrice = nights * pricePerNight;
                 
                 nightsDisplay.textContent = nights;
-                totalDisplay.textContent = `$${totalPrice.toFixed(2)}`;
+                totalDisplay.textContent = `Ksh ${totalPrice.toFixed(2)}`;
             } else {
                 nightsDisplay.textContent = '0';
-                totalDisplay.textContent = '$0.00';
+                totalDisplay.textContent = 'Ksh 0.00';
             }
         }
 
@@ -2116,7 +2140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
             } catch (error) {
                 console.error('Error creating booking:', error);
-                showErrorMessage(error.Message);
+                showErrorNotification(error.Message);
                 throw error;
             }
         }
@@ -2127,6 +2151,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 createBooking(userId, listingId);
             }, 2000);
         });
-        
-
+    } runBookingFlow();
 })
