@@ -565,6 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.overlay').style.display = "block";
             document.querySelector(".notification-message").textContent = "You must be signed in to review this property.";
             document.querySelector(".notification-title").textContent = "Error";
+            document.getElementById('dismiss-btn').style.display = "none";
             return;
             } else {
                 e.preventDefault();
@@ -724,6 +725,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const dismissBtn = document.getElementById('dismiss-btn');
     const closeNotif = document.querySelector('.close-btn');
     const notification = document.getElementById('notification');
+
+    const closeNotif2 = document.querySelector('.close-btn');
     
     function handlePrimary() {
         alert('Primary action clicked!');
@@ -734,6 +737,14 @@ document.addEventListener('DOMContentLoaded', () => {
         closeNotif.addEventListener('click', function () {
             notification.style.display = 'none';
             document.getElementById('other-overlay').style.display = "none";
+            document.getElementById('location-overlay').style.display = "none";
+        });
+    }
+
+    if (closeNotif2) {
+        closeNotif2.addEventListener('click', function () {
+            notification.style.display = 'none';
+            document.getElementById('location-overlay').style.display = "none";
         });
     }
 
