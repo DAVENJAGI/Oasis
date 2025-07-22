@@ -148,24 +148,24 @@
             
             <div class="search-container">
                 <form class="search-form">
-                    <select class="search-input">
-                        <option class="option-type">Kenya</option>
-                        <option class="option-type">Tanzania</option>
-                        <option class="option-type">Uganda</option>
+                    <select id="country-search-div" class="search-input">
+                        <option value="Kenya" class="option-type">Kenya</option>
+                        <option value="Tanzania" class="option-type">Tanzania</option>
+                        <option value="Uganda" class="option-type">Uganda</option>
                     </select>
-                    <input type="text" class="search-input" placeholder="City, neighborhood, or address">
-                    <select class="search-input">
+                    <input type="text" id="location-search-div" class="search-input" placeholder="City, neighborhood, or address">
+                    <select id="property-type-div" class="search-input">
                         <option class="option-type">Property Type</option>
-                        <option class="option-type">Apartment</option>
-                        <option class="option-type">Bungalow</option>
-                        <option class="option-type">Cabin</option>
-                        <option class="option-type">Condo</option>
-                        <option class="option-type">Cottage</option>
-                        <option class="option-type">Mansion</option>
-                        <option class="option-type">Studio</option>
-                        <option class="option-type">Townhouse</option>
+                        <option value="Apartment" class="option-type">Apartment</option>
+                        <option value="Bungalow" class="option-type">Bungalow</option>
+                        <option value="Cabin" class="option-type">Cabin</option>
+                        <option value="Condo" class="option-type">Condo</option>
+                        <option value="Cottage" class="option-type">Cottage</option>
+                        <option value="Mansion" class="option-type">Mansion</option>
+                        <option value="Studio" class="option-type">Studio</option>
+                        <option value="Townhouse" class="option-type">Townhouse</option>
                     </select>
-                    <button type="submit" class="search-button">Search Properties</button>
+                    <button id="search-listings-button" class="search-button">Search Properties</button>
                 </form>
             </div>
         </div>
@@ -177,6 +177,8 @@
             <h2 class="section-title">Premium Properties</h2>
             <p class="section-subtitle">Handpicked luxury homes and exceptional rental opportunities across the globe</p>
         </div>
+
+        <div class="no-listings-found">No listings found!! Reload to search again</div>
 
         <div class="loader-container">
             <div class="loader">
