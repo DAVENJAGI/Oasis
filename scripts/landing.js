@@ -50,7 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ENDPOINTS: {
             USER_DATA: `/user/${userId}`,
             USER_FAVORITED_LISTINGS: `/user/${userId}/favorites/`,
-            LATEST_AND_NEARBY_LISTINGS: `/listings/latest`
+            LATEST_AND_NEARBY_LISTINGS: `/listings/latest`,
+            LISTINGS_SEARCH: `/listings_search`
         },
         MESSAGES: {
             LOGIN_SUCCESS: 'Login sucessful',
@@ -113,26 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-
-    const userProfileImage = document.getElementById("user_profile_icon");
-    /*
-    if(userProfileImage && imageUrl) {
-        userProfileImage.style.backgroundImage = `url('${imageUrl}')`;
-        userProfileImage.style.backgroundSize = "cover";
-        userProfileImage.style.backgroundPosition = "center";     
-        userProfileImage.style.borderRadius = "50%";   
-        console.log('This is image path', imageUrl);
-    } else {
-        const defaultProfileIconHTML = `
-        <div class="third_header_div_components tooltip-container" id="my_messages_icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"  class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-            </svg>
-        </div
-        `;
-        userProfileImage.outerHTML = defaultProfileIconHTML;
-    }
-    */
 
     //FETCH LISTING topReviews DETAILS
     async function fetchUserFavorites() {
@@ -301,11 +282,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
+        container.innerHTML = "";
+
         console.log(nearbyLatestListings);
         nearbyLatestListings.forEach(listing => {
             const listingCard = createListingCard(listing);
             container.appendChild(listingCard);
         });
+        const sectionHeader = document.querySelector('.listings');
+        if (sectionHeader) {
+            sectionHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
 
     document.querySelectorAll('.view-details-btn').forEach(btn => {
@@ -323,11 +310,54 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           window.location.href = 'item.html';
         }, 300);
-    }      
-
+    }
       
     function bookNow(listingId) {
         console.log('Book now for listing:', listingId);
     }
+
+    document.getElementById("logoClick").addEventListener("click", () => {
+        location.reload();
+    })
+
+    //SEARCH LISTINGS
+    async function searchListing() {
+        const searchButton = document.getElementById("search-listings-button");
+        searchButton.disabled = true;
+        searchButton.textContent = "Searching..."; 
+    
+        const formData = {
+            property_type: document.getElementById('property-type-div').value,
+            country: document.getElementById('country-search-div').value,
+            location: document.getElementById('location-search-div').value,
+        };
+    
+        try {
+            const searchData = await makeRequest(CONFIG.ENDPOINTS.LISTINGS_SEARCH, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...getAuthHeaders()
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            if(searchData.length === 0) {
+                document.querySelector(".no-listings-found").style.display = 'block';
+            }
+            appendListingCards(searchData);
+            return searchData;
+        } catch (error) {
+            console.error("Error fetching favorite listings:", error);
+        } finally {
+            searchButton.disabled = false;
+            searchButton.textContent = "Search Listings";
+        }
+    }
+    
+    document.getElementById("search-listings-button").addEventListener("click", (e) => {
+        e.preventDefault();
+        searchListing();
+    });
 
 })
