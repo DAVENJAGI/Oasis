@@ -837,6 +837,7 @@ document.addEventListener('DOMContentLoaded', () => {
             SIMILAR_LISTINGS: (listingId) => `/listing/${listingId}/similar`,
             BOOK_LISTING: (listingId) => `/listing/${listingId}/book`,
             REPORT_LISTING: (listingId) => `/listings/${listingId}/report`,
+            LISTING_IMAGES: (listingId) => `/listing/${listingId}/images`,
         },
         MESSAGES: {
             LOGIN_SUCCESS: 'Login sucessful',
@@ -924,6 +925,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchListingRating();
         fetchListingReviews();
         fetchListingTags();
+        fetchListingImages(listingId);
         initializeMap(listingData, townData);
         } catch (error) {
             console.error("Error fetching listings:", error);
@@ -1540,6 +1542,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    //FETCH LISTING IMAGED
+    async function fetchListingImages() {
+        try {
+            const listingImagesData = await makeRequest(CONFIG.ENDPOINTS.LISTING_IMAGES(listingId), {
+            headers: getAuthHeaders()
+        });
+        return listingImagesData;
+        } catch (error) {
+            console.error("Error fetching listings images:", error);
+        }
+    }
+
+
     let hasFetchedSimilarListings = false; 
     const target = document.querySelector('.similar-properties');
 
@@ -1675,7 +1690,6 @@ document.addEventListener('DOMContentLoaded', () => {
     //APPEND LISTINGS TO CARD
     function appendListingCards(almostSimilarListingData) {
         const container = document.querySelector('.properties-grid');
-        console.log(almostSimilarListingData);
         if (!container) {
             console.error('Container not found:', container);
             return;
