@@ -1492,6 +1492,7 @@ body {
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg,  rgba(134, 213, 238, 0.5) 0%, rgba(60, 132, 194, 0.5) 100% );
     backdrop-filter: blur(4px);
     z-index: 1050;
     display: none;
@@ -3502,6 +3503,7 @@ body {
 }
 #error-icon {
     display: none;
+    font-size: 30px;
 }
 
 .notification-title {
