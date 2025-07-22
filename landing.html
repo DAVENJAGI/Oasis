@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oasis - Discover Your Perfect Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/landing.css">
+    <script type="text/javascript" src="./scripts/landing.js"></script>
+    <script type="text/javascript" src="./scripts/handle_light_and_dark_mode.js"></script>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="floating-elements">
+        <div class="floating-element" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+        <div class="floating-element" style="top: 60%; left: 80%; animation-delay: 3s;"></div>
+        <div class="floating-element" style="top: 30%; left: 70%; animation-delay: 6s;"></div>
+        <div class="floating-element" style="top: 80%; left: 20%; animation-delay: 9s;"></div>
+    </div>
+
+    <header id="header-1" class="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo">
+                    <div class="logo-icon">O</div>
+                    <div class="logo-text">Oasis</div>
+                </div>
+            </a>
+            
+            <div class="header-actions">
+                <button class="action-button tooltip" data-tooltip="Saved Properties">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l11 11z"></path>
+                    </svg>
+                    <span class="notification-badge">7</span>
+                </button>
+                
+                <button class="action-button tooltip" data-tooltip="Notifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-badge">3</span>
+                </button>
+                
+                <button id="change-color-theme-button" class="action-button theme-toggle ">
+                    <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                
+                <div class="profile-section" id="profileSection">
+                    <div id="usr-profile-avatar" class="profile-avatar-header"></div>
+                    <div class="profile-info-header">
+                        <div class="profile-name-header">_</div>
+                    </div>
+                    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6,9 12,15 18,9"></polyline>
+                    </svg>
+
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <div class="dropdown-item" id="route-to-user-profile">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            View Profile
+                        </div>
+                        <div class="dropdown-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+                            </svg>
+                            Account Settings
+                        </div>
+                        <div class="dropdown-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7v10c0 5.55 3.84 9.99 9 11 5.16-1.01 9-5.45 9-11V7l-10-5z"/>
+                            </svg>
+                            Privacy & Security
+                        </div>
+                        <div class="dropdown-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="1"/>
+                                <circle cx="12" cy="5" r="1"/>
+                                <circle cx="12" cy="19" r="1"/>
+                            </svg>
+                            Help & Support
+                        </div>
+                        <div class="dropdown-item logout" id="logoutItem">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                <polyline points="16,17 21,12 16,7"/>
+                                <line x1="21" y1="12" x2="9" y2="12"/>
+                            </svg>
+                            Logout
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <header id="header-2" class="header">
+        <div class="header-container">
+            <a href="#" class="logo" id="logoClick">
+                <div class="logo">
+                    <div class="logo-icon">O</div>
+                    <div class="logo-text">Oasis</div>
+                </div>
+            </a>
+            
+            <div class="header-actions">
+                <button id="change-color-theme-button" class="action-button theme-toggle">
+                    <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                
+                <div id="usr-login-button" class="profile-section">
+                    <div class="profile-avatar-header">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-info-header">
+                        <div class="profile-name-header">Login</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text" id="loaderText">Loading...</div>
+            <div class="loader-subtext" id="loaderSubtext">Please wait</div>
+            <div class="loader-progress">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find Your Dream Home</h1>
+            <p>Discover extraordinary properties in Kenya's most desirable locations with our premium real estate platform.</p>
+            
+            <div class="search-container">
+                <form class="search-form">
+                    <select class="search-input">
+                        <option class="option-type">Kenya</option>
+                        <option class="option-type">Tanzania</option>
+                        <option class="option-type">Uganda</option>
+                    </select>
+                    <input type="text" class="search-input" placeholder="City, neighborhood, or address">
+                    <select class="search-input">
+                        <option class="option-type">Property Type</option>
+                        <option value="Apartment" class="option-type">Apartment</option>
+                        <option value="bungalow" class="option-type">Bungalow</option>
+                        <option value="cabin" class="option-type">Cabin</option>
+                        <option value="condo" class="option-type">Condo</option>
+                        <option value="cottage" class="option-type">Cottage</option>
+                        <option value="mansion" class="option-type">Mansion</option>
+                        <option value="studio" class="option-type">Studio</option>
+                        <option value="townhouse" class="option-type">Townhouse</option>
+                    </select>
+                    <button type="submit" class="search-button">Search Properties</button>
+                </form>
+            </div>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <section class="listings">
+        <div class="section-header">
+            <h2 class="section-title">Premium Properties</h2>
+            <p class="section-subtitle">Handpicked luxury homes and exceptional rental opportunities across the globe</p>
+        </div>
+
+        <div class="loader-container">
+            <div class="loader">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+
+        <div class="listings-grid">
+            <!--
+            <div class="listing-card fade-in">
+                <div class="listing-image">
+                    <div class="listing-favorite">
+                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="listing-content">
+                    <div class="listing-header">
+                        <div>
+                            <h3 class="listing-title">Universal Homes</h3>
+                            <div class="listing-type">Modern Bungalow</div>
+                        </div>
+                        <div class="listing-price">
+                            <div class="price-amount">Ksh 67,000</div>
+                            <div class="price-period">per night</div>
+                        </div>
+                    </div>
+                    <div class="listing-location">
+                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <span>Nairobi, Westlands</span>
+                    </div>
+                    <div class="listing-amenities">
+                        <div class="amenity">
+                            <svg class="amenity-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 21v-4a2 2 0 012-2h4a2 2 0 012 2v4"/>
+                            </svg>
+                            <span>3 Beds</span>
+                        </div>
+                        <div class="amenity">
+                            <svg class="amenity-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
+                            </svg>
+                            <span>2 Baths</span>
+                        </div>
+                    </div>
+                    <div class="listing-actions">
+                        <button id="view-listing-details" class="action-button">View Details</button>
+                        <button id="go-to-booking-button" class="action-button primary">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        -->
+        </section>
+    </div>
+</body>
+    

@@ -126,64 +126,67 @@ def post_listing(listing_id):
     storage.save()
     return jsonify(obj.to_dict())
 
-
 @listing_views.route('/listings_search', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/listings/search.yml', methods=['POST'])
+@require_agent_or_admin_or_user_auth
 def search_listings_by_id():
-    """ search listings by id """
+    """ search listings by country, location, and property type """
     if request.get_json() is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-
+    
     data = request.get_json()
-
-    if data and len(data):
-        states = data.get('states', None)
-        towns = data.get('towns', None)
-        amenities = data.get('amenities', None)
-
-    if not data or not len(data) or (
-            not states and
-            not towns and
-            not amenities):
-        listings = storage.all(Listing).values()
-        list_listings = []
-        for listing in listings:
-            list_listings.append(listing.to_dict())
-        return jsonify(list_listings)
-
-    list_listings = []
-    if states:
-        states_obj = [storage.get(State, s_id) for s_id in states]
-        for state in states_obj:
-            if state:
-                for city in state.towns:
-                    if city:
-                        for listing in city.listings:
-                            list_listings.append(listing)
-
-    if towns:
-        city_obj = [storage.get(Town, c_id) for c_id in towns]
-        for city in city_obj:
-            if city:
-                for listing in city.listings:
-                    if listing not in list_listings:
-                        list_listings.append(listing)
-
-    if amenities:
-        if not list_listings:
-            list_listings = storage.all(Listing).values()
-        amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
-        list_listings = [listing for listing in list_listings
-                       if all([am in listing.amenities
-                               for am in amenities_obj])]
-
+    
+    country = data.get('country', None)
+    location = data.get('location', None)
+    property_type = data.get('property_type', None)
+    
+    all_listings = list(storage.all(Listing).values())
+    filtered_listings = all_listings
+    
+    if country and country.lower() != 'kenya':
+        country_listings = []
+        for listing in filtered_listings:
+            town = storage.get(Town, listing.town_id)
+            if town:
+                state = storage.get(State, town.state_id)
+                if state and state.name.lower() == country.lower():
+                    country_listings.append(listing)
+        filtered_listings = country_listings
+    
+    if location and location.strip():
+        location_lower = location.lower().strip()
+        location_listings = []
+        
+        for listing in filtered_listings:
+            if listing.address and location_lower in listing.address.lower():
+                location_listings.append(listing)
+                continue
+            
+            if listing.property_name and location_lower in listing.property_name.lower():
+                location_listings.append(listing)
+                continue
+            
+            town = storage.get(Town, listing.town_id)
+            if town and town.name and location_lower in town.name.lower():
+                location_listings.append(listing)
+                continue
+        
+        filtered_listings = location_listings
+    
+    if property_type and property_type.lower() != 'property type':
+        property_type_listings = [
+            listing for listing in filtered_listings
+            if listing.property_type and listing.property_type.lower() == property_type.lower()
+        ]
+        filtered_listings = property_type_listings
+    
     listings = []
-    for p in list_listings:
-        d = p.to_dict()
+    for listing in filtered_listings:
+        d = listing.to_dict()
         d.pop('amenities', None)
         listings.append(d)
-
+    
     return jsonify(listings)
 
 @listing_views.route('/listings/<string:listing_id>/images', methods=['POST'])
