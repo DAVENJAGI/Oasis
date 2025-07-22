@@ -721,161 +721,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    //REPORT DIV HANDLING OF DATA
+    const dismissBtn = document.getElementById('dismiss-btn');
+    const closeNotif = document.querySelector('.close-btn');
+    const notification = document.getElementById('notification');
     
-        const reportPopup = document.getElementById('report-listing-popup');
-        const showReportBtn = document.getElementById('report-listing-btn');
-        const closeReportBtn = document.getElementById('close-report-popup');
-        const cancelReportBtn = document.getElementById('cancel-report');
-        const submitReportBtn = document.getElementById('submit-report');
-        const reportForm = document.getElementById('report-form');
-        const reportDescription = document.getElementById('report-description');
-        const charCount = document.getElementById('char-count');
-        const dismissBtn = document.getElementById('dismiss-btn');
-        const closeNotif = document.querySelector('.close-btn');
-        const notification = document.getElementById('notification');
+    function handlePrimary() {
+        alert('Primary action clicked!');
+        closeNotification();
+    }
+    
+    if (closeNotif) {
+        closeNotif.addEventListener('click', function () {
+            notification.style.display = 'none';
+            document.getElementById('other-overlay').style.display = "none";
+        });
+    }
 
-        function handlePrimary() {
-            alert('Primary action clicked!');
+  /*  setTimeout(() => {
+        const notification = document.getElementById('notification');
+        if (notification.style.display !== 'none') {
             closeNotification();
         }
-        if (closeNotif) {
-            closeNotif.addEventListener('click', function () {
-                notification.style.display = 'none';
-                document.querySelector('.overlay').style.display = "none";
-            });
-        } 
-        if (dismissBtn) {
-            dismissBtn.addEventListener('click', function () {
-                notification.style.display = 'none';
-                document.querySelector('.overlay').style.display = "none";
-            });
-        }
-        
-        setTimeout(() => {
-            const notification = document.getElementById('notification');
-            if (notification.style.display !== 'none') {
-                closeNotification();
-            }
-        }, 8000);
-
-        if (showReportBtn && reportPopup) {
-            showReportBtn.addEventListener('click', function () {
-              if (!isLoggedIn()) {
-                notification.style.display = 'block';
-                document.querySelector('.overlay').style.display = "block";
-                document.querySelector(".notification-message").textContent = "You must be signed in to rate or report this property.";
-                document.querySelector(".notification-title").textContent = "Error";
-                return;
-            }
-              
-                reportPopup.classList.add('active');
-              document.body.style.overflow = 'hidden';
-            });
-        }
-
-        function hideReportPopup() {
-            console.log('Hiding poup....');
-            reportPopup.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        closeReportBtn.addEventListener('click', hideReportPopup);
-        cancelReportBtn.addEventListener('click', hideReportPopup);
-
-        reportPopup.addEventListener('click', function(e) {
-            if (e.target === reportPopup) {
-                hideReportPopup();
-            }
+    }, 8000);*/
+    
+    if (dismissBtn) {
+        dismissBtn.addEventListener('click', function () {
+            notification.style.display = 'none';
+            document.getElementById('other-overlay').style.display = "none";
+            location.reload();
         });
+    }
 
-        const reasonOptions = document.querySelectorAll('.reason-option');
-        reasonOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                reasonOptions.forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-                const radio = this.querySelector('input[type="radio"]');
-                radio.checked = true;
-            });
-        });
-
-        const urgencyOptions = document.querySelectorAll('.urgency-option');
-        urgencyOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                urgencyOptions.forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-                const radio = this.querySelector('input[type="radio"]');
-                radio.checked = true;
-            });
-        });
-
-        
-        reportDescription.addEventListener('input', function() {
-            const count = this.value.length;
-            charCount.textContent = count;
-            
-            if (count > 1400) {
-                charCount.style.color = '#ff6b6b';
-            } else if (count > 1200) {
-                charCount.style.color = '#ffa500';
-            } else {
-                charCount.style.color = '#666';
-            }
-        });
-
-        reportForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const reportData = {
-                name: formData.get('reporter-name') || document.getElementById('reporter-name').value,
-                email: formData.get('reporter-email') || document.getElementById('reporter-email').value,
-                reason: formData.get('report-reason'),
-                urgency: formData.get('urgency'),
-                title: document.getElementById('report-title').value,
-                description: document.getElementById('report-description').value,
-                timestamp: new Date().toISOString()
-            };
-
-            if (!reportData.name || !reportData.email || !reportData.reason || !reportData.title || !reportData.description) {
-                alert('Please fill in all required fields.');
-                return;
-            }
-
-            submitReportBtn.disabled = true;
-            submitReportBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-
-            setTimeout(() => {
-                console.log('Report submitted:', reportData);
-                alert('Thank you for your report. We will review it within 24-48 hours and take appropriate action.');
-                
-                reportForm.reset();
-                reasonOptions.forEach(opt => opt.classList.remove('selected'));
-                urgencyOptions.forEach(opt => opt.classList.remove('selected'));
-                charCount.textContent = '0';
-                
-                submitReportBtn.disabled = false;
-                submitReportBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Report';
-                
-                hidePopup();
-            }, 1500);
-        });
-
-        
-        const evidenceInput = document.getElementById('evidence-input');
-        evidenceInput.addEventListener('change', function() {
-            const files = this.files;
-            if (files.length > 0) {
-                const uploadText = document.querySelector('.upload-text');
-                uploadText.textContent = `${files.length} file(s) selected`;
-            }
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && reportPopup.classList.contains('active')) {
-                hidePopup();
-            }
-        });
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -904,6 +780,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showErrorNotification(message, title = 'Error') {
         hideLoader();
+        document.getElementById('dismiss-btn').style.display = "none";
         document.getElementById('booking-popup').style.display = 'none';
         const notification = document.querySelector('.notification');
         const notificationIcon = document.getElementById('error-icon');
@@ -925,6 +802,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showSuccessMessage(message, title = 'Success') {
         hideLoader();
+        document.querySelector('.close-btn').style.display = "none";
         document.getElementById('booking-popup').style.display = 'none';
         const notification = document.querySelector('.notification');
         const overlay = document.getElementById('other-overlay');
@@ -958,6 +836,7 @@ document.addEventListener('DOMContentLoaded', () => {
             USER_FAVORITES: (userId) => `/user/${userId}/favorites`,
             SIMILAR_LISTINGS: (listingId) => `/listing/${listingId}/similar`,
             BOOK_LISTING: (listingId) => `/listing/${listingId}/book`,
+            REPORT_LISTING: (listingId) => `/listings/${listingId}/report`,
         },
         MESSAGES: {
             LOGIN_SUCCESS: 'Login sucessful',
@@ -2100,8 +1979,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         generateCalendar();
-
-
         
         async function createBooking() {
             try {
@@ -2160,4 +2037,193 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 2000);
         });
     } runBookingFlow();
+
+    //REPORT DIV HANDLING OF DATA
+    async function runReportFlow () {
+        const reportPopup = document.getElementById('report-listing-popup');
+        const showReportBtn = document.getElementById('report-listing-btn');
+        const closeReportBtn = document.getElementById('close-report-popup');
+        const cancelReportBtn = document.getElementById('cancel-report');
+        const submitReportBtn = document.getElementById('submit-report');
+        const reportForm = document.getElementById('report-form');
+        const reportDescription = document.getElementById('report-description');
+        const charCount = document.getElementById('char-count');
+
+
+        if (showReportBtn && reportPopup) {
+            showReportBtn.addEventListener('click', function () {
+              if (!isLoggedIn()) {
+                notification.style.display = 'block';
+                document.querySelector('.overlay').style.display = "block";
+                document.querySelector(".notification-message").textContent = "You must be signed in to rate or report this property.";
+                document.querySelector(".notification-title").textContent = "Error";
+                return;
+            }
+              
+                reportPopup.classList.add('active');
+              document.body.style.overflow = 'hidden';
+            });
+        }
+
+        function hideReportPopup() {
+            console.log('Hiding poup....');
+            reportPopup.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeReportBtn.addEventListener('click', hideReportPopup);
+        cancelReportBtn.addEventListener('click', hideReportPopup);
+
+        reportPopup.addEventListener('click', function(e) {
+            if (e.target === reportPopup) {
+                hideReportPopup();
+            }
+        });
+
+        const reasonOptions = document.querySelectorAll('.reason-option');
+        reasonOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                reasonOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+            });
+        });
+
+        const urgencyOptions = document.querySelectorAll('.urgency-option');
+        urgencyOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                urgencyOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+            });
+        });
+
+        
+        reportDescription.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = count;
+            
+            if (count > 1400) {
+                charCount.style.color = '#ff6b6b';
+            } else if (count > 1200) {
+                charCount.style.color = '#ffa500';
+            } else {
+                charCount.style.color = '#666';
+            }
+        });
+
+        reportForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const reportData = {
+                name: formData.get('reporter-name') || document.getElementById('reporter-name').value,
+                email: formData.get('reporter-email') || document.getElementById('reporter-email').value,
+                reason: formData.get('report-reason'),
+                urgency: formData.get('urgency'),
+                title: document.getElementById('report-title').value,
+                description: document.getElementById('report-description').value,
+                timestamp: new Date().toISOString()
+            };
+
+            if (!reportData.name || !reportData.email || !reportData.reason || !reportData.title || !reportData.description) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            submitReportBtn.disabled = true;
+            submitReportBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+            setTimeout(() => {
+                console.log('Report submitted:', reportData);
+                alert('Thank you for your report. We will review it within 24-48 hours and take appropriate action.');
+                
+                reportForm.reset();
+                reasonOptions.forEach(opt => opt.classList.remove('selected'));
+                urgencyOptions.forEach(opt => opt.classList.remove('selected'));
+                charCount.textContent = '0';
+                
+                submitReportBtn.disabled = false;
+                submitReportBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Report';
+                
+                hidePopup();
+            }, 1500);
+        });
+
+        
+        const evidenceInput = document.getElementById('evidence-input');
+        evidenceInput.addEventListener('change', function() {
+            const files = this.files;
+            if (files.length > 0) {
+                const uploadText = document.querySelector('.upload-text');
+                uploadText.textContent = `${files.length} file(s) selected`;
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && reportPopup.classList.contains('active')) {
+                hidePopup();
+            }
+        });
+
+        async function createReport() {
+            try {
+                const title = document.getElementById('report-title').value.trim();
+                const description = document.getElementById('report-description').value.trim();
+                const reasonInput = document.querySelector('input[name="report-reason"]:checked');
+                const urgencyInput = document.querySelector('input[name="urgency"]:checked');
+                const evidenceInput = document.getElementById('evidence-input');
+                const evidenceFiles = evidenceInput.files;
+
+                if (!description || !reasonInput || !urgencyInput) {
+                    showErrorNotification("Please fill in all required fields");
+                }
+
+                const reportData = {
+                    user_id: userId,
+                    report_title: title,
+                    reason: reasonInput.value,
+                    urgency: urgencyInput.value,
+                    description: description,
+                };
+
+                if (evidenceFiles && evidenceFiles.length > 0) {
+                    const fileArray = Array.from(evidenceFiles);
+                    for (const file of fileArray) {
+                        const base64 = await toBase64(file);
+                        reportData.evidence.push({ name: file.name, content: base64 });
+                    }
+                }
+        
+                try {
+                    const newReport = await makeRequest(CONFIG.ENDPOINTS.REPORT_LISTING(listingId), {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        ...getAuthHeaders()
+                    },
+                    body: JSON.stringify(reportData)
+                });
+                showSuccessMessage('You have reported listing successfully!');
+                return newReport;
+                } catch (error) {
+                    showErrorNotification("Error fetching creating booking:");
+                }
+        
+            } catch (error) {
+                // console.error('Error creating booking:', error);
+                showErrorNotification(error.Message);
+                throw error;
+            }
+        }
+    
+        document.getElementById('submit-report').addEventListener('click', () => {
+            showLoader();
+            setTimeout(() => {
+                createReport(userId, listingId);
+            }, 2000);
+        });
+    } runReportFlow();
 })
