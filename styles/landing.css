@@ -3,6 +3,18 @@
     padding: 0;
     box-sizing: border-box;
 }
+::-webkit-scrollbar {
+    height: 4px;
+    width: 11px;
+    background: var(--current-bg);
+}
+::-webkit-scrollbar-thumb {
+    background-color: #86D5EE;
+    border-radius: 20px;
+    width: 10px;
+    max-height: 20px;
+}
+
 :root {
     --primary-color: white;
     --secondary-primary-color: #4a5568;
@@ -573,6 +585,12 @@ body {
     transform: translateY(-2px);
     box-shadow: var(--current-shadow-medium);
     background: var(--accent-gradient);
+}
+.no-listings-found{
+    display: none;
+    text-align: center;
+    color: var(--secondary-primary-color);
+    font-size: 1.2em;
 }
 
 .loader-container {
