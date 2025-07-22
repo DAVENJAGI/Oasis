@@ -550,42 +550,42 @@
                                     </label>
                                     <div class="reason-options">
                                         <div class="reason-option" data-reason="inappropriate">
-                                            <input type="radio" name="report-reason" value="inappropriate" id="reason-inappropriate">
+                                            <input type="radio" name="report-reason" value="Inappropriate Content" id="reason-inappropriate">
                                             <label class="reason-label" for="reason-inappropriate">
                                                 <i class="fas fa-ban"></i>
                                                 Inappropriate Content
                                             </label>
                                         </div>
                                         <div class="reason-option" data-reason="fake">
-                                            <input type="radio" name="report-reason" value="fake" id="reason-fake">
+                                            <input type="radio" name="report-reason" value="Fake or Misleading" id="reason-fake">
                                             <label class="reason-label" for="reason-fake">
                                                 <i class="fas fa-times-circle"></i>
                                                 Fake or Misleading
                                             </label>
                                         </div>
                                         <div class="reason-option" data-reason="safety">
-                                            <input type="radio" name="report-reason" value="safety" id="reason-safety">
+                                            <input type="radio" name="report-reason" value="Safety Concerns" id="reason-safety">
                                             <label class="reason-label" for="reason-safety">
                                                 <i class="fas fa-shield-alt"></i>
                                                 Safety Concerns
                                             </label>
                                         </div>
                                         <div class="reason-option" data-reason="discrimination">
-                                            <input type="radio" name="report-reason" value="discrimination" id="reason-discrimination">
+                                            <input type="radio" name="report-reason" value="Discrimination" id="reason-discrimination">
                                             <label class="reason-label" for="reason-discrimination">
                                                 <i class="fas fa-balance-scale"></i>
                                                 Discrimination
                                             </label>
                                         </div>
                                         <div class="reason-option" data-reason="pricing">
-                                            <input type="radio" name="report-reason" value="pricing" id="reason-pricing">
+                                            <input type="radio" name="report-reason" value="Pricing Issues" id="reason-pricing">
                                             <label class="reason-label" for="reason-pricing">
                                                 <i class="fas fa-dollar-sign"></i>
                                                 Pricing Issues
                                             </label>
                                         </div>
                                         <div class="reason-option" data-reason="other">
-                                            <input type="radio" name="report-reason" value="other" id="reason-other">
+                                            <input type="radio" name="report-reason" value="Other" id="reason-other">
                                             <label class="reason-label" for="reason-other">
                                                 <i class="fas fa-ellipsis-h"></i>
                                                 Other
@@ -601,17 +601,17 @@
                                     </label>
                                     <div class="urgency-level">
                                         <div class="urgency-option" data-urgency="low">
-                                            <input type="radio" name="urgency" value="low" id="urgency-low">
+                                            <input type="radio" name="urgency" value="Minor Issue" id="urgency-low">
                                             <div class="urgency-label">Low</div>
                                             <div class="urgency-desc">Minor issue</div>
                                         </div>
                                         <div class="urgency-option" data-urgency="medium">
-                                            <input type="radio" name="urgency" value="medium" id="urgency-medium">
+                                            <input type="radio" name="urgency" value="Moderate Concern" id="urgency-medium">
                                             <div class="urgency-label">Medium</div>
                                             <div class="urgency-desc">Moderate concern</div>
                                         </div>
                                         <div class="urgency-option" data-urgency="high">
-                                            <input type="radio" name="urgency" value="high" id="urgency-high">
+                                            <input type="radio" name="urgency" value="Imediate Attention" id="urgency-high">
                                             <div class="urgency-label">High</div>
                                             <div class="urgency-desc">Immediate attention</div>
                                         </div>
@@ -682,7 +682,10 @@
 
         <!--NOTIFICATION DIV-->
         <div class="notification" id="notification">
-            
+            <button class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+
             <div id="success-icon" class="notification-icon">
                 ✓
             </div>
