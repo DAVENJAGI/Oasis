@@ -148,9 +148,11 @@ def search_listings_by_id():
         for listing in filtered_listings:
             town = storage.get(Town, listing.town_id)
             if town:
-                state = storage.get(State, town.state_id)
-                if state and state.name.lower() == country.lower():
-                    country_listings.append(listing)
+                city = storage.get(City, town.city_id)
+                if city:
+                    state = storage.get(State, city.state_id)
+                    if state and state.name.lower() == country.lower():
+                        country_listings.append(listing)
         filtered_listings = country_listings
     
     if location and location.strip():
