@@ -4,13 +4,12 @@ import boto3
 from botocore.exceptions import ClientError
 from flask import current_app
 
-# Supabase S3-compatible settings
 SUPABASE_S3_ENDPOINT = 'https://rddlldguussuxiuunyhg.supabase.co/storage/v1/s3'
 SUPABASE_ACCESS_KEY = os.getenv('SUPABASE_ACCESS_KEY')
 SUPABASE_SECRET_KEY = os.getenv('SUPABASE_SECRET_KEY')
 SUPABASE_BUCKET_NAME = 'listings'
 
-# Create S3 client
+#sS3 SUPABASE CLIENT
 s3 = boto3.client(
     's3',
     endpoint_url=SUPABASE_S3_ENDPOINT,
@@ -21,6 +20,7 @@ s3 = boto3.client(
 
 #FOLDER STRUCTURE
 UPLOAD_FOLDER = 'static/images/listings'
+LISTING_IMAGES_FOLDER = 'static/images/listings/listing_images'
 COVER_UPLOAD_FOLDER = 'static/images/listings/cover_photos'
 USER_PROFILE_IMAGE_UPLOAD_FOLDER = 'static/images/users/profile_images'
 AGENT_PROFILE_IMAGE_UPLOAD_FOLDER = 'static/images/agents/profile_images'
@@ -47,7 +47,7 @@ def upload_file_to_s3(file, s3_key):
 def save_image(file, listing_id):
     """Uploads listing image to Supabase and returns public URL"""
     filename = secure_filename(f"{listing_id}_{file.filename}")
-    s3_key = f"{UPLOAD_FOLDER}/{filename}"
+    s3_key = f"{LISTING_IMAGES_FOLDER}/{filename}"
     return upload_file_to_s3(file, s3_key)
 
 def save_cover_image(file, listing_id):
