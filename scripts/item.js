@@ -1021,7 +1021,7 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: getAuthHeaders()
         });
         console.log(userData);
-        fetchFavoriteListings(userId);
+        // fetchFavoriteListings(userId);
         document.getElementById("profile-name-header").textContent = `${userData.first_name} ${userData.last_name}`;
         const nameChar = `${userData.first_name.charAt(0)}${userData.last_name.charAt(0)}`.toUpperCase()
         document.getElementById('usr-profile-avatar').textContent = nameChar;
@@ -1548,11 +1548,54 @@ document.addEventListener('DOMContentLoaded', () => {
             const listingImagesData = await makeRequest(CONFIG.ENDPOINTS.LISTING_IMAGES(listingId), {
             headers: getAuthHeaders()
         });
+        appendImage (listingImagesData);
         return listingImagesData;
         } catch (error) {
             console.error("Error fetching listings images:", error);
         }
     }
+
+    async function appendImage(listingImagesData) {
+        const imageSlider = document.getElementById('image-slider');
+        const galleryControls = document.getElementById('gallery-controls');
+        
+        const existingImages = imageSlider.querySelectorAll('.gallery-image');
+        existingImages.forEach(img => img.remove());
+
+        galleryControls.innerHTML = '';
+        
+        if (listingImagesData && listingImagesData.length > 0) {
+            imageSlider.classList.add('has-images');
+            
+            listingImagesData.forEach((img, index) => {
+                const image = document.createElement('img');
+                image.src = img.file_path;
+                image.style.display = index === 0 ? 'block' : 'none';
+                image.classList.add('gallery-image');
+                imageSlider.appendChild(image);
+                
+                const dot = document.createElement('div');
+                dot.className = 'gallery-dot' + (index === 0 ? ' active' : '');
+                
+                dot.addEventListener('click', () => {
+                    const allImages = imageSlider.querySelectorAll('.gallery-image');
+                    const allDots = galleryControls.querySelectorAll('.gallery-dot');
+                    
+                    allImages.forEach((img, i) => {
+                        img.style.display = i === index ? 'block' : 'none';
+                    });
+                    
+                    allDots.forEach(d => d.classList.remove('active'));
+                    dot.classList.add('active');
+                });
+                
+                galleryControls.appendChild(dot);
+            });
+        } else {
+            imageSlider.classList.remove('has-images');
+        }
+    }
+    
 
 
     let hasFetchedSimilarListings = false; 
