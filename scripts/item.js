@@ -749,7 +749,6 @@ document.addEventListener('DOMContentLoaded', () => {
             dismissBtn.addEventListener('click', function () {
                 notification.style.display = 'none';
                 document.querySelector('.overlay').style.display = "none";
-                location.reload();
             });
         }
         
@@ -908,7 +907,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('booking-popup').style.display = 'none';
         const notification = document.querySelector('.notification');
         const notificationIcon = document.getElementById('error-icon');
-        const overlay = document.querySelector('.overlay');
+        const overlay = document.getElementById('other-overlay');
         const messageDiv = document.querySelector('.notification-message');
         const titleDiv = document.querySelector('.notification-title');
     
@@ -928,7 +927,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hideLoader();
         document.getElementById('booking-popup').style.display = 'none';
         const notification = document.querySelector('.notification');
-        const overlay = document.querySelector('.overlay');
+        const overlay = document.getElementById('other-overlay');
         const notificationIcon = document.getElementById('success-icon');
         const messageDiv = document.querySelector('.notification-message');
         const titleDiv = document.querySelector('.notification-title');
