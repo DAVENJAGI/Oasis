@@ -204,7 +204,7 @@ def upload_listing_image(listing_id):
     try:
         file_url = save_image(file, listing_id)
 
-        listing_image = listingImage(listing_id=listing_id, file_path=filepath)
+        listing_image = listingImage(listing_id=listing_id, file_path=file_url)
         storage.new(listing_image)
         storage.save()
 
