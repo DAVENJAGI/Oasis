@@ -210,7 +210,7 @@ def upload_listing_image(listing_id):
 
         return jsonify({
             "message": "Image uploaded successfully",
-            "file_path": filepath,
+            "file_path": file_url,
             "listing_id": listing_id
         }), 201
     except Exception as e:
