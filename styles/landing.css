@@ -1079,6 +1079,7 @@ body {
     opacity: 1;
     display: none;
     transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .page-loader.active {
