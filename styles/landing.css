@@ -679,6 +679,7 @@ body {
     position: relative;
     cursor: pointer;
     box-shadow: var(--shadow-light);
+    max-width: 450px;
 }
 
 .listing-card:hover {

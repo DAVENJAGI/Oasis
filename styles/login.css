@@ -338,6 +338,12 @@ body.scrolled {
     stroke: var(--primary-color);
     transform: rotate(180deg);
 }
+.no-listings-found{
+    display: none;
+    text-align: center;
+    color: var(--secondary-primary-color);
+    font-size: 1.2em;
+}
 
 .login-container {
     backdrop-filter: blur(1.25rem);
@@ -717,6 +723,7 @@ body.scrolled {
     position: relative;
     cursor: pointer;
     box-shadow: var(--current-shadow-light);
+    max-width: 450px;
 }
 
 .listing-card:hover {
