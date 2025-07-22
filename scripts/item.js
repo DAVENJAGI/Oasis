@@ -1561,11 +1561,41 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const existingImages = imageSlider.querySelectorAll('.gallery-image');
         existingImages.forEach(img => img.remove());
-
         galleryControls.innerHTML = '';
         
         if (listingImagesData && listingImagesData.length > 0) {
             imageSlider.classList.add('has-images');
+            let currentIndex = 0;
+            
+            let startX = 0;
+            let endX = 0;
+            let isDragging = false;
+            
+            function showImage(index) {
+                const allImages = imageSlider.querySelectorAll('.gallery-image');
+                const allDots = galleryControls.querySelectorAll('.gallery-dot');
+                
+                allImages.forEach((img, i) => {
+                    img.style.display = i === index ? 'block' : 'none';
+                });
+                
+                allDots.forEach(d => d.classList.remove('active'));
+                if (allDots[index]) {
+                    allDots[index].classList.add('active');
+                }
+                
+                currentIndex = index;
+            }
+            
+            function nextImage() {
+                const nextIndex = (currentIndex + 1) % listingImagesData.length;
+                showImage(nextIndex);
+            }
+            
+            function prevImage() {
+                const prevIndex = (currentIndex - 1 + listingImagesData.length) % listingImagesData.length;
+                showImage(prevIndex);
+            }
             
             listingImagesData.forEach((img, index) => {
                 const image = document.createElement('img');
@@ -1578,24 +1608,87 @@ document.addEventListener('DOMContentLoaded', () => {
                 dot.className = 'gallery-dot' + (index === 0 ? ' active' : '');
                 
                 dot.addEventListener('click', () => {
-                    const allImages = imageSlider.querySelectorAll('.gallery-image');
-                    const allDots = galleryControls.querySelectorAll('.gallery-dot');
-                    
-                    allImages.forEach((img, i) => {
-                        img.style.display = i === index ? 'block' : 'none';
-                    });
-                    
-                    allDots.forEach(d => d.classList.remove('active'));
-                    dot.classList.add('active');
+                    showImage(index);
                 });
                 
                 galleryControls.appendChild(dot);
             });
+            
+            imageSlider.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                isDragging = true;
+            }, { passive: true });
+            
+            imageSlider.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+            }, { passive: false });
+            
+            imageSlider.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                
+                endX = e.changedTouches[0].clientX;
+                const deltaX = startX - endX;
+                const minSwipeDistance = 50;
+                
+                if (Math.abs(deltaX) > minSwipeDistance) {
+                    if (deltaX > 0) {
+                        nextImage();
+                    } else {
+                        prevImage();
+                    }
+                }
+                
+                isDragging = false;
+            }, { passive: true });
+            
+            imageSlider.addEventListener('mousedown', (e) => {
+                startX = e.clientX;
+                isDragging = true;
+                e.preventDefault();
+            });
+            
+            imageSlider.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+            });
+            
+            imageSlider.addEventListener('mouseup', (e) => {
+                if (!isDragging) return;
+                
+                endX = e.clientX;
+                const deltaX = startX - endX;
+                const minSwipeDistance = 50;
+                
+                if (Math.abs(deltaX) > minSwipeDistance) {
+                    if (deltaX > 0) {
+                        nextImage();
+                    } else {
+                        prevImage();
+                    }
+                }
+                
+                isDragging = false;
+            });
+            
+            imageSlider.addEventListener('mouseleave', () => {
+                isDragging = false;
+            });
+            
+            imageSlider.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    prevImage();
+                } else if (e.key === 'ArrowRight') {
+                    nextImage();
+                }
+            });
+            
+            imageSlider.setAttribute('tabindex', '0');
+            
         } else {
             imageSlider.classList.remove('has-images');
         }
     }
-    
 
 
     let hasFetchedSimilarListings = false; 
