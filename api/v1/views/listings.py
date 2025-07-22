@@ -11,6 +11,7 @@ from models.agent import Agent
 from models.user import User
 from models.amenity import Amenity
 from models.state import State
+from models.city import City
 from models.review import Review
 from models.booking import Booking
 from models.report import Report
