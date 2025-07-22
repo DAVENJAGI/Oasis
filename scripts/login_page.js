@@ -400,7 +400,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ENDPOINTS: {
             LOGIN: '/user/login/',
             NEARBY_LISTINGS: `/nearby_listings/`,
-            LATEST_LISTINGS: `/listings/latest/`
+            LATEST_LISTINGS: `/listings/latest/`,
+            LISTINGS_SEARCH: `/listings_search`
         },
         MESSAGES: {
             LOGIN_SUCCESS: 'Login sucessful',
@@ -897,10 +898,10 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Container not found:', container);
             return;
         }
-        
+
+        container.innerHTML = "";        
         console.log(combinedListings);
         combinedListings.forEach(listing => {
-            console.log(listing.distance_km);
             const listingCard = createListingCard(listing);
             container.appendChild(listingCard);
         });
@@ -916,4 +917,47 @@ document.addEventListener('DOMContentLoaded', () => {
     function viewDetails(id) {
         window.location.href = "item.html";
     }
+
+    //SEARCH LISTINGS
+    async function searchListing() {
+        const searchButton = document.getElementById("search-listings-button");
+        document.querySelector(".no-listings-found").style.display = 'none';
+        const loader = document.querySelector(".loader-container");
+        loader.style.visibility = "visible";
+        searchButton.disabled = true;
+        searchButton.textContent = "Searching..."; 
+    
+        const formData = {
+            property_type: document.getElementById('property-type-div').value,
+            country: document.getElementById('country-search-div').value,
+            location: document.getElementById('location-search-div').value,
+        };
+    
+        try {
+            const searchData = await makeRequest(CONFIG.ENDPOINTS.LISTINGS_SEARCH, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            if(searchData.length === 0) {
+                document.querySelector(".no-listings-found").style.display = 'block';
+            }
+            appendListingCards(searchData);
+            loader.style.visibility = "hidden";
+            return searchData;
+        } catch (error) {
+            console.error("Error fetching favorite listings:", error);
+        } finally {
+            searchButton.disabled = false;
+            searchButton.textContent = "Search Listings";
+        }
+    }
+    
+    document.getElementById("search-listings-button").addEventListener("click", (e) => {
+        e.preventDefault();
+        searchListing();
+    });
 })

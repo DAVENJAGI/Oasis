@@ -323,6 +323,9 @@ document.addEventListener('DOMContentLoaded', () => {
     //SEARCH LISTINGS
     async function searchListing() {
         const searchButton = document.getElementById("search-listings-button");
+        document.querySelector(".no-listings-found").style.display = 'none';
+        const loader = document.querySelector(".loader-container");
+        loader.style.visibility = "visible";
         searchButton.disabled = true;
         searchButton.textContent = "Searching..."; 
     
@@ -346,6 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector(".no-listings-found").style.display = 'block';
             }
             appendListingCards(searchData);
+            loader.style.visibility = "hidden";
             return searchData;
         } catch (error) {
             console.error("Error fetching favorite listings:", error);
