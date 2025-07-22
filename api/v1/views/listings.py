@@ -129,7 +129,6 @@ def post_listing(listing_id):
 @listing_views.route('/listings_search', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/listings/search.yml', methods=['POST'])
-@require_agent_or_admin_or_user_auth
 def search_listings_by_id():
     """ search listings by country, location, and property type """
     if request.get_json() is None:
